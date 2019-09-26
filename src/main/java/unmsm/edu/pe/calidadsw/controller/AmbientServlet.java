@@ -2,16 +2,13 @@ package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import unmsm.edu.pe.calidadsw.dao.AmbientDAO;
-import unmsm.edu.pe.calidadsw.models.Ambient;
+import unmsm.edu.pe.calidadsw.dao.implement.AmbientDAO;
 
 @WebServlet("/ambients")
 public class AmbientServlet extends HttpServlet {
@@ -19,12 +16,8 @@ public class AmbientServlet extends HttpServlet {
     AmbientDAO ambientDAO;
 
     public void init() {
-        String jdbcURL = getServletContext().getInitParameter("jdbcURL");
-        String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
-        String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
         try {
-
-            ambientDAO = new AmbientDAO(jdbcURL, jdbcUsername, jdbcPassword);
+            ambientDAO = new AmbientDAO();
         } catch (Exception e) {
             e.printStackTrace();
         }

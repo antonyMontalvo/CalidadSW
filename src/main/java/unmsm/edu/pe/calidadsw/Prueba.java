@@ -1,11 +1,8 @@
 package unmsm.edu.pe.calidadsw;
 
-import java.util.Date;
-import java.util.List;
-
-import unmsm.edu.pe.calidadsw.dao.AssistantDAO;
-import unmsm.edu.pe.calidadsw.dao.EventDAO;
-import unmsm.edu.pe.calidadsw.dao.Event_has_assistantDAO;
+import unmsm.edu.pe.calidadsw.dao.implement.AssistantDAO;
+import unmsm.edu.pe.calidadsw.dao.implement.EventDAO;
+import unmsm.edu.pe.calidadsw.dao.implement.Event_has_assistantDAO;
 import unmsm.edu.pe.calidadsw.models.Assistant;
 import unmsm.edu.pe.calidadsw.models.Event;
 import unmsm.edu.pe.calidadsw.models.Event_has_assistant;

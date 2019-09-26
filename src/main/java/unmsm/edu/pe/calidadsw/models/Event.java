@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unmsm.edu.pe.calidadsw.models;
-
-import java.util.Date;
 
 /**
  *
@@ -17,14 +10,13 @@ public class Event {
     String description;
     String date;
     String state;
-    int idambiente; //LLave foranea proveniente de la tabla ambiente.
-    int dni;        //Llave foranea proveniente de la tabla administrador.
+    int idambiente; // LLave foranea proveniente de la tabla ambiente.
+    int dni; // Llave foranea proveniente de la tabla administrador.
 
-    
-    public Event(){
-        
+    public Event() {
+
     }
-    
+
     public Event(String title, String description, String date, String state, int idambiente, int dni) {
         this.title = title;
         this.description = description;
@@ -89,8 +81,5 @@ public class Event {
     public void setDni(int dni) {
         this.dni = dni;
     }
-    
-    
-    
-    
+
 }

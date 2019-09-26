@@ -4,7 +4,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
     <param-name>jdbcURL</param-name>
-    <param-value>jdbc:mysql://159.65.248.34:3306/quality_project?useSSL=false</param-value>
+    <param-value>jdbc:mysql://159.65.248.34:3306/?useSSL=false</param-value>
   </context-param>
   <context-param>
     <param-name>jdbcUsername</param-name>

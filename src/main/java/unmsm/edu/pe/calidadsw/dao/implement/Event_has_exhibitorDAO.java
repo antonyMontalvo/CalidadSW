@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao;
+package unmsm.edu.pe.calidadsw.dao.implement;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,17 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.connection.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.models.Event_has_exhibitor;
 import unmsm.edu.pe.calidadsw.models.Exhibitor;
 
 public class Event_has_exhibitorDAO {
-    private JDBCDataAccessClass con;
+    private JDBCDataAccessClass jdbc;
     private Connection _connection;
     
-    public Event_has_exhibitorDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
-        System.out.println(jdbcURL);
-        con = new JDBCDataAccessClass(jdbcURL, jdbcUsername, jdbcPassword);
+    public Event_has_exhibitorDAO() {
+        jdbc = new JDBCDataAccessClass();
     }
     
     public List<Exhibitor> consultaTodosExpositoresEvento(Integer id) {
@@ -26,8 +25,8 @@ public class Event_has_exhibitorDAO {
 
         Statement statement = null;
         try {
-            con.conectar();
-            _connection = con.getJdbcConnection();
+            jdbc.conectar();
+            _connection = jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select "
                     + " a.dni"
@@ -61,8 +60,8 @@ public class Event_has_exhibitorDAO {
 
         Statement statement = null;
         try {
-            con.conectar();
-            _connection = con.getJdbcConnection();
+            jdbc.conectar();
+            _connection = jdbc.getJdbcConnection();
 
             statement = _connection.createStatement();
             //INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`, `apellido_paterno`, 

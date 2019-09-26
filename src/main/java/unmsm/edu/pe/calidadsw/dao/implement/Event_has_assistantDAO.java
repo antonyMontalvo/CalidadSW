@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao;
+package unmsm.edu.pe.calidadsw.dao.implement;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,37 +7,37 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.connection.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.models.Assistant;
+import unmsm.edu.pe.calidadsw.models.Event_has_assistant;
 
-public class AssistantDAO {
-    private JDBCDataAccessClass con;
+public class Event_has_assistantDAO {
+    private JDBCDataAccessClass jdbc;
     private Connection _connection;
     
-    public AssistantDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
-        System.out.println(jdbcURL);
-        con = new JDBCDataAccessClass(jdbcURL, jdbcUsername, jdbcPassword);
+    public Event_has_assistantDAO() {
+        jdbc = new JDBCDataAccessClass();
     }
+    
+    public List<Assistant> consultaTodosParticipantesEvento(Integer id) {
+        //Lista de asistentes a un determinado evento
+        List<Assistant> consultaAsistentes = new ArrayList<>();
 
-    public List<Assistant> consultaTodosAsistentes() {
-
-        List<Assistant> consultaAssistant = new ArrayList<>();
         Statement statement = null;
-
         try {
-            con.conectar();
-            _connection = con.getJdbcConnection();
+            jdbc.conectar();
+            _connection = jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select "
-                    + "dni"
-                    + ",name"
-                    + ",lastname"
-                    + ",age"
-                    + ",telephone"
-                    + ",mail"
-                    + ",username"
-                    + ",password"
-                    + " from assistant");
+                    + " a.dni"
+                    + ",a.name"
+                    + ",a.lastname"
+                    + ",a.age"
+                    + ",a.telephone"
+                    + ",a.mail"
+                    + ",a.username"
+                    + ",a.password"
+                    + " from assistant a inner join event_has_assistant e on a.dni = e.dni where e.idevent = "+id+";");
 
             while (resultSet.next()) {
 
@@ -50,48 +50,35 @@ public class AssistantDAO {
                 assistant.setMail(resultSet.getString("mail"));
                 assistant.setUsername(resultSet.getString("username"));
                 assistant.setPassword(resultSet.getString("password"));
-              
-                consultaAssistant.add(assistant);
+
+                consultaAsistentes.add(assistant);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error crear la sentencia "
                     + e.getMessage());
         }
-        return consultaAssistant;
+        return consultaAsistentes;
 
     }
-
-    //el id de trabajador se genera automaticamente
-    public boolean registrarAsistente(Assistant assistant) {
+    
+    public boolean inscribirParticipanteEvento(Event_has_assistant event_has_assistant) {
 
         Statement statement = null;
         try {
-            con.conectar();
-            _connection = con.getJdbcConnection();
+            jdbc.conectar();
+            _connection = jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             //INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`, `apellido_paterno`, 
             //`apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx', 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
-            String query = "insert into assistant ("
+            String query = "insert into event_has_assistant ("
                     //+ "id_trabajador"
-                    + "dni"
-                    + ",name"
-                    + ",lastname"
-                    + ",age"
-                    + ",telephone"
-                    + ",mail "
-                    + ",username "
-                    + ",password) "
+                    + "idevent"
+                    + ",dni) "
                     + "values ("
                     //+ trabajador.getIdTrabajador()
-                    + "'" + assistant.getDni()+ "'"
-                    + ",'" + assistant.getName() + "'"
-                    + ",'" + assistant.getLastname() + "'"
-                    + ",'" + assistant.getAge() + "'"
-                    + ",'" + assistant.getTelephone() + "'"
-                    + ",'" + assistant.getMail() + "'"
-                    + ",'" + assistant.getUsername() + "'"
-                    + ",'" + assistant.getPassword() + "')";
+                    + "'" + event_has_assistant.getIdevent()+ "'"
+                    + ",'" + event_has_assistant.getDni() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
