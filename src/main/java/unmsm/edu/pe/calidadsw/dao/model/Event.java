@@ -5,80 +5,80 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Event {
-    private int _idEvent;
-    private String _title;
-    private String _description;
-    private String _date;
-    private String _state;
-    private int _idAmbient; // LLave foranea proveniente de la tabla ambiente.
-    private int _dni; // Llave foranea proveniente de la tabla administrador.
+    private int idEvent;
+    private String title;
+    private String description;
+    private String date;
+    private String state;
+    private int idAmbient; // LLave foranea proveniente de la tabla ambiente.
+    private int dni; // Llave foranea proveniente de la tabla administrador.
 
     public Event() {
     }
 
     public Event(String title, String description, String date, String state, int idAmbient, int dni) {
-        this._title = title;
-        this._description = description;
-        this._date = date;
-        this._state = state;
-        this._idAmbient = idAmbient;
-        this._dni = dni;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.state = state;
+        this.idAmbient = idAmbient;
+        this.dni = dni;
     }
 
     public int getIdEvent() {
-        return _idEvent;
+        return idEvent;
     }
 
     public void setIdEvent(int idevent) {
-        this._idEvent = idevent;
+        this.idEvent = idevent;
     }
 
     public String getTitle() {
-        return _title;
+        return title;
     }
 
     public void setTitle(String title) {
-        this._title = title;
+        this.title = title;
     }
 
     public String getDescription() {
-        return _description;
+        return description;
     }
 
     public void setDescription(String description) {
-        this._description = description;
+        this.description = description;
     }
 
     public String getDate() {
-        return _date;
+        return date;
     }
 
     public void setDate(String date) {
-        this._date = date;
+        this.date = date;
     }
 
     public String getState() {
-        return _state;
+        return state;
     }
 
     public void setState(String state) {
-        this._state = state;
+        this.state = state;
     }
 
     public int getIdAmbient() {
-        return _idAmbient;
+        return idAmbient;
     }
 
     public void setIdAmbient(int idAmbient) {
-        this._idAmbient = idAmbient;
+        this.idAmbient = idAmbient;
     }
 
     public int getDni() {
-        return _dni;
+        return dni;
     }
 
     public void setDni(int dni) {
-        this._dni = dni;
+        this.dni = dni;
     }
 
 }

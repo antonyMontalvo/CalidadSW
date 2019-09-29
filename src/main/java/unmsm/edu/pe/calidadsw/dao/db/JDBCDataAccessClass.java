@@ -1,30 +1,45 @@
 package unmsm.edu.pe.calidadsw.dao.db;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-// import java.util.logging.Level;
-// import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author antony
  */
 public class JDBCDataAccessClass {
-    private Connection jdbcConnection;
     private String jdbcURL = null;
     private String jdbcUsername = null;
     private String jdbcPassword = null;
-    // private final static Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
+    private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
 
     public JDBCDataAccessClass() {
-        this.jdbcURL = "jdbc:mysql://159.65.248.34:3306/quality_project?useSSL=false";
-        this.jdbcUsername = "";
-        this.jdbcPassword = "";
+        int contador = 0;
+        String datos[] = new String[3];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("server.txt"));) {
+            String linea = br.readLine();
+            while (linea != null && contador < 3) {
+                datos[contador] = linea;
+                linea = br.readLine();
+                contador++;
+            }
+
+            this.jdbcURL = datos[0];
+            this.jdbcUsername = datos[1];
+            this.jdbcPassword = datos[2];
+        } catch (Exception e1) {
+            LOGGER.log(Level.SEVERE, e1.getMessage());
+        }
     }
 
     public Connection getJdbcConnection() {
-        jdbcConnection = null;
+        Connection jdbcConnection = null;
 
         try {
             if (jdbcConnection == null || jdbcConnection.isClosed()) {
@@ -32,23 +47,10 @@ public class JDBCDataAccessClass {
                 jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            // LOGGER.log(Level.WARNING, "Error connect to DataBase");
+            LOGGER.log(Level.SEVERE, e.getMessage());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            // LOGGER.log(Level.WARNING, "Error connect to DataBase");
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
         return jdbcConnection;
-    }
-
-    public void closeJdbcConnection() {
-        try {
-            if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.close();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            // LOGGER.log(Level.SEVERE, "Error desconnect to DataBase");
-        }
     }
 }

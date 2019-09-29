@@ -4,28 +4,28 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
 public class AmbientDAO {
-    private JDBCDataAccessClass _jdbc;
-    private Connection _connection;
+    private JDBCDataAccessClass jdbc;
+    private static final Logger LOGGER = Logger.getLogger("AmbientDAO");
 
     public AmbientDAO() {
-        _jdbc = new JDBCDataAccessClass();
+        jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Ambient t) {
         Boolean result = true;
         String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            CallableStatement callableStatement = _connection.prepareCall(sql);
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setString(1, t.getName());
             callableStatement.setString(2, t.getType());
@@ -33,75 +33,82 @@ public class AmbientDAO {
             callableStatement.setInt(4, t.getCapacity());
             callableStatement.setString(5, t.getDescription());
 
-            ResultSet resulSet = callableStatement.executeQuery();
+            try (ResultSet resulSet = callableStatement.executeQuery();) {
+                if (resulSet.next()) {
+                    int response = resulSet.getInt("response");
 
-            if (resulSet.next()) {
-                int response = resulSet.getInt("response");
-
-                if (response == 0) {
-                    result = false;
+                    if (response == 0) {
+                        result = false;
+                        LOGGER.log(Level.SEVERE, "Error to execute procedure create.");
+                    }
                 }
             }
+
         } catch (SQLException e) {
             result = false;
-            System.out.println("Error crear la sentencia " + e.getMessage());
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
         return result;
     }
 
     public boolean delete(Integer id) {
-        Statement statement = null;
         Boolean result = true;
+        String sql = "delete from ambient where idambient = " + id;
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            String query = "delete from ambient where idambient = " + id;
+            callableStatement.setInt(1, id);
 
-            System.out.println("Ejecutando=" + query);
-            statement.execute(query);
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                if (resultSet.next()) {
+                    int response = resultSet.getInt("response");
+
+                    if (response == 0) {
+                        result = false;
+                        LOGGER.log(Level.SEVERE, "Error to execute procedure delete.");
+                    }
+                }
+            }
         } catch (SQLException e) {
             result = false;
-            System.out.println("Error crear la sentencia " + e.getMessage());
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
         return result;
     }
 
     public List<Ambient> read() {
-        List<Ambient> consultaAmbientes = new ArrayList<>();
-        Statement statement = null;
+        List<Ambient> ambients = new ArrayList<>();
+        String sql = "{CALL sp_get_ambients(?,?,?,?,?)}";
 
         try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select " + "idambient" + ",name" + ",type" + ",floor"
-                    + ",capacity" + ",description" + " from ambient");
+            try (Connection connection = jdbc.getJdbcConnection();
+                    CallableStatement callableStatement = connection.prepareCall(sql);) {
+                // ResultSet resultSet = statement.executesql("select " + "idambient" + ",name"
+                // + ",type" + ",floor"
+                // + ",capacity" + ",description" + " from ambient");
 
-            while (resultSet.next()) {
+                try (ResultSet resultSet = callableStatement.executeQuery();) {
+                    while (resultSet.next()) {
+                        Ambient ambient = new Ambient();
 
-                Ambient ambient = new Ambient();
-                ambient.setIdAmbient(resultSet.getInt("idambient"));
-                ambient.setName(resultSet.getString("name"));
-                ambient.setType(resultSet.getString("type"));
-                ambient.setFloor(resultSet.getString("floor"));
-                ambient.setCapacity(resultSet.getInt("capacity"));
-                ambient.setDescription(resultSet.getString("description"));
+                        ambient.setIdAmbient(resultSet.getInt("idambient"));
+                        ambient.setName(resultSet.getString("name"));
+                        ambient.setType(resultSet.getString("type"));
+                        ambient.setFloor(resultSet.getString("floor"));
+                        ambient.setCapacity(resultSet.getInt("capacity"));
+                        ambient.setDescription(resultSet.getString("description"));
 
-                consultaAmbientes.add(ambient);
+                        ambients.add(ambient);
+                    }
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error crear la sentencia " + e.getMessage());
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
-        return consultaAmbientes;
+        return ambients;
     }
 }

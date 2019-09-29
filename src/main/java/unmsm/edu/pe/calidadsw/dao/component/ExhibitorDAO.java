@@ -1,83 +1,87 @@
 package unmsm.edu.pe.calidadsw.dao.component;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
 public class ExhibitorDAO {
-    private JDBCDataAccessClass _jdbc;
-    private Connection _connection;
+    private JDBCDataAccessClass jdbc;
+    private static final Logger LOGGER = Logger.getLogger("ExhibitorDAO");
 
     public ExhibitorDAO() {
-        _jdbc = new JDBCDataAccessClass();
+        jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Exhibitor t) {
-        Statement statement = null;
         Boolean result = true;
+        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
-            // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
-            // `apellido_paterno`,
-            // `apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx',
-            // 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
-            String query = "insert into exhibitor ("
-                    // + "id_trabajador"
-                    + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty) " + "values ("
-                    // + trabajador.getIdTrabajador()
-                    + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname() + "'" + ",'"
-                    + t.getNationality() + "'" + ",'" + t.getSpecialty() + "')";
-            System.out.println("Ejecutando=" + query);
-            statement.execute(query);
+        // String query = "insert into exhibitor ("
+        // // + "id_trabajador"
+        // + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty) " + "values
+        // ("
+        // // + trabajador.getIdTrabajador()
+        // + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname()
+        // + "'" + ",'"
+        // + t.getNationality() + "'" + ",'" + t.getSpecialty() + "')";
 
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                if (resultSet.next()) {
+                    int response = resultSet.getInt("response");
+
+                    if (response == 0) {
+                        result = false;
+                        LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                    }
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error crear la sentencia " + e.getMessage());
             result = false;
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
         return result;
     }
 
     public List<Exhibitor> read() {
-        List<Exhibitor> consultaExhibitor = new ArrayList<>();
-        Statement statement = null;
+        List<Exhibitor> exhibitors = new ArrayList<>();
+        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
+        // ResultSet resultSet = statement.executeQuery(
+        // "select " + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty" + "
+        // from exhibitor");
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(
-                    "select " + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty" + " from exhibitor");
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            while (resultSet.next()) {
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    Exhibitor exhibitor = new Exhibitor();
 
-                Exhibitor exhibitor = new Exhibitor();
-                exhibitor.setDni(resultSet.getInt("dni"));
-                exhibitor.setName(resultSet.getString("name"));
-                exhibitor.setLastname(resultSet.getString("lastname"));
-                exhibitor.setNationality(resultSet.getString("nacionality"));
-                exhibitor.setSpecialty(resultSet.getString("specialty"));
+                    exhibitor.setDni(resultSet.getInt("dni"));
+                    exhibitor.setName(resultSet.getString("name"));
+                    exhibitor.setLastname(resultSet.getString("lastname"));
+                    exhibitor.setNationality(resultSet.getString("nacionality"));
+                    exhibitor.setSpecialty(resultSet.getString("specialty"));
 
-                consultaExhibitor.add(exhibitor);
+                    exhibitors.add(exhibitor);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error crear la sentencia " + e.getMessage());
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
-        return consultaExhibitor;
+        return exhibitors;
     }
 
 }

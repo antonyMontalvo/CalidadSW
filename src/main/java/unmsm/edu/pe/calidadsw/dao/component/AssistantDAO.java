@@ -1,85 +1,92 @@
 package unmsm.edu.pe.calidadsw.dao.component;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 
 public class AssistantDAO {
-    private JDBCDataAccessClass _jdbc;
-    private Connection _connection;
+    private JDBCDataAccessClass jdbc;
+    private static final Logger LOGGER = Logger.getLogger("AssistantDAO");
 
     public AssistantDAO() {
-        _jdbc = new JDBCDataAccessClass();
+        jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Assistant t) {
-        Statement statement = null;
         Boolean result = true;
+        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
+        // String query = "insert into assistant ("
+        // // + "id_trabajador"
+        // + "dni" + ",name" + ",lastname" + ",age" + ",telephone" + ",mail " +
+        // ",username " + ",password) "
+        // + "values ("
+        // // + trabajador.getIdTrabajador()
+        // + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname()
+        // + "'" + ",'"
+        // + t.getAge() + "'" + ",'" + t.getTelephone() + "'" + ",'" + t.getMail() + "'"
+        // + ",'"
+        // + t.getUsername() + "'" + ",'" + t.getPassword() + "')";
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
-            // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
-            // `apellido_paterno`,
-            // `apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx',
-            // 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
-            String query = "insert into assistant ("
-                    // + "id_trabajador"
-                    + "dni" + ",name" + ",lastname" + ",age" + ",telephone" + ",mail " + ",username " + ",password) "
-                    + "values ("
-                    // + trabajador.getIdTrabajador()
-                    + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname() + "'" + ",'"
-                    + t.getAge() + "'" + ",'" + t.getTelephone() + "'" + ",'" + t.getMail() + "'" + ",'"
-                    + t.getUsername() + "'" + ",'" + t.getPassword() + "')";
-            System.out.println("Ejecutando=" + query);
-            statement.execute(query);
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                if (resultSet.next()) {
+                    int response = resultSet.getInt("response");
+
+                    if (response == 0) {
+                        result = false;
+                        LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                    }
+                }
+            }
         } catch (SQLException e) {
-            System.out.println("Error crear la sentencia " + e.getMessage());
             result = false;
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
         return result;
     }
 
     public List<Assistant> read() {
-        List<Assistant> consultaAssistant = new ArrayList<>();
-        Statement statement = null;
+        List<Assistant> assistants = new ArrayList<>();
+        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
+        // ResultSet resultSet = statement.executeQuery("select " + "dni" + ",name" +
+        // ",lastname" + ",age"
+        // + ",telephone" + ",mail" + ",username" + ",password" + " from assistant");
 
-        try {
-            _connection = _jdbc.getJdbcConnection();
-            statement = _connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select " + "dni" + ",name" + ",lastname" + ",age"
-                    + ",telephone" + ",mail" + ",username" + ",password" + " from assistant");
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            while (resultSet.next()) {
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
 
-                Assistant assistant = new Assistant();
-                assistant.setDni(resultSet.getInt("dni"));
-                assistant.setName(resultSet.getString("name"));
-                assistant.setLastname(resultSet.getString("lastname"));
-                assistant.setAge(resultSet.getInt("age"));
-                assistant.setTelephone(resultSet.getString("telephone"));
-                assistant.setMail(resultSet.getString("mail"));
-                assistant.setUsername(resultSet.getString("username"));
-                assistant.setPassword(resultSet.getString("password"));
+                while (resultSet.next()) {
+                    Assistant assistant = new Assistant();
 
-                consultaAssistant.add(assistant);
+                    assistant.setDni(resultSet.getInt("dni"));
+                    assistant.setName(resultSet.getString("name"));
+                    assistant.setLastname(resultSet.getString("lastname"));
+                    assistant.setAge(resultSet.getInt("age"));
+                    assistant.setTelephone(resultSet.getString("telephone"));
+                    assistant.setMail(resultSet.getString("mail"));
+                    assistant.setUsername(resultSet.getString("username"));
+                    assistant.setPassword(resultSet.getString("password"));
+
+                    assistants.add(assistant);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error crear la sentencia " + e.getMessage());
-        } finally {
-            _jdbc.closeJdbcConnection();
+            LOGGER.log(Level.WARNING, e.getMessage());
         }
 
-        return consultaAssistant;
+        return assistants;
     }
 }
