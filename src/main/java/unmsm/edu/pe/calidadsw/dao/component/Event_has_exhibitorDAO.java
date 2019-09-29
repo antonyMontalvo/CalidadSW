@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao.implement;
+package unmsm.edu.pe.calidadsw.dao.component;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
-import unmsm.edu.pe.calidadsw.models.Event_has_exhibitor;
-import unmsm.edu.pe.calidadsw.models.Exhibitor;
+import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.model.Event_has_exhibitor;
+import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
 public class Event_has_exhibitorDAO {
     private JDBCDataAccessClass jdbc;

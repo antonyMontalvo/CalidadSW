@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao.implement;
+package unmsm.edu.pe.calidadsw.dao.component;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,11 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.dao.IGlobal;
-import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
-import unmsm.edu.pe.calidadsw.models.Exhibitor;
+import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
-public class ExhibitorDAO implements IGlobal<List<Exhibitor>, Integer> {
+public class ExhibitorDAO {
     private JDBCDataAccessClass jdbc;
     private Connection _connection;
 
@@ -19,8 +18,7 @@ public class ExhibitorDAO implements IGlobal<List<Exhibitor>, Integer> {
         jdbc = new JDBCDataAccessClass();
     }
 
-    @Override
-    public boolean create(List<Exhibitor> t) {
+    public boolean create(Exhibitor t) {
         Statement statement = null;
 
         try {
@@ -35,8 +33,8 @@ public class ExhibitorDAO implements IGlobal<List<Exhibitor>, Integer> {
                     // + "id_trabajador"
                     + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty) " + "values ("
                     // + trabajador.getIdTrabajador()
-                    + "'" + t.get(0).getDni() + "'" + ",'" + t.get(0).getName() + "'" + ",'" + t.get(0).getLastname()
-                    + "'" + ",'" + t.get(0).getNationality() + "'" + ",'" + t.get(0).getSpecialty() + "')";
+                    + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname() + "'" + ",'"
+                    + t.getNationality() + "'" + ",'" + t.getSpecialty() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
@@ -48,13 +46,6 @@ public class ExhibitorDAO implements IGlobal<List<Exhibitor>, Integer> {
         }
     }
 
-    @Override
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
     public List<Exhibitor> read() {
         List<Exhibitor> consultaExhibitor = new ArrayList<>();
         Statement statement = null;
@@ -83,18 +74,6 @@ public class ExhibitorDAO implements IGlobal<List<Exhibitor>, Integer> {
             System.out.println("Error crear la sentencia " + e.getMessage());
         }
         return consultaExhibitor;
-    }
-
-    @Override
-    public List<Exhibitor> read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean update(List<Exhibitor> t) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
 }

@@ -1,22 +1,28 @@
-package unmsm.edu.pe.calidadsw.models;
+package unmsm.edu.pe.calidadsw.dao.model;
 
 /**
  *
  * @author antony
  */
-public class Administrator {
+public class Assistant {
     int dni;
     String name;
     String lastname;
     int age;
+    String telephone;
+    String mail;
     String username;
     String password;
 
-    public Administrator(int dni, String name, String lastname, int age, String username, String password) {
+    public Assistant(){}
+    
+    public Assistant(int dni, String name, String lastname, int age, String telephone, String mail, String username, String password) {
         this.dni = dni;
         this.name = name;
         this.lastname = lastname;
         this.age = age;
+        this.telephone = telephone;
+        this.mail = mail;
         this.username = username;
         this.password = password;
     }
@@ -51,6 +57,22 @@ public class Administrator {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getUsername() {

@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao.implement;
+package unmsm.edu.pe.calidadsw.dao.component;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,22 +7,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.dao.IGlobal;
-import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
-import unmsm.edu.pe.calidadsw.models.Event;
+import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
-public class EventDAO implements IGlobal<List<Event>, Integer> {
+public class AmbientDAO {
     private JDBCDataAccessClass jdbc;
     private Connection _connection;
 
-    public EventDAO() {
+    public AmbientDAO() {
         jdbc = new JDBCDataAccessClass();
     }
 
-    @Override
-    public boolean create(List<Event> t) {
+    public boolean create(Ambient t) {
         Statement statement = null;
-
         try {
             jdbc.conectar();
             _connection = jdbc.getJdbcConnection();
@@ -31,14 +28,13 @@ public class EventDAO implements IGlobal<List<Event>, Integer> {
             // `apellido_paterno`,
             // `apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx',
             // 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
-            String query = "insert into event ("
+            String query = "insert into ambient ("
                     // + "id_trabajador"
-                    + "title" + ",description" + ",date" + ",state" + ",idambient" + ",dni) " + "values ("
+                    + "idambient" + ",name" + ",type" + ",floor" + ",capacity" + ",description) " + "values ("
                     // + trabajador.getIdTrabajador()
-
-                    + "'" + t.get(0).getTitle() + "'" + ",'" + t.get(0).getDescription() + "'" + ",'"
-                    + String.valueOf(t.get(0).getDate()) + "'" + ",'" + t.get(0).getState() + "'" + ",'"
-                    + t.get(0).getIdambiente() + "'" + ",'" + t.get(0).getDni() + "')";
+                    + "'" + t.getIdambient() + "'" + ",'" + t.getName() + "'" + ",'" + t.getType()
+                    + "'" + ",'" + t.getFloor() + "'" + ",'" + t.getCapacity() + "'" + ",'"
+                    + t.getDescription() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
@@ -50,16 +46,14 @@ public class EventDAO implements IGlobal<List<Event>, Integer> {
         }
     }
 
-    @Override
     public boolean delete(Integer id) {
         Statement statement = null;
-
         try {
             jdbc.conectar();
             _connection = jdbc.getJdbcConnection();
             statement = _connection.createStatement();
 
-            String query = "delete from event where idevent = " + id;
+            String query = "delete from ambient where idambient = " + id;
 
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
@@ -72,48 +66,32 @@ public class EventDAO implements IGlobal<List<Event>, Integer> {
         }
     }
 
-    @Override
-    public List<Event> read() {
-        List<Event> consultaEventos = new ArrayList<>();
+    public List<Ambient> read() {
+        List<Ambient> consultaAmbientes = new ArrayList<>();
         Statement statement = null;
-
         try {
             jdbc.conectar();
             _connection = jdbc.getJdbcConnection();
             statement = _connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select " + "idevent" + ",title" + ",description" + ",date"
-                    + ",state" + ",idambient" + ",dni" + " from event");
+            ResultSet resultSet = statement.executeQuery("select " + "idambient" + ",name" + ",type" + ",floor"
+                    + ",capacity" + ",description" + " from ambient");
 
             while (resultSet.next()) {
 
-                Event event = new Event();
-                event.setIdevent(resultSet.getInt("idevent"));
-                event.setTitle(resultSet.getString("title"));
-                event.setDescription(resultSet.getString("description"));
-                event.setDate(resultSet.getString("date"));
-                event.setState(resultSet.getString("state"));
-                event.setIdambiente(resultSet.getInt("idambient"));
-                event.setDni(resultSet.getInt("dni"));
+                Ambient ambient = new Ambient();
+                ambient.setIdambient(resultSet.getInt("idambient"));
+                ambient.setName(resultSet.getString("name"));
+                ambient.setType(resultSet.getString("type"));
+                ambient.setFloor(resultSet.getString("floor"));
+                ambient.setCapacity(resultSet.getInt("capacity"));
+                ambient.setDescription(resultSet.getString("description"));
 
-                consultaEventos.add(event);
+                consultaAmbientes.add(ambient);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
         }
-        return consultaEventos;
+        return consultaAmbientes;
     }
-
-    @Override
-    public List<Event> read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean update(List<Event> t) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
 }

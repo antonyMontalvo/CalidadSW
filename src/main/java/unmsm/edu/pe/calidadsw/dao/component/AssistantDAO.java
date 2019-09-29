@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao.implement;
+package unmsm.edu.pe.calidadsw.dao.component;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,11 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import unmsm.edu.pe.calidadsw.dao.IGlobal;
-import unmsm.edu.pe.calidadsw.dao.JDBCDataAccessClass;
-import unmsm.edu.pe.calidadsw.models.Assistant;
+import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 
-public class AssistantDAO implements IGlobal<List<Assistant>, Integer> {
+public class AssistantDAO {
     private JDBCDataAccessClass jdbc;
     private Connection _connection;
 
@@ -19,8 +18,7 @@ public class AssistantDAO implements IGlobal<List<Assistant>, Integer> {
         jdbc = new JDBCDataAccessClass();
     }
 
-    @Override
-    public boolean create(List<Assistant> t) {
+    public boolean create(Assistant t) {
         Statement statement = null;
         try {
             jdbc.conectar();
@@ -35,10 +33,9 @@ public class AssistantDAO implements IGlobal<List<Assistant>, Integer> {
                     + "dni" + ",name" + ",lastname" + ",age" + ",telephone" + ",mail " + ",username " + ",password) "
                     + "values ("
                     // + trabajador.getIdTrabajador()
-                    + "'" + t.get(0).getDni() + "'" + ",'" + t.get(0).getName() + "'" + ",'" + t.get(0).getLastname()
-                    + "'" + ",'" + t.get(0).getAge() + "'" + ",'" + t.get(0).getTelephone() + "'" + ",'"
-                    + t.get(0).getMail() + "'" + ",'" + t.get(0).getUsername() + "'" + ",'" + t.get(0).getPassword()
-                    + "')";
+                    + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname() + "'" + ",'"
+                    + t.getAge() + "'" + ",'" + t.getTelephone() + "'" + ",'" + t.getMail() + "'" + ",'"
+                    + t.getUsername() + "'" + ",'" + t.getPassword() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
@@ -50,13 +47,6 @@ public class AssistantDAO implements IGlobal<List<Assistant>, Integer> {
         }
     }
 
-    @Override
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
     public List<Assistant> read() {
         List<Assistant> consultaAssistant = new ArrayList<>();
         Statement statement = null;
@@ -88,17 +78,4 @@ public class AssistantDAO implements IGlobal<List<Assistant>, Integer> {
         }
         return consultaAssistant;
     }
-
-    @Override
-    public List<Assistant> read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean update(List<Assistant> t) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
 }

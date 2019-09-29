@@ -1,11 +1,11 @@
 package unmsm.edu.pe.calidadsw;
 
-import unmsm.edu.pe.calidadsw.dao.implement.AssistantDAO;
-import unmsm.edu.pe.calidadsw.dao.implement.EventDAO;
-import unmsm.edu.pe.calidadsw.dao.implement.Event_has_assistantDAO;
-import unmsm.edu.pe.calidadsw.models.Assistant;
-import unmsm.edu.pe.calidadsw.models.Event;
-import unmsm.edu.pe.calidadsw.models.Event_has_assistant;
+import unmsm.edu.pe.calidadsw.dao.component.AssistantDAO;
+import unmsm.edu.pe.calidadsw.dao.component.EventDAO;
+import unmsm.edu.pe.calidadsw.dao.component.Event_has_assistantDAO;
+import unmsm.edu.pe.calidadsw.dao.model.Assistant;
+import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Event_has_assistant;
 
 public class Prueba {
     public static void main (String [ ] args) {

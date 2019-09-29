@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import unmsm.edu.pe.calidadsw.dao.implement.AmbientDAO;
+import unmsm.edu.pe.calidadsw.dao.component.AmbientDAO;;
 
 @WebServlet("/ambients")
 public class AmbientServlet extends HttpServlet {

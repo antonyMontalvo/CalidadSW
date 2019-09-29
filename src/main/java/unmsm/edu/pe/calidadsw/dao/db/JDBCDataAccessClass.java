@@ -1,4 +1,4 @@
-package unmsm.edu.pe.calidadsw.dao;
+package unmsm.edu.pe.calidadsw.dao.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
