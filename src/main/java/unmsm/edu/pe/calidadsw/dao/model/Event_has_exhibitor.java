@@ -5,32 +5,31 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Event_has_exhibitor {
-    int idevent;
-    int dni;
+    private int _idEvent;
+    private int _dni;
 
-    public Event_has_exhibitor(){}
-    
-    public Event_has_exhibitor(int idevent, int dni) {
-        this.idevent = idevent;
-        this.dni = dni;
+    public Event_has_exhibitor() {
     }
 
-    public int getIdevent() {
-        return idevent;
+    public Event_has_exhibitor(int idEvent, int dni) {
+        this._idEvent = idEvent;
+        this._dni = dni;
     }
 
-    public void setIdevent(int idevent) {
-        this.idevent = idevent;
+    public int getIdEvent() {
+        return _idEvent;
+    }
+
+    public void setIdEvent(int idEvent) {
+        this._idEvent = idEvent;
     }
 
     public int getDni() {
-        return dni;
+        return _dni;
     }
 
     public void setDni(int dni) {
-        this.dni = dni;
+        this._dni = dni;
     }
-    
-    
-    
+
 }

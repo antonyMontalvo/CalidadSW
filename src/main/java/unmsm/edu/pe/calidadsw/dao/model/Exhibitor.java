@@ -5,61 +5,61 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Exhibitor {
-    int dni;
-    String name;
-    String lastname;
-    String nationality;
-    String specialty;
+    private int _dni;
+    private String _name;
+    private String _lastname;
+    private String _nationality;
+    private String _specialty;
 
-    public Exhibitor(){}
-    
+    public Exhibitor() {
+    }
+
     public Exhibitor(int dni, String name, String lastname, String nationality, String specialty) {
-        this.dni = dni;
-        this.name = name;
-        this.lastname = lastname;
-        this.nationality = nationality;
-        this.specialty = specialty;
+        this._dni = dni;
+        this._name = name;
+        this._lastname = lastname;
+        this._nationality = nationality;
+        this._specialty = specialty;
     }
 
     public int getDni() {
-        return dni;
+        return _dni;
     }
 
     public void setDni(int dni) {
-        this.dni = dni;
+        this._dni = dni;
     }
 
     public String getName() {
-        return name;
+        return _name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this._name = name;
     }
 
     public String getLastname() {
-        return lastname;
+        return _lastname;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this._lastname = lastname;
     }
 
     public String getNationality() {
-        return nationality;
+        return _nationality;
     }
 
     public void setNationality(String nationality) {
-        this.nationality = nationality;
+        this._nationality = nationality;
     }
 
     public String getSpecialty() {
-        return specialty;
+        return _specialty;
     }
 
     public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+        this._specialty = specialty;
     }
-    
-    
+
 }

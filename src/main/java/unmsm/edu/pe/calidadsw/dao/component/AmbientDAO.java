@@ -11,67 +11,69 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
 public class AmbientDAO {
-    private JDBCDataAccessClass jdbc;
+    private JDBCDataAccessClass _jdbc;
     private Connection _connection;
 
     public AmbientDAO() {
-        jdbc = new JDBCDataAccessClass();
+        _jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Ambient t) {
         Statement statement = null;
+        Boolean result = true;
+        String query = "insert into ambient ("
+                // + "id_trabajador"
+                + "idambient" + ",name" + ",type" + ",floor" + ",capacity" + ",description) " + "values ("
+                // + trabajador.getIdTrabajador()
+                + "'" + t.getIdAmbient() + "'" + ",'" + t.getName() + "'" + ",'" + t.getType() + "'" + ",'"
+                + t.getFloor() + "'" + ",'" + t.getCapacity() + "'" + ",'" + t.getDescription() + "')";
+
+        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
+        
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
-            // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
-            // `apellido_paterno`,
-            // `apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx',
-            // 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
-            String query = "insert into ambient ("
-                    // + "id_trabajador"
-                    + "idambient" + ",name" + ",type" + ",floor" + ",capacity" + ",description) " + "values ("
-                    // + trabajador.getIdTrabajador()
-                    + "'" + t.getIdambient() + "'" + ",'" + t.getName() + "'" + ",'" + t.getType()
-                    + "'" + ",'" + t.getFloor() + "'" + ",'" + t.getCapacity() + "'" + ",'"
-                    + t.getDescription() + "')";
+
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
-
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            result = false;
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public boolean delete(Integer id) {
         Statement statement = null;
+        Boolean result = true;
+
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
 
             String query = "delete from ambient where idambient = " + id;
 
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
-
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            result = false;
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public List<Ambient> read() {
         List<Ambient> consultaAmbientes = new ArrayList<>();
         Statement statement = null;
+
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select " + "idambient" + ",name" + ",type" + ",floor"
                     + ",capacity" + ",description" + " from ambient");
@@ -79,7 +81,7 @@ public class AmbientDAO {
             while (resultSet.next()) {
 
                 Ambient ambient = new Ambient();
-                ambient.setIdambient(resultSet.getInt("idambient"));
+                ambient.setIdAmbient(resultSet.getInt("idambient"));
                 ambient.setName(resultSet.getString("name"));
                 ambient.setType(resultSet.getString("type"));
                 ambient.setFloor(resultSet.getString("floor"));
@@ -89,9 +91,11 @@ public class AmbientDAO {
                 consultaAmbientes.add(ambient);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
         return consultaAmbientes;
     }
 }

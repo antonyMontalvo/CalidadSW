@@ -5,29 +5,28 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Event_has_assistant {
-    int idevent;
-    int dni;
-    
-    public Event_has_assistant(int idevent,int dni){
-        this.idevent=idevent;
-        this.dni=dni;
+    private int _idEvent;
+    private int _dni;
+
+    public Event_has_assistant(int idEvent, int dni) {
+        this._idEvent = idEvent;
+        this._dni = dni;
     }
 
-    public int getIdevent() {
-        return idevent;
+    public int getIdEvent() {
+        return _idEvent;
     }
 
-    public void setIdevent(int idevent) {
-        this.idevent = idevent;
+    public void setIdEvent(int idEvent) {
+        this._idEvent = idEvent;
     }
 
     public int getDni() {
-        return dni;
+        return _dni;
     }
 
     public void setDni(int dni) {
-        this.dni = dni;
+        this._dni = dni;
     }
-    
-    
+
 }

@@ -11,19 +11,19 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
 public class ExhibitorDAO {
-    private JDBCDataAccessClass jdbc;
+    private JDBCDataAccessClass _jdbc;
     private Connection _connection;
 
     public ExhibitorDAO() {
-        jdbc = new JDBCDataAccessClass();
+        _jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Exhibitor t) {
         Statement statement = null;
+        Boolean result = true;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
             // `apellido_paterno`,
@@ -38,12 +38,15 @@ public class ExhibitorDAO {
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+            result = false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public List<Exhibitor> read() {
@@ -51,9 +54,7 @@ public class ExhibitorDAO {
         Statement statement = null;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
-
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
                     "select " + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty" + " from exhibitor");
@@ -72,7 +73,10 @@ public class ExhibitorDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
         return consultaExhibitor;
     }
 

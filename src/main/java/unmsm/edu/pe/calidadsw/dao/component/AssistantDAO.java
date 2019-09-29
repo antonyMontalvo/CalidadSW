@@ -11,18 +11,19 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 
 public class AssistantDAO {
-    private JDBCDataAccessClass jdbc;
+    private JDBCDataAccessClass _jdbc;
     private Connection _connection;
 
     public AssistantDAO() {
-        jdbc = new JDBCDataAccessClass();
+        _jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Assistant t) {
         Statement statement = null;
+        Boolean result = true;
+
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
             // `apellido_paterno`,
@@ -38,13 +39,14 @@ public class AssistantDAO {
                     + t.getUsername() + "'" + ",'" + t.getPassword() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
-
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+            result = false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public List<Assistant> read() {
@@ -52,8 +54,7 @@ public class AssistantDAO {
         Statement statement = null;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select " + "dni" + ",name" + ",lastname" + ",age"
                     + ",telephone" + ",mail" + ",username" + ",password" + " from assistant");
@@ -75,7 +76,10 @@ public class AssistantDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
         return consultaAssistant;
     }
 }

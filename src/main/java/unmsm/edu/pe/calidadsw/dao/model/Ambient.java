@@ -5,70 +5,70 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Ambient {
-    int idambient;
-    String name;
-    String type;
-    String floor;
-    int capacity;
-    String description;
+    private int _idAmbient;
+    private String _name;
+    private String _type;
+    private String _floor;
+    private int _capacity;
+    private String _description;
 
-    public Ambient(){
-        
+    public Ambient() {
     }
+
     public Ambient(String name, String type, String floor, int capacity, String description) {
-        this.name = name;
-        this.type = type;
-        this.floor = floor;
-        this.capacity = capacity;
-        this.description = description;
+        this._name = name;
+        this._type = type;
+        this._floor = floor;
+        this._capacity = capacity;
+        this._description = description;
     }
 
-    public int getIdambient() {
-        return idambient;
+    public int getIdAmbient() {
+        return _idAmbient;
     }
 
-    public void setIdambient(int idambient) {
-        this.idambient = idambient;
+    public void setIdAmbient(int idAmbient) {
+        this._idAmbient = idAmbient;
     }
 
     public String getName() {
-        return name;
+        return _name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this._name = name;
     }
 
     public String getType() {
-        return type;
+        return _type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this._type = type;
     }
 
     public String getFloor() {
-        return floor;
+        return _floor;
     }
 
     public void setFloor(String floor) {
-        this.floor = floor;
+        this._floor = floor;
     }
 
     public int getCapacity() {
-        return capacity;
+        return _capacity;
     }
 
     public void setCapacity(int capacity) {
-        this.capacity = capacity;
+        this._capacity = capacity;
     }
 
     public String getDescription() {
-        return description;
+        return _description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this._description = description;
     }
-    
+
 }

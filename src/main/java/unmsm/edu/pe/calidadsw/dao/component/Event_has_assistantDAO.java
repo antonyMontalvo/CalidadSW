@@ -12,32 +12,25 @@ import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 import unmsm.edu.pe.calidadsw.dao.model.Event_has_assistant;
 
 public class Event_has_assistantDAO {
-    private JDBCDataAccessClass jdbc;
+    private JDBCDataAccessClass _jdbc;
     private Connection _connection;
-    
+
     public Event_has_assistantDAO() {
-        jdbc = new JDBCDataAccessClass();
+        _jdbc = new JDBCDataAccessClass();
     }
-    
+
     public List<Assistant> consultaTodosParticipantesEvento(Integer id) {
-        //Lista de asistentes a un determinado evento
+        // Lista de asistentes a un determinado evento
         List<Assistant> consultaAsistentes = new ArrayList<>();
 
         Statement statement = null;
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select "
-                    + " a.dni"
-                    + ",a.name"
-                    + ",a.lastname"
-                    + ",a.age"
-                    + ",a.telephone"
-                    + ",a.mail"
-                    + ",a.username"
-                    + ",a.password"
-                    + " from assistant a inner join event_has_assistant e on a.dni = e.dni where e.idevent = "+id+";");
+            ResultSet resultSet = statement.executeQuery("select " + " a.dni" + ",a.name" + ",a.lastname" + ",a.age"
+                    + ",a.telephone" + ",a.mail" + ",a.username" + ",a.password"
+                    + " from assistant a inner join event_has_assistant e on a.dni = e.dni where e.idevent = " + id
+                    + ";");
 
             while (resultSet.next()) {
 
@@ -54,42 +47,40 @@ public class Event_has_assistantDAO {
                 consultaAsistentes.add(assistant);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error crear la sentencia "
-                    + e.getMessage());
+            System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
         return consultaAsistentes;
-
     }
-    
-    public boolean inscribirParticipanteEvento(Event_has_assistant event_has_assistant) {
 
+    public boolean inscribirParticipanteEvento(Event_has_assistant event_has_assistant) {
         Statement statement = null;
+        Boolean result = true;
+
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
-            //INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`, `apellido_paterno`, 
-            //`apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx', 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
+            // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
+            // `apellido_paterno`,
+            // `apellido_materno`, `telefono`, `direccion`) VALUES ('6', '12312312', 'xxxx',
+            // 'xxxx', 'xxxx', '1123132', 'dasadsdasads');
             String query = "insert into event_has_assistant ("
-                    //+ "id_trabajador"
-                    + "idevent"
-                    + ",dni) "
-                    + "values ("
-                    //+ trabajador.getIdTrabajador()
-                    + "'" + event_has_assistant.getIdevent()+ "'"
-                    + ",'" + event_has_assistant.getDni() + "')";
+                    // + "id_trabajador"
+                    + "idevent" + ",dni) " + "values ("
+                    // + trabajador.getIdTrabajador()
+                    + "'" + event_has_assistant.getIdEvent() + "'" + ",'" + event_has_assistant.getDni() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
-
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error crear la sentencia "
-                    + e.getMessage());
-            return false;
+            result = false;
+            System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
 
+        return result;
     }
 
 }

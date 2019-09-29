@@ -5,91 +5,92 @@ package unmsm.edu.pe.calidadsw.dao.model;
  * @author antony
  */
 public class Assistant {
-    int dni;
-    String name;
-    String lastname;
-    int age;
-    String telephone;
-    String mail;
-    String username;
-    String password;
+    private int _dni;
+    private String _name;
+    private String _lastname;
+    private int _age;
+    private String _telephone;
+    private String _mail;
+    private String _username;
+    private String _password;
 
-    public Assistant(){}
-    
-    public Assistant(int dni, String name, String lastname, int age, String telephone, String mail, String username, String password) {
-        this.dni = dni;
-        this.name = name;
-        this.lastname = lastname;
-        this.age = age;
-        this.telephone = telephone;
-        this.mail = mail;
-        this.username = username;
-        this.password = password;
+    public Assistant() {
+    }
+
+    public Assistant(int dni, String name, String lastname, int age, String telephone, String mail, String username,
+            String password) {
+        this._dni = dni;
+        this._name = name;
+        this._lastname = lastname;
+        this._age = age;
+        this._telephone = telephone;
+        this._mail = mail;
+        this._username = username;
+        this._password = password;
     }
 
     public int getDni() {
-        return dni;
+        return _dni;
     }
 
     public void setDni(int dni) {
-        this.dni = dni;
+        this._dni = dni;
     }
 
     public String getName() {
-        return name;
+        return _name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this._name = name;
     }
 
     public String getLastname() {
-        return lastname;
+        return _lastname;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this._lastname = lastname;
     }
 
     public int getAge() {
-        return age;
+        return _age;
     }
 
     public void setAge(int age) {
-        this.age = age;
+        this._age = age;
     }
 
     public String getTelephone() {
-        return telephone;
+        return _telephone;
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this._telephone = telephone;
     }
 
     public String getMail() {
-        return mail;
+        return _mail;
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+        this._mail = mail;
     }
 
     public String getUsername() {
-        return username;
+        return _username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this._username = username;
     }
 
     public String getPassword() {
-        return password;
+        return _password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this._password = password;
     }
-    
-    
+
 }

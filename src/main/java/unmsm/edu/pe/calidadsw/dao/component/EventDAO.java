@@ -11,19 +11,19 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
 public class EventDAO {
-    private JDBCDataAccessClass jdbc;
+    private JDBCDataAccessClass _jdbc;
     private Connection _connection;
 
     public EventDAO() {
-        jdbc = new JDBCDataAccessClass();
+        _jdbc = new JDBCDataAccessClass();
     }
 
     public boolean create(Event t) {
         Statement statement = null;
+        Boolean result = true;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             // INSERT INTO `bd_practica_1`.`trabajador` (`id_trabajador`, `dni`, `nombres`,
             // `apellido_paterno`,
@@ -34,26 +34,27 @@ public class EventDAO {
                     + "title" + ",description" + ",date" + ",state" + ",idambient" + ",dni) " + "values ("
                     // + trabajador.getIdTrabajador()
 
-                    + "'" + t.getTitle() + "'" + ",'" + t.getDescription() + "'" + ",'"
-                    + String.valueOf(t.getDate()) + "'" + ",'" + t.getState() + "'" + ",'"
-                    + t.getIdambiente() + "'" + ",'" + t.getDni() + "')";
+                    + "'" + t.getTitle() + "'" + ",'" + t.getDescription() + "'" + ",'" + String.valueOf(t.getDate())
+                    + "'" + ",'" + t.getState() + "'" + ",'" + t.getIdAmbient() + "'" + ",'" + t.getDni() + "')";
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+            result = false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public boolean delete(Integer id) {
         Statement statement = null;
+        Boolean result = true;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
 
             String query = "delete from event where idevent = " + id;
@@ -61,12 +62,14 @@ public class EventDAO {
             System.out.println("Ejecutando=" + query);
             statement.execute(query);
 
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
-            return false;
+            result = false;
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
+        return result;
     }
 
     public List<Event> read() {
@@ -74,8 +77,7 @@ public class EventDAO {
         Statement statement = null;
 
         try {
-            jdbc.conectar();
-            _connection = jdbc.getJdbcConnection();
+            _connection = _jdbc.getJdbcConnection();
             statement = _connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select " + "idevent" + ",title" + ",description" + ",date"
                     + ",state" + ",idambient" + ",dni" + " from event");
@@ -83,20 +85,22 @@ public class EventDAO {
             while (resultSet.next()) {
 
                 Event event = new Event();
-                event.setIdevent(resultSet.getInt("idevent"));
+                event.setIdEvent(resultSet.getInt("idevent"));
                 event.setTitle(resultSet.getString("title"));
                 event.setDescription(resultSet.getString("description"));
                 event.setDate(resultSet.getString("date"));
                 event.setState(resultSet.getString("state"));
-                event.setIdambiente(resultSet.getInt("idambient"));
+                event.setIdAmbient(resultSet.getInt("idambient"));
                 event.setDni(resultSet.getInt("dni"));
 
                 consultaEventos.add(event);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Error crear la sentencia " + e.getMessage());
+        } finally {
+            _jdbc.closeJdbcConnection();
         }
+
         return consultaEventos;
     }
 }
