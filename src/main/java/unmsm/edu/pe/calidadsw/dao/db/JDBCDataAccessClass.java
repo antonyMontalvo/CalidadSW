@@ -49,9 +49,6 @@ public class JDBCDataAccessClass {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             // LOGGER.log(Level.SEVERE, "Error desconnect to DataBase");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            // LOGGER.log(Level.WARNING, "Error connect to DataBase");
         }
     }
 }

@@ -70,6 +70,7 @@
         <version>3.2.2</version>
       </plugin>
 
+      <!-- Tomcat embeded server -->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
@@ -78,6 +79,13 @@
           <port>8080</port>
           <path>/qualitysw</path>
         </configuration>
+      </plugin>
+
+      <!-- Sonarqube -->
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.6.0.1398</version>
       </plugin>
     </plugins>
   </build>

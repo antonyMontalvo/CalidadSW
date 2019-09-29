@@ -15,6 +15,3 @@ buildNumber.properties
 
 # Log file
 *.log
-
-# Config
-src/main/webapp/WEB-INF/web.xml
