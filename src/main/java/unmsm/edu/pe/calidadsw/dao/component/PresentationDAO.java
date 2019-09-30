@@ -10,27 +10,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
-import unmsm.edu.pe.calidadsw.dao.model.Event_has_exhibitor;
+import unmsm.edu.pe.calidadsw.dao.design.IPresentationDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
+import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
-public class Event_has_exhibitorDAO {
+public class PresentationDAO implements IPresentationDAO {
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("Event_has_exhibitorDAO");
     
-    public Event_has_exhibitorDAO() {
+    public PresentationDAO() {
         jdbc = new JDBCDataAccessClass();
     }
 
+    @Override
     public List<Exhibitor> consultaTodosExpositoresEvento(Integer id) {
         // Lista de asistentes a un determinado evento
         List<Exhibitor> exhibitors = new ArrayList<>();
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // ResultSet resultSet = statement
-        // .executeQuery("select " + " a.dni" + ",a.name" + ",a.lastname" +
-        // ",a.nationality" + ",a.specialty"
-        // + " from exhibitor a inner join event_has_assistant e on a.dni = e.dni where
-        // e.idevent = "
-        // + id + ";");
+        String sql = "{CALL sp_get_exhibitors_event(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -39,7 +35,7 @@ public class Event_has_exhibitorDAO {
                 while (resultSet.next()) {
                     Exhibitor exhibitor = new Exhibitor();
 
-                    exhibitor.setDni(resultSet.getInt("dni"));
+                    exhibitor.setDni(resultSet.getString("dni"));
                     exhibitor.setName(resultSet.getString("name"));
                     exhibitor.setLastname(resultSet.getString("lastname"));
                     exhibitor.setNationality(resultSet.getString("nationality"));
@@ -56,15 +52,10 @@ public class Event_has_exhibitorDAO {
 
     }
 
-    public boolean inscribirExpositorEvento(Event_has_exhibitor event_has_exhibitor) {
+    @Override
+    public boolean inscribirExpositorEvento(Presentation presentation) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // String query = "insert into event_has_exhibitor ("
-        // // + "id_trabajador"
-        // + "idevent" + ",dni) " + "values ("
-        // // + trabajador.getIdTrabajador()
-        // + "'" + event_has_exhibitor.getIdEvent() + "'" + ",'" +
-        // event_has_exhibitor.getDni() + "')";
+        String sql = "{CALL sp_insert_presentation(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {

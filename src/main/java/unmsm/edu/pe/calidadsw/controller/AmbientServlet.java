@@ -17,16 +17,7 @@ import unmsm.edu.pe.calidadsw.dao.component.AmbientDAO;
 public class AmbientServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
-    static AmbientDAO ambientDAO;
-
-    @Override
-    public void init() {
-        try {
-            ambientDAO = new AmbientDAO();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-    }
+    static AmbientDAO ambientDAO = new AmbientDAO();
 
     public AmbientServlet() {
         super();

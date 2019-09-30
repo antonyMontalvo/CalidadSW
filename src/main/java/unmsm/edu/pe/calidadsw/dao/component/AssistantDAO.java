@@ -10,9 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.design.IAssistantDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Assistant;
+import unmsm.edu.pe.calidadsw.dao.model.Client;
 
-public class AssistantDAO {
+public class AssistantDAO implements IAssistantDAO{// Client_has_Event
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("AssistantDAO");
 
@@ -20,20 +22,42 @@ public class AssistantDAO {
         jdbc = new JDBCDataAccessClass();
     }
 
-    public boolean create(Assistant t) {
+    @Override
+    public List<Client> consultaTodosParticipantesEvento(Integer id) {
+        // Lista de asistentes a un determinado evento
+        List<Client> assistants = new ArrayList<>();
+        String sql = "{CALL sp_get_assistants_event(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    Client assistant = new Client();
+
+                    assistant.setDni(resultSet.getString("dni"));
+                    assistant.setName(resultSet.getString("name"));
+                    assistant.setLastname(resultSet.getString("lastname"));
+                    assistant.setBirthdate(resultSet.getDate("age"));
+                    assistant.setTelephone(resultSet.getString("telephone"));
+                    assistant.setMail(resultSet.getString("mail"));
+                    assistant.setUsername(resultSet.getString("username"));
+                    assistant.setPassword(resultSet.getString("password"));
+
+                    assistants.add(assistant);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.getMessage());
+        }
+
+        return assistants;
+    }
+
+    @Override
+    public boolean inscribirParticipanteEvento(Assistant assistant) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // String query = "insert into assistant ("
-        // // + "id_trabajador"
-        // + "dni" + ",name" + ",lastname" + ",age" + ",telephone" + ",mail " +
-        // ",username " + ",password) "
-        // + "values ("
-        // // + trabajador.getIdTrabajador()
-        // + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname()
-        // + "'" + ",'"
-        // + t.getAge() + "'" + ",'" + t.getTelephone() + "'" + ",'" + t.getMail() + "'"
-        // + ",'"
-        // + t.getUsername() + "'" + ",'" + t.getPassword() + "')";
+        String sql = "{CALL sp_insert_assistant(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -56,37 +80,4 @@ public class AssistantDAO {
         return result;
     }
 
-    public List<Assistant> read() {
-        List<Assistant> assistants = new ArrayList<>();
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // ResultSet resultSet = statement.executeQuery("select " + "dni" + ",name" +
-        // ",lastname" + ",age"
-        // + ",telephone" + ",mail" + ",username" + ",password" + " from assistant");
-
-        try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
-
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    Assistant assistant = new Assistant();
-
-                    assistant.setDni(resultSet.getInt("dni"));
-                    assistant.setName(resultSet.getString("name"));
-                    assistant.setLastname(resultSet.getString("lastname"));
-                    assistant.setAge(resultSet.getInt("age"));
-                    assistant.setTelephone(resultSet.getString("telephone"));
-                    assistant.setMail(resultSet.getString("mail"));
-                    assistant.setUsername(resultSet.getString("username"));
-                    assistant.setPassword(resultSet.getString("password"));
-
-                    assistants.add(assistant);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
-        }
-
-        return assistants;
-    }
 }

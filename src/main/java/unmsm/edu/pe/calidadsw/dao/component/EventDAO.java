@@ -10,9 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
+import unmsm.edu.pe.calidadsw.dao.model.Administrator;
+import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
-public class EventDAO {
+public class EventDAO implements IEventDAO{
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("EventDAO");
 
@@ -20,19 +23,10 @@ public class EventDAO {
         jdbc = new JDBCDataAccessClass();
     }
 
+    @Override
     public boolean create(Event t) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // String query = "insert into event ("
-        // // + "id_trabajador"
-        // + "title" + ",description" + ",date" + ",state" + ",idambient" + ",dni) " +
-        // "values ("
-        // // + trabajador.getIdTrabajador()
-
-        // + "'" + t.getTitle() + "'" + ",'" + t.getDescription() + "'" + ",'" +
-        // String.valueOf(t.getDate())
-        // + "'" + ",'" + t.getState() + "'" + ",'" + t.getIdAmbient() + "'" + ",'" +
-        // t.getDni() + "')";
+        String sql = "{CALL sp_insert_event(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -55,10 +49,10 @@ public class EventDAO {
         return result;
     }
 
+    @Override
     public boolean delete(Integer id) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // String query = "delete from event where idevent = " + id;
+        String sql = "{CALL sp_delete_event(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -81,30 +75,33 @@ public class EventDAO {
         return result;
     }
 
+    @Override
     public List<Event> read() {
         List<Event> events = new ArrayList<>();
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // ResultSet resultSet = statement.executeQuery("select " + "idevent" + ",title"
-        // + ",description" + ",date"
-        // + ",state" + ",idambient" + ",dni" + " from event");
+        String sql = "{CALL sp_get_events()}";
 
         try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
+                CallableStatement callableStatement = connection.prepareCall(sql);
+                ResultSet resultSet = callableStatement.executeQuery();) {
 
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-                while (resultSet.next()) {
-                    Event event = new Event();
+            while (resultSet.next()) {
+                Event event = new Event();
+                Ambient ambient = new Ambient();
+                Administrator administrator = new Administrator();
 
-                    event.setIdEvent(resultSet.getInt("idevent"));
-                    event.setTitle(resultSet.getString("title"));
-                    event.setDescription(resultSet.getString("description"));
-                    event.setDate(resultSet.getString("date"));
-                    event.setState(resultSet.getString("state"));
-                    event.setIdAmbient(resultSet.getInt("idambient"));
-                    event.setDni(resultSet.getInt("dni"));
+                event.setIdEvent(resultSet.getInt("idevent"));
+                event.setTitle(resultSet.getString("title"));
+                event.setDescription(resultSet.getString("description"));
+                event.setDate(resultSet.getDate("date"));
+                event.setState(resultSet.getString("state"));
 
-                    events.add(event);
-                }
+                ambient.setIdAmbient(resultSet.getInt("idambient"));
+                event.setAmbient(ambient);
+
+                administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
+                event.setAdministrator(administrator);
+
+                events.add(event);
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.getMessage());

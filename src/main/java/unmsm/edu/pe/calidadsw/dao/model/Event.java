@@ -1,5 +1,7 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
+import java.util.Date;
+
 /**
  *
  * @author antony
@@ -8,21 +10,33 @@ public class Event {
     private int idEvent;
     private String title;
     private String description;
-    private String date;
+    private Date date;
     private String state;
-    private int idAmbient; // LLave foranea proveniente de la tabla ambiente.
-    private int dni; // Llave foranea proveniente de la tabla administrador.
+    private Ambient ambient; // LLave foranea proveniente de la tabla ambiente.
+    private Administrator administrator; // Llave foranea proveniente de la tabla administrador.
 
     public Event() {
     }
 
-    public Event(String title, String description, String date, String state, int idAmbient, int dni) {
+    public Event(String title, String description, Date date, String state, Ambient ambient,
+            Administrator administrator) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.state = state;
-        this.idAmbient = idAmbient;
-        this.dni = dni;
+        this.ambient = ambient;
+        this.administrator = administrator;
+    }
+
+    public Event(int idEvent, String title, String description, Date date, String state, Ambient ambient,
+            Administrator administrator) {
+        this.idEvent = idEvent;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.state = state;
+        this.ambient = ambient;
+        this.administrator = administrator;
     }
 
     public int getIdEvent() {
@@ -49,11 +63,11 @@ public class Event {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -65,20 +79,20 @@ public class Event {
         this.state = state;
     }
 
-    public int getIdAmbient() {
-        return idAmbient;
+    public Ambient getAmbient() {
+        return ambient;
     }
 
-    public void setIdAmbient(int idAmbient) {
-        this.idAmbient = idAmbient;
+    public void setAmbient(Ambient ambient) {
+        this.ambient = ambient;
     }
 
-    public int getDni() {
-        return dni;
+    public Administrator getAdministrator() {
+        return administrator;
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
     }
 
 }

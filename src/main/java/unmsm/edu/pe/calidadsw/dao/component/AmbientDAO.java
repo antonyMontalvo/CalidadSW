@@ -10,9 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
-public class AmbientDAO {
+public class AmbientDAO implements IAmbientDAO{
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("AmbientDAO");
 
@@ -20,18 +21,19 @@ public class AmbientDAO {
         jdbc = new JDBCDataAccessClass();
     }
 
-    public boolean create(Ambient t) {
+    @Override
+    public boolean create(Ambient ambient) {
         Boolean result = true;
         String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            callableStatement.setString(1, t.getName());
-            callableStatement.setString(2, t.getType());
-            callableStatement.setString(3, t.getFloor());
-            callableStatement.setInt(4, t.getCapacity());
-            callableStatement.setString(5, t.getDescription());
+            callableStatement.setString(1, ambient.getName());
+            callableStatement.setString(2, ambient.getType());
+            callableStatement.setString(3, ambient.getFloor());
+            callableStatement.setInt(4, ambient.getCapacity());
+            callableStatement.setString(5, ambient.getDescription());
 
             try (ResultSet resulSet = callableStatement.executeQuery();) {
                 if (resulSet.next()) {
@@ -52,9 +54,10 @@ public class AmbientDAO {
         return result;
     }
 
+    @Override
     public boolean delete(Integer id) {
         Boolean result = true;
-        String sql = "delete from ambient where idambient = " + id;
+        String sql = "{CALL sp_delete_ambient(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -79,32 +82,28 @@ public class AmbientDAO {
         return result;
     }
 
+    @Override
     public List<Ambient> read() {
         List<Ambient> ambients = new ArrayList<>();
-        String sql = "{CALL sp_get_ambients(?,?,?,?,?)}";
+        String sql = "{CALL sp_get_ambients()}";
 
-        try {
-            try (Connection connection = jdbc.getJdbcConnection();
-                    CallableStatement callableStatement = connection.prepareCall(sql);) {
-                // ResultSet resultSet = statement.executesql("select " + "idambient" + ",name"
-                // + ",type" + ",floor"
-                // + ",capacity" + ",description" + " from ambient");
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);
+                ResultSet resultSet = callableStatement.executeQuery();) {
 
-                try (ResultSet resultSet = callableStatement.executeQuery();) {
-                    while (resultSet.next()) {
-                        Ambient ambient = new Ambient();
+            while (resultSet.next()) {
+                Ambient ambient = new Ambient();
 
-                        ambient.setIdAmbient(resultSet.getInt("idambient"));
-                        ambient.setName(resultSet.getString("name"));
-                        ambient.setType(resultSet.getString("type"));
-                        ambient.setFloor(resultSet.getString("floor"));
-                        ambient.setCapacity(resultSet.getInt("capacity"));
-                        ambient.setDescription(resultSet.getString("description"));
+                ambient.setIdAmbient(resultSet.getInt("idambient"));
+                ambient.setName(resultSet.getString("name"));
+                ambient.setType(resultSet.getString("type"));
+                ambient.setFloor(resultSet.getString("floor"));
+                ambient.setCapacity(resultSet.getInt("capacity"));
+                ambient.setDescription(resultSet.getString("description"));
 
-                        ambients.add(ambient);
-                    }
-                }
+                ambients.add(ambient);
             }
+
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.getMessage());
         }

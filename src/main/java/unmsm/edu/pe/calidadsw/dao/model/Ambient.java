@@ -11,16 +11,18 @@ public class Ambient {
     private String floor;
     private int capacity;
     private String description;
+    private String state;
 
     public Ambient() {
     }
 
-    public Ambient(String name, String type, String floor, int capacity, String description) {
+    public Ambient(String name, String type, String floor, int capacity, String description, String state) {
         this.name = name;
         this.type = type;
         this.floor = floor;
         this.capacity = capacity;
         this.description = description;
+        this.state = state;
     }
 
     public int getIdAmbient() {
@@ -69,6 +71,14 @@ public class Ambient {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
 }

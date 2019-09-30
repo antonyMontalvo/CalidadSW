@@ -10,9 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
+import unmsm.edu.pe.calidadsw.dao.design.IExhibitorDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
-public class ExhibitorDAO {
+public class ExhibitorDAO implements IExhibitorDAO {
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("ExhibitorDAO");
 
@@ -20,18 +21,10 @@ public class ExhibitorDAO {
         jdbc = new JDBCDataAccessClass();
     }
 
+    @Override
     public boolean create(Exhibitor t) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-
-        // String query = "insert into exhibitor ("
-        // // + "id_trabajador"
-        // + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty) " + "values
-        // ("
-        // // + trabajador.getIdTrabajador()
-        // + "'" + t.getDni() + "'" + ",'" + t.getName() + "'" + ",'" + t.getLastname()
-        // + "'" + ",'"
-        // + t.getNationality() + "'" + ",'" + t.getSpecialty() + "')";
+        String sql = "{CALL sp_insert_exhibitor(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -54,12 +47,10 @@ public class ExhibitorDAO {
         return result;
     }
 
+    @Override
     public List<Exhibitor> read() {
         List<Exhibitor> exhibitors = new ArrayList<>();
-        String sql = "{CALL sp_insert_ambient(?,?,?,?,?)}";
-        // ResultSet resultSet = statement.executeQuery(
-        // "select " + "dni" + ",name" + ",lastname" + ",nationality" + ",specialty" + "
-        // from exhibitor");
+        String sql = "{CALL sp_get_exhibitors()}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -68,7 +59,7 @@ public class ExhibitorDAO {
                 while (resultSet.next()) {
                     Exhibitor exhibitor = new Exhibitor();
 
-                    exhibitor.setDni(resultSet.getInt("dni"));
+                    exhibitor.setDni(resultSet.getString("dni"));
                     exhibitor.setName(resultSet.getString("name"));
                     exhibitor.setLastname(resultSet.getString("lastname"));
                     exhibitor.setNationality(resultSet.getString("nacionality"));

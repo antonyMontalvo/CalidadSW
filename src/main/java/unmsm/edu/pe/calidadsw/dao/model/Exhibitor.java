@@ -1,49 +1,40 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
+import java.util.Date;
+
 /**
  *
  * @author antony
  */
-public class Exhibitor {
-    private int dni;
-    private String name;
-    private String lastname;
+public class Exhibitor extends User {
+    private int idExhibitor;
     private String nationality;
     private String specialty;
 
     public Exhibitor() {
     }
 
-    public Exhibitor(int dni, String name, String lastname, String nationality, String specialty) {
-        this.dni = dni;
-        this.name = name;
-        this.lastname = lastname;
+    public Exhibitor(String dni, String name, String lastname, Date birthdate, String nationality, String specialty) {
+        super(dni, name, lastname, birthdate);
         this.nationality = nationality;
         this.specialty = specialty;
     }
 
-    public int getDni() {
-        return dni;
+    public Exhibitor(String dni, String name, String lastname, Date birthdate, int idExhibitor, String nationality,
+            String specialty) {
+        super(dni, name, lastname, birthdate);
+        this.idExhibitor = idExhibitor;
+        this.nationality = nationality;
+        this.specialty = specialty;
+
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
+    public int getIdExhibitor() {
+        return idExhibitor;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setIdExhibitor(int idExhibitor) {
+        this.idExhibitor = idExhibitor;
     }
 
     public String getNationality() {

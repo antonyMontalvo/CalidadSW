@@ -1,56 +1,39 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
+import java.util.Date;
+
 /**
  *
  * @author antony
  */
-public class Administrator {
-    private int dni;
-    private String name;
-    private String lastname;
-    private int age;
+public class Administrator extends User {
+    private int idAdministrator;
     private String username;
     private String password;
 
-    public Administrator(int dni, String name, String lastname, int age, String username, String password) {
-        this.dni = dni;
-        this.name = name;
-        this.lastname = lastname;
-        this.age = age;
+    public Administrator() {
+    }
+
+    public Administrator(String dni, String name, String lastname, Date birthdate, String username, String password) {
+        super(dni, name, lastname, birthdate);
         this.username = username;
         this.password = password;
     }
 
-    public int getDni() {
-        return dni;
+    public Administrator(String dni, String name, String lastname, Date birthdate, int idAdministrator, String username,
+            String password) {
+        super(dni, name, lastname, birthdate);
+        this.idAdministrator = idAdministrator;
+        this.username = username;
+        this.password = password;
     }
 
-    public void setDni(int dni) {
-        this.dni = dni;
+    public int getIdAdministrator() {
+        return idAdministrator;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setIdAdministrator(int idAdministrator) {
+        this.idAdministrator = idAdministrator;
     }
 
     public String getUsername() {
