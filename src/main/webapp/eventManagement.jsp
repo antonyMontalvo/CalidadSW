@@ -20,12 +20,36 @@
             <jsp:attribute name="content">
                 <div class="container">
                     <br>
-                    <div class="row ml-4 mr-4">
+                    <br>
 
-                        <h2>Lista de eventos</h2>
-                        <br>
-                        <br>
-                        <br>
+                    <h2 class="ml-4">Lista de eventos</h2>
+                    <br>
+
+                    <form method="post" action="" class="ml-4 mr-4">
+
+                        <div class="form-row align-items-center">
+                            
+                            <div class="col-4">
+                                <label for="startDate">Fecha inicio</label>
+                                <input class="form-control mb-2" type="date" value="2011-08-19" id="startDate" name="startDate">
+                            </div>
+
+                            <div class="col-4">
+                                <label for="endDate">Fecha fin</label>
+                                <input class="form-control mb-2" type="date" value="2011-08-19" id="endDate" name="endDate">
+                            </div> 
+
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary mt-4">Buscar</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <br>
+                    <br>
+
+                    <div class="row ml-4 mr-4">
 
                         <table class="table">
                             <thead class="thead-dark">
@@ -50,17 +74,17 @@
                                     <td class="text-center">2</td>
                                     <td class="text-center">5</td>
                                     <td class="text-center">
-                                        <a class="btn btn-warning" href="#">Edit</a>
-                                        <a class="btn btn-danger" href="#">Remove</a>
+                                        <a class="btn btn-info" href="eventAttendant.jsp">Info</a>
+                                        <a class="btn btn-warning" href="#">Editar</a>
+                                        <a class="btn btn-dark" href="#">Publicar</a>
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
-
+                        </table>    
                     </div>
+                    
                 </div>
                 <br>
-
 
             </jsp:attribute>
         </t:sidebar>
