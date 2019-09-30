@@ -20,10 +20,11 @@ public class JDBCDataAccessClass {
 
     public JDBCDataAccessClass() {
         int contador = 0;
-        String datos[] = new String[3];
-
+        
         try (BufferedReader br = new BufferedReader(new FileReader("server.txt"));) {
+            String datos[] = new String[3];
             String linea = br.readLine();
+
             while (linea != null && contador < 3) {
                 datos[contador] = linea;
                 linea = br.readLine();
@@ -42,15 +43,11 @@ public class JDBCDataAccessClass {
         Connection jdbcConnection = null;
 
         try {
-            if (jdbcConnection == null || jdbcConnection.isClosed()) {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-            }
+            jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
         }
+
         return jdbcConnection;
     }
 }

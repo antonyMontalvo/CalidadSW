@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IClientDAO;
-import unmsm.edu.pe.calidadsw.dao.model.Client;;
+import unmsm.edu.pe.calidadsw.dao.model.Client;
 
 public class ClientDAO implements IClientDAO{
     private JDBCDataAccessClass jdbc;

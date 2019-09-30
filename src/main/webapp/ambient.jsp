@@ -21,7 +21,7 @@
         </tr>
     </table>
 
-    <table border="1" width="100%">
+    <table border="1">
         <thead>
             <tr>
                 <td>Filial</td>
