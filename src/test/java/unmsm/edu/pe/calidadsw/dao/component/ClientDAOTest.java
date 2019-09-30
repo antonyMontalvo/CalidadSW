@@ -11,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Date;
+
 import unmsm.edu.pe.calidadsw.dao.model.Client;
 
 /**
@@ -18,22 +21,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Client;
  * @author Antony
  */
 public class ClientDAOTest {
-    
+
     public ClientDAOTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -44,13 +47,12 @@ public class ClientDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Client client = null;
+        Client client = new Client("72410501", "Antony", "Montalvo", new Date(1998, 11, 16), "933310680",
+                "antonis162010@gmail.com", "antonis1620", "123456789");
         ClientDAO instance = new ClientDAO();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.create(client);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

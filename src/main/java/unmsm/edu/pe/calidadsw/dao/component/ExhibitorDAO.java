@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,13 +23,21 @@ public class ExhibitorDAO implements IExhibitorDAO {
     }
 
     @Override
-    public boolean create(Exhibitor t) {
+    public boolean create(Exhibitor exhibitor) {
         Boolean result = true;
         String sql = "{CALL sp_insert_exhibitor(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
+            callableStatement.setString(1, exhibitor.getName());
+            callableStatement.setString(2, exhibitor.getLastname());
+            callableStatement.setString(3, exhibitor.getDni());
 
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            callableStatement.setString(4, formatter.format(exhibitor.getBirthdate()));
+            callableStatement.setString(5, exhibitor.getNationality());
+            callableStatement.setString(6, exhibitor.getSpecialty());
+            
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");

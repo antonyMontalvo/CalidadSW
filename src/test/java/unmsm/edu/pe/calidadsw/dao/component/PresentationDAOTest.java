@@ -21,22 +21,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Presentation;
  * @author Antony
  */
 public class PresentationDAOTest {
-    
+
     public PresentationDAOTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -47,13 +47,11 @@ public class PresentationDAOTest {
     @Test
     public void testReadExhibitorsEvent() {
         System.out.println("readExhibitorsEvent");
-        Event event = null;
+        Event event = new Event();
+        event.setIdEvent(1);
         PresentationDAO instance = new PresentationDAO();
-        List<Exhibitor> expResult = null;
         List<Exhibitor> result = instance.readExhibitorsEvent(event);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, result);
     }
 
     /**
@@ -62,13 +60,16 @@ public class PresentationDAOTest {
     @Test
     public void testRegisterPresentation() {
         System.out.println("registerPresentation");
-        Presentation presentation = null;
+        Event event = new Event();
+        event.setIdEvent(1);
+        Exhibitor exhibitor = new Exhibitor();
+        exhibitor.setIdExhibitor(1);
+        Presentation presentation = new Presentation(15, 17, event, exhibitor);
+        
         PresentationDAO instance = new PresentationDAO();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.registerPresentation(presentation);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
 }

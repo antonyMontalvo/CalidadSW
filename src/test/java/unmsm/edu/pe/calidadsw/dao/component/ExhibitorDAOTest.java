@@ -5,6 +5,7 @@
  */
 package unmsm.edu.pe.calidadsw.dao.component;
 
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -19,22 +20,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
  * @author Antony
  */
 public class ExhibitorDAOTest {
-    
+
     public ExhibitorDAOTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -45,13 +46,12 @@ public class ExhibitorDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Exhibitor t = null;
+        Exhibitor exhibitor = new Exhibitor("72410502", "Christian", "Garcia", new Date(1970, 9, 31), "Perú",
+                "DataBase administrator");
         ExhibitorDAO instance = new ExhibitorDAO();
-        boolean expResult = false;
-        boolean result = instance.create(t);
+        boolean expResult = true;
+        boolean result = instance.create(exhibitor);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -61,11 +61,8 @@ public class ExhibitorDAOTest {
     public void testRead() {
         System.out.println("read");
         ExhibitorDAO instance = new ExhibitorDAO();
-        List<Exhibitor> expResult = null;
         List<Exhibitor> result = instance.read();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, result);
     }
-    
+
 }

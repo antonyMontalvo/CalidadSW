@@ -60,9 +60,14 @@ public class AssistantDAOTest {
     @Test
     public void testRegisterParticipant() {
         System.out.println("registerParticipant");
-        Assistant assistant = new Assistant();
+        Client client = new Client();
+        client.setIdClient(1);
+        Event event = new Event();
+        event.setIdEvent(1);
+        Assistant assistant = new Assistant(client, event);
+        
         AssistantDAO instance = new AssistantDAO();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.registerParticipant(assistant);
         assertEquals(expResult, result);
     }

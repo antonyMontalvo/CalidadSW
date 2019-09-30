@@ -19,22 +19,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Ambient;
  * @author Antony
  */
 public class AmbientDAOTest {
-    
+
     public AmbientDAOTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -45,7 +45,8 @@ public class AmbientDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Ambient ambient = new Ambient("test", "type", "floor", 500, "description", "state");
+        Ambient ambient = new Ambient("Auditorio San Marcos", "Cerrado", "Primer", 500, "Central frente al rectorado",
+                "Creado");
         AmbientDAO instance = new AmbientDAO();
         boolean expResult = true;
         boolean result = instance.create(ambient);
@@ -58,7 +59,7 @@ public class AmbientDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        Integer id = 12;
+        Integer id = 1;
         AmbientDAO instance = new AmbientDAO();
         boolean expResult = true;
         boolean result = instance.delete(id);
@@ -75,5 +76,5 @@ public class AmbientDAOTest {
         List<Ambient> result = instance.read();
         assertEquals(result, result);
     }
-    
+
 }

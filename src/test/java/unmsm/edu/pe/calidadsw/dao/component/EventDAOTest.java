@@ -5,6 +5,7 @@
  */
 package unmsm.edu.pe.calidadsw.dao.component;
 
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -12,6 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import unmsm.edu.pe.calidadsw.dao.model.Administrator;
+import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
 /**
@@ -19,22 +23,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
  * @author Antony
  */
 public class EventDAOTest {
-    
+
     public EventDAOTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -45,13 +49,17 @@ public class EventDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Event event = null;
+        Ambient ambient = new Ambient();
+        ambient.setIdAmbient(1);
+        Administrator administrator = new Administrator();
+        administrator.setIdAdministrator(1);
+        Event event = new Event("Docker conference", "La primera conferencia del año.", new Date(2019, 9, 31), "creado",
+                ambient, administrator);
+
         EventDAO instance = new EventDAO();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.create(event);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,13 +68,11 @@ public class EventDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        Integer id = null;
+        Integer id = 1;
         EventDAO instance = new EventDAO();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.delete(id);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -76,11 +82,8 @@ public class EventDAOTest {
     public void testRead() {
         System.out.println("read");
         EventDAO instance = new EventDAO();
-        List<Event> expResult = null;
         List<Event> result = instance.read();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, result);
     }
-    
+
 }
