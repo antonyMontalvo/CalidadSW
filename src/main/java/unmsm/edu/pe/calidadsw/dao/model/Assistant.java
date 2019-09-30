@@ -4,10 +4,16 @@ package unmsm.edu.pe.calidadsw.dao.model;
  *
  * @author antony
  */
-public class Assistant { // Client_has_Event
+public class Assistant {
+    /**
+     * Client_has_Event
+     */
     private int idAssistant;
     private Client client;
     private Event event;
+
+    public Assistant() {
+    }
 
     public Assistant(Client client, Event event) {
         this.client = client;

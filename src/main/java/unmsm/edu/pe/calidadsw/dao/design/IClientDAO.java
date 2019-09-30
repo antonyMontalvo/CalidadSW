@@ -8,5 +8,10 @@ import unmsm.edu.pe.calidadsw.dao.model.Client;
  */
 public interface IClientDAO {
 
+    /**
+     * 
+     * @param client
+     * @return
+     */
     public abstract boolean create(Client client);
 }

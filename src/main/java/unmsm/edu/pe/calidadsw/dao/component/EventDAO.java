@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,7 +16,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
-public class EventDAO implements IEventDAO{
+public class EventDAO implements IEventDAO {
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("EventDAO");
 
@@ -24,12 +25,21 @@ public class EventDAO implements IEventDAO{
     }
 
     @Override
-    public boolean create(Event t) {
+    public boolean create(Event event) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_event(?,?,?,?,?)}";
+        String sql = "{CALL sp_insert_event(?,?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setString(1, event.getTitle());
+            callableStatement.setString(2, event.getDescription());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            callableStatement.setString(3, formatter.format(event.getDate()));
+            callableStatement.setString(4, event.getState());
+            callableStatement.setInt(5, event.getAmbient().getIdAmbient());
+            callableStatement.setInt(6, event.getAdministrator().getIdAdministrator());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
@@ -38,12 +48,14 @@ public class EventDAO implements IEventDAO{
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Event create succesfully.");
                     }
                 }
             }
         } catch (SQLException e) {
             result = false;
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return result;
@@ -57,6 +69,8 @@ public class EventDAO implements IEventDAO{
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
+            callableStatement.setInt(1, id);
+
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");
@@ -64,12 +78,14 @@ public class EventDAO implements IEventDAO{
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure delete.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Event delete succesfully.");
                     }
                 }
             }
         } catch (SQLException e) {
             result = false;
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return result;
@@ -103,8 +119,10 @@ public class EventDAO implements IEventDAO{
 
                 events.add(event);
             }
+            LOGGER.log(Level.INFO, "Events.");
+
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return events;

@@ -10,7 +10,16 @@ import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
  */
 public interface IExhibitorDAO {
 
+    /**
+     * 
+     * @param exhibitor
+     * @return
+     */
     public abstract boolean create(Exhibitor exhibitor);
 
+    /**
+     * 
+     * @return
+     */
     public abstract List<Exhibitor> read();
 }

@@ -3,8 +3,10 @@ package unmsm.edu.pe.calidadsw.dao.model;
 /**
  * Presentation
  */
-public class Presentation { // Event_has_exhibitor
-
+public class Presentation {
+    /**
+     * Event_has_exhibitor
+     */
     private int idPresentation;
     private int startTime;
     private int endTime;

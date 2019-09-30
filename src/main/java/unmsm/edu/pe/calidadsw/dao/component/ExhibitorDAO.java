@@ -36,12 +36,14 @@ public class ExhibitorDAO implements IExhibitorDAO {
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Exhibitor create succesfully.");
                     }
                 }
             }
         } catch (SQLException e) {
             result = false;
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return result;
@@ -53,23 +55,25 @@ public class ExhibitorDAO implements IExhibitorDAO {
         String sql = "{CALL sp_get_exhibitors()}";
 
         try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
+                CallableStatement callableStatement = connection.prepareCall(sql);
+                ResultSet resultSet = callableStatement.executeQuery();) {
 
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-                while (resultSet.next()) {
-                    Exhibitor exhibitor = new Exhibitor();
+            while (resultSet.next()) {
+                Exhibitor exhibitor = new Exhibitor();
 
-                    exhibitor.setDni(resultSet.getString("dni"));
-                    exhibitor.setName(resultSet.getString("name"));
-                    exhibitor.setLastname(resultSet.getString("lastname"));
-                    exhibitor.setNationality(resultSet.getString("nacionality"));
-                    exhibitor.setSpecialty(resultSet.getString("specialty"));
+                exhibitor.setIdExhibitor(resultSet.getInt("idexhibitor"));
+                exhibitor.setDni(resultSet.getString("dni"));
+                exhibitor.setName(resultSet.getString("name"));
+                exhibitor.setLastname(resultSet.getString("lastname"));
+                exhibitor.setNationality(resultSet.getString("nacionality"));
+                exhibitor.setSpecialty(resultSet.getString("specialty"));
 
-                    exhibitors.add(exhibitor);
-                }
+                exhibitors.add(exhibitor);
             }
+            LOGGER.log(Level.INFO, "Exhibitors.");
+
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return exhibitors;

@@ -12,7 +12,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <spring.version>5.1.0.RELEASE</spring.version>
   </properties>
 
   <dependencies>
@@ -53,6 +52,7 @@
       <version>1.2</version>
     </dependency>
   </dependencies>
+
   <build>
     <finalName>CalidadSW</finalName>
     <plugins>
@@ -81,6 +81,28 @@
         </configuration>
       </plugin>
 
+      <!-- Jacoco -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <!-- attached to Maven test phase -->
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
       <!-- Sonarqube -->
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>

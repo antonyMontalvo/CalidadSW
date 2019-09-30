@@ -11,25 +11,30 @@ import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IPresentationDAO;
+import unmsm.edu.pe.calidadsw.dao.model.Event;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
 public class PresentationDAO implements IPresentationDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("Event_has_exhibitorDAO");
-    
+    private static final Logger LOGGER = Logger.getLogger("PresentationDAO");
+
     public PresentationDAO() {
         jdbc = new JDBCDataAccessClass();
     }
 
     @Override
-    public List<Exhibitor> consultaTodosExpositoresEvento(Integer id) {
-        // Lista de asistentes a un determinado evento
+    public List<Exhibitor> readExhibitorsEvent(Event event) {
+        /**
+         * Lista de asistentes a un determinado evento
+         */
         List<Exhibitor> exhibitors = new ArrayList<>();
         String sql = "{CALL sp_get_exhibitors_event(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, event.getIdEvent());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 while (resultSet.next()) {
@@ -43,6 +48,8 @@ public class PresentationDAO implements IPresentationDAO {
 
                     exhibitors.add(exhibitor);
                 }
+                LOGGER.log(Level.INFO, "Presentations.");
+
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.getMessage());
@@ -53,12 +60,17 @@ public class PresentationDAO implements IPresentationDAO {
     }
 
     @Override
-    public boolean inscribirExpositorEvento(Presentation presentation) {
+    public boolean registerPresentation(Presentation presentation) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_presentation(?,?,?,?,?)}";
+        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, presentation.getStartTime());
+            callableStatement.setInt(2, presentation.getEndTime());
+            callableStatement.setInt(3, presentation.getExhibitor().getIdExhibitor());
+            callableStatement.setInt(4, presentation.getEvent().getIdEvent());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
@@ -67,6 +79,8 @@ public class PresentationDAO implements IPresentationDAO {
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Exhibitor create succesfully.");
                     }
                 }
             }

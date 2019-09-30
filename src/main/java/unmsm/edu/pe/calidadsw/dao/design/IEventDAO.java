@@ -10,9 +10,23 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
  */
 public interface IEventDAO {
 
+    /**
+     * 
+     * @param event
+     * @return
+     */
     public abstract boolean create(Event event);
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public abstract boolean delete(Integer id);
 
+    /**
+     * 
+     * @return
+     */
     public abstract List<Event> read();
 }

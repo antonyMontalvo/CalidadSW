@@ -9,6 +9,7 @@ import java.util.List;
 
 import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 import unmsm.edu.pe.calidadsw.dao.model.Client;
+import unmsm.edu.pe.calidadsw.dao.model.Event;
 
 /**
  *
@@ -16,7 +17,17 @@ import unmsm.edu.pe.calidadsw.dao.model.Client;
  */
 public interface IAssistantDAO {
 
-    public abstract List<Client> consultaTodosParticipantesEvento(Integer id);
+    /**
+     * 
+     * @param event
+     * @return
+     */
+    public abstract List<Client> readAssistantsEvent(Event event);
 
-    public abstract boolean inscribirParticipanteEvento(Assistant assistant);
+    /**
+     * 
+     * @param assistant
+     * @return
+     */
+    public abstract boolean registerParticipant(Assistant assistant);
 }

@@ -13,7 +13,7 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
-public class AmbientDAO implements IAmbientDAO{
+public class AmbientDAO implements IAmbientDAO {
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("AmbientDAO");
 
@@ -42,13 +42,15 @@ public class AmbientDAO implements IAmbientDAO{
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.SEVERE, "Error to execute procedure create.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Ambient create succesfully.");
                     }
                 }
             }
 
         } catch (SQLException e) {
             result = false;
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return result;
@@ -71,12 +73,14 @@ public class AmbientDAO implements IAmbientDAO{
                     if (response == 0) {
                         result = false;
                         LOGGER.log(Level.SEVERE, "Error to execute procedure delete.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Ambient delete succesfully.");
                     }
                 }
             }
         } catch (SQLException e) {
             result = false;
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return result;
@@ -103,9 +107,10 @@ public class AmbientDAO implements IAmbientDAO{
 
                 ambients.add(ambient);
             }
+            LOGGER.log(Level.INFO, "Ambients.");
 
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
         return ambients;
