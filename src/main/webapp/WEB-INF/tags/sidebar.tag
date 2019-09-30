@@ -9,12 +9,11 @@
     <div class="bg-dark border-right border-dark" id="sidebar-wrapper">
         <div class="sidebar-heading border-right border-dark"><font color="white">SIGCE</font></div>
         <div class="list-group list-group-flush">
-            <a href="index.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Inicio</font></a>
+            <a href="eventStartPage.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Inicio</font></a>
             <a href="eventCreation.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Crear evento</font></a>
             <a href="eventManagement.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Gestión de eventos</font></a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
+            <a href="eventEnviroment.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
             <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Reportes</font></a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Status</font></a>
         </div>
     </div>
     <!-- /#sidebar-wrapper -->

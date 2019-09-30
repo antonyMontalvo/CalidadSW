@@ -1,11 +1,12 @@
 <%-- 
-    Document   : view1
-    Created on : 29/09/2019, 01:02:30 AM
+    Document   : eventCreationS2
+    Created on : 29/09/2019, 04:04:12 PM
     Author     : Usuario
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,11 +15,9 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
         <title>SIGCE</title>
     </head>
-
     <body>
         <t:sidebar>
-            <jsp:attribute name="content"> <!--Bloque de contenido, definido en el tag sidebar.tag-->
-
+            <jsp:attribute name="content">
                 <div class="container-fluid">
                     <br>
                     <div class="row">
@@ -31,41 +30,20 @@
                                     Después de crear un evento, no podrás cambiar la configuración de este.
 
                                     <form method="post" action="">
-
+                                        
                                         <div class="form-group">
                                             <br>
-                                            <label for="title">Título</label>
-                                            <input type="text" class="form-control" id="title" name="title">
-                                            <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y claro.</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="description">Descripción</label>
-                                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
-                                            <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de que trata el evento.</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="expositor">Expositor</label>
-                                            <select id="expositor" name="expositor" class="form-control">
+                                            <label for="environment">Ambiente</label>
+                                            <select id="environment" name="environment" class="form-control">
                                                 <option selected>Elige...</option>
                                                 <option>...</option>
                                             </select>
-                                            <small id="expositorHelp" class="form-text text-muted">Persona que presentará la ponencia durante el evento.</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="date">Fecha y hora</label>
-                                            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="date" name="date">
-                                            <small id="dateHelp" class="form-text text-muted">Día y hora en la cual se desarrollará el evento.</small> 
+                                            <small id="enviromentHelp" class="form-text text-muted">Lugar donde se realizará el evento.</small>
                                         </div>
 
                                         <br>
 
-                                        <button type="submit" class="btn btn-primary" formaction="eventCreationS2.jsp">Siguiente</button>  
+                                        <button type="submit" class="btn btn-primary">Crear</button>  
 
                                     </form>
                                 </div>
@@ -91,10 +69,7 @@
                     </div>
 
                 </div>
-
             </jsp:attribute>
-        </t:sidebar>    
+        </t:sidebar>
     </body>
-
-</body>
 </html>
