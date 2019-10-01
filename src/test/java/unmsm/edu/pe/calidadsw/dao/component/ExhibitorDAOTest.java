@@ -46,7 +46,7 @@ public class ExhibitorDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Exhibitor exhibitor = new Exhibitor("72410512", "Christian", "Garcia", new Date(70, 8, 31), "Perú",
+        Exhibitor exhibitor = new Exhibitor("72410514", "Christian", "Garcia", new Date(70, 8, 31), "Perú",
                 "DataBase administrator");
         ExhibitorDAO instance = new ExhibitorDAO();
         boolean expResult = true;

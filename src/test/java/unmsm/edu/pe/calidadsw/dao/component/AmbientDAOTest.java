@@ -59,7 +59,7 @@ public class AmbientDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        Integer id = 6;
+        Integer id = 7;
         AmbientDAO instance = new AmbientDAO();
         boolean expResult = true;
         boolean result = instance.delete(id);

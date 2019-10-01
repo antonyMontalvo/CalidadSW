@@ -47,7 +47,7 @@ public class ClientDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Client client = new Client("72410511", "Antony", "Montalvo", new Date(98, 10, 16));
+        Client client = new Client("72410513", "Antony", "Montalvo", new Date(98, 10, 16));
         client.setTelephone("933310680");
         client.setMail("antonis162010@gmail.com");
         client.setUsername("antonis1620");

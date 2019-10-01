@@ -13,6 +13,9 @@ public class Presentation {
     private Event event;
     private Exhibitor exhibitor;
 
+    public Presentation() {
+    }
+
     public Presentation(int startTime, int endTime, Event event, Exhibitor exhibitor) {
         this.startTime = startTime;
         this.endTime = endTime;

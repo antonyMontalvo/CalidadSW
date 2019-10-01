@@ -59,6 +59,7 @@ public class AdministratorTest {
         int idAdministrator = 0;
         Administrator instance = new Administrator();
         instance.setIdAdministrator(idAdministrator);
+        assertEquals(idAdministrator, instance.getIdAdministrator());
     }
 
     /**
@@ -83,6 +84,7 @@ public class AdministratorTest {
         String username = "";
         Administrator instance = new Administrator();
         instance.setUsername(username);
+        assertEquals(username, instance.getUsername());
     }
 
     /**
@@ -107,6 +109,7 @@ public class AdministratorTest {
         String password = "";
         Administrator instance = new Administrator();
         instance.setPassword(password);
+        assertEquals(password, instance.getPassword());
     }
     
 }

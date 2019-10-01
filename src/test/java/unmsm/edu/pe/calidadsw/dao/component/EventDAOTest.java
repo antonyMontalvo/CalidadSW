@@ -68,7 +68,7 @@ public class EventDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        Integer id = 7;
+        Integer id = 8;
         EventDAO instance = new EventDAO();
         boolean expResult = true;
         boolean result = instance.delete(id);
