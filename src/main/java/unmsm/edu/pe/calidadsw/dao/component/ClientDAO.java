@@ -27,9 +27,9 @@ public class ClientDAO implements IClientDAO {
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
-            callableStatement.setString(1, client.getName());
-            callableStatement.setString(2, client.getLastname());
-            callableStatement.setString(3, client.getDni());
+            callableStatement.setString(1, client.getDni());
+            callableStatement.setString(2, client.getName());
+            callableStatement.setString(3, client.getLastname());
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             callableStatement.setString(4, formatter.format(client.getBirthdate()));

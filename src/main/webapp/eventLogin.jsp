@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/custom-login.css" />
         <title>SIGCE</title>
     </head>
-    <body background="${pageContext.request.contextPath}/webapp/lib/img/login-background.jpg">
+    <body>
         <br>
         <br>
         <br>

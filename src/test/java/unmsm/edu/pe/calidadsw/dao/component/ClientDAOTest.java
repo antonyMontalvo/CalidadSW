@@ -47,8 +47,11 @@ public class ClientDAOTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Client client = new Client("72410501", "Antony", "Montalvo", new Date(1998, 11, 16), "933310680",
-                "antonis162010@gmail.com", "antonis1620", "123456789");
+        Client client = new Client("72410511", "Antony", "Montalvo", new Date(98, 10, 16));
+        client.setTelephone("933310680");
+        client.setMail("antonis162010@gmail.com");
+        client.setUsername("antonis1620");
+        client.setPassword("123456789");
         ClientDAO instance = new ClientDAO();
         boolean expResult = true;
         boolean result = instance.create(client);

@@ -53,7 +53,7 @@ public class EventDAOTest {
         ambient.setIdAmbient(1);
         Administrator administrator = new Administrator();
         administrator.setIdAdministrator(1);
-        Event event = new Event("Docker conference", "La primera conferencia del año.", new Date(2019, 9, 31), "creado",
+        Event event = new Event("Docker conference", "La primera conferencia del año.", new Date(119, 8, 31), "creado",
                 ambient, administrator);
 
         EventDAO instance = new EventDAO();
@@ -68,7 +68,7 @@ public class EventDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        Integer id = 1;
+        Integer id = 7;
         EventDAO instance = new EventDAO();
         boolean expResult = true;
         boolean result = instance.delete(id);

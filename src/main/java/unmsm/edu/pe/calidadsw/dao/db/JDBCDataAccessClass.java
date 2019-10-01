@@ -20,9 +20,9 @@ public class JDBCDataAccessClass {
 
     public JDBCDataAccessClass() {
         int contador = 0;
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader("server.txt"));) {
-            String datos[] = new String[3];
+            String[] datos = new String[3];
             String linea = br.readLine();
 
             while (linea != null && contador < 3) {

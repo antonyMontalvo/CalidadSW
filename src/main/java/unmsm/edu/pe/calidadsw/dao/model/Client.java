@@ -17,24 +17,14 @@ public class Client extends User {
     }
 
     // Insert client
-    public Client(String dni, String name, String lastname, Date birthdate, String telephone, String mail, String username,
-            String password) {
+    public Client(String dni, String name, String lastname, Date birthdate) {
         super(dni, name, lastname, birthdate);
-        this.telephone = telephone;
-        this.mail = mail;
-        this.username = username;
-        this.password = password;
     }
 
     // With id client
-    public Client(String dni, String name, String lastname, Date birthdate, int idClient, String telephone, String mail,
-            String username, String password) {
+    public Client(String dni, String name, String lastname, Date birthdate, int idClient) {
         super(dni, name, lastname, birthdate);
         this.idClient = idClient;
-        this.telephone = telephone;
-        this.mail = mail;
-        this.username = username;
-        this.password = password;
     }
 
     public int getIdClient() {

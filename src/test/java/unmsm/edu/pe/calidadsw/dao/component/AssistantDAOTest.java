@@ -63,7 +63,7 @@ public class AssistantDAOTest {
         Client client = new Client();
         client.setIdClient(1);
         Event event = new Event();
-        event.setIdEvent(1);
+        event.setIdEvent(3);
         Assistant assistant = new Assistant(client, event);
         
         AssistantDAO instance = new AssistantDAO();

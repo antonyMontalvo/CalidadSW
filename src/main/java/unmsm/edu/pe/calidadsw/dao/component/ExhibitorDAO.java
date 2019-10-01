@@ -25,13 +25,13 @@ public class ExhibitorDAO implements IExhibitorDAO {
     @Override
     public boolean create(Exhibitor exhibitor) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_exhibitor(?,?,?,?,?)}";
+        String sql = "{CALL sp_insert_exhibitor(?,?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
-            callableStatement.setString(1, exhibitor.getName());
-            callableStatement.setString(2, exhibitor.getLastname());
-            callableStatement.setString(3, exhibitor.getDni());
+            callableStatement.setString(1, exhibitor.getDni());
+            callableStatement.setString(2, exhibitor.getName());
+            callableStatement.setString(3, exhibitor.getLastname());
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             callableStatement.setString(4, formatter.format(exhibitor.getBirthdate()));
