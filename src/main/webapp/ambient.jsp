@@ -7,34 +7,36 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Reportes</title>
-    </head>
-    <body>
-        <h1>Lista de reportes</h1>
-        <table>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reportes</title>
+</head>
+
+<body>
+    <h1>Lista de reportes</h1>
+    <table>
+        <tr>
+            <td><a href="/practica1">Ir al menú</a> </td>
+        </tr>
+    </table>
+
+    <table border="1">
+        <thead>
             <tr>
-                <td><a href="/practica1">Ir al menú</a> </td>
+                <td>Filial</td>
+                <td>Horas</td>
+                <td>Mes</td>
+                <td>Año</td>
             </tr>
-        </table>
+        </thead>
+        <tbody>
+            <%
+                    List<Ambient> ambients = (List<Ambient>) request.getAttribute("ambients");
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <td>Filial</td>
-                    <td>Horas</td>
-                    <td>Mes</td>
-                    <td>Año</td>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                    List<Ambient> ambientes = (List<Ambient>) request.getAttribute("ambientes");
-
-                    for (Ambient a : ambientes) {
+                    for (Ambient a : ambients) {
                         out.println("<tr>");
                         out.println("<td>" + a.getDescription() + "</td>");
                         out.println("<td>" + a.getFloor() + "</td>");
@@ -43,7 +45,8 @@
                         out.println("</tr>");
                     }
                 %>
-            </tbody>
-        </table>
-    </body>
+        </tbody>
+    </table>
+</body>
+
 </html>
