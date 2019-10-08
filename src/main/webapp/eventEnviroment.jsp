@@ -4,8 +4,11 @@
     Author     : Usuario
 --%>
 
+<%@page language="java" import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 
 
 <!DOCTYPE html>
@@ -17,16 +20,30 @@
         <title>SIGCE</title>
     </head>
     <body>
+
         <t:sidebar>
             <jsp:attribute name="content">
 
                 <div class="container">
-                    
+
                     <br>
                     <h2 class="ml-4">Ambientes</h2>
-                    
+
                     <br>
-                    
+
+                    <c:forEach var="a" items="ambients">
+                        <div class="card flex-row flex-wrap ml-4 mr-4">
+                            <div class="card-header border-0">
+                                <img src="//placehold.it/200" alt="">
+                            </div>
+                            <div class="card-block px-2">
+                                <h4 class="card-title mt-3 ml-3"><c:out value="${a.getDescription()}"/></h4>
+                                <p class="card-text mt-3 ml-3">Descripcion</p>
+                            </div>
+                            <div class="w-100"></div>
+                        </div>
+                    </c:forEach>
+
                     <div class="card flex-row flex-wrap ml-4 mr-4">
                         <div class="card-header border-0">
                             <img src="//placehold.it/200" alt="">
@@ -37,9 +54,9 @@
                         </div>
                         <div class="w-100"></div>
                     </div>
-                    
+
                     <br>
-                    
+
                     <div class="card flex-row flex-wrap ml-4 mr-4">
                         <div class="card-header border-0">
                             <img src="//placehold.it/200" alt="">
@@ -50,7 +67,7 @@
                         </div>
                         <div class="w-100"></div>
                     </div>
-                    
+
                 </div>
                 <br>
 
