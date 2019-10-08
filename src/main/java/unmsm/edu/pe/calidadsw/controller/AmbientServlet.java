@@ -62,7 +62,7 @@ public class AmbientServlet extends HttpServlet {
         try {
             elements = ambientDAO.read();
             request.setAttribute("ambients", elements);
-            request.getRequestDispatcher("ambient.jsp").forward(request, response);
+            request.getRequestDispatcher("eventEnviroment.jsp").forward(request, response);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
