@@ -75,7 +75,7 @@
                                     <td class="text-center"><c:out value="${item.getDescription()}"/></td>
                                     <td class="text-center"><c:out value="${item.getDate()}"/></td>
                                     <td class="text-center"><c:out value="${item.getState()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getAmbient().getIdAmbient()}"/></td>
+                                    <td class="text-center"><c:out value="${item.getAmbient().getName()}"/></td>
                                     <td class="text-center">
                                         <a class="btn btn-info" href="eventAttendant.jsp">Info</a>
                                         <a class="btn btn-warning" href="#">Editar</a>
