@@ -69,7 +69,19 @@ public class EventManagementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        String accion = request.getParameter("accion");
+        int id=Integer.parseInt(request.getParameter("id"));
+        
+        if(accion.equals("publicar")){
+            if(eventDAO.publish(id)){
+                System.out.println("Evento publicado con exito");
+                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+            }else{
+                System.out.println("Error en la operacion");
+            }
+        }
+        
         List<Event> elements;
         try {
             elements = eventDAO.read();
@@ -105,6 +117,8 @@ public class EventManagementServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        
+        
     }
 
     /**

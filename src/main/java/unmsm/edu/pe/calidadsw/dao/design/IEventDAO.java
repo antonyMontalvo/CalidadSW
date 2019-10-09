@@ -31,4 +31,6 @@ public interface IEventDAO {
     public abstract List<Event> read();
     
     public abstract List<Event> search(String start_date, String end_date);
+    
+    public abstract boolean publish(Integer id);
 }

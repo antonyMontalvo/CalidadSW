@@ -168,4 +168,34 @@ public class EventDAO implements IEventDAO {
         }
         return events;
     }
+    
+    @Override
+    public boolean publish(Integer id){
+        Boolean result = true;
+        String sql = "{CALL publish_event(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, id);
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                if (resultSet.next()) {
+                    int response = resultSet.getInt("response");
+
+                    if (response == 0) {
+                        result = false;
+                        LOGGER.log(Level.WARNING, "Error to execute procedure publish.");
+                    } else if (response == 1) {
+                        LOGGER.log(Level.INFO, "Event published succesfully.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            result = false;
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+
+        return result;
+    }
 }
