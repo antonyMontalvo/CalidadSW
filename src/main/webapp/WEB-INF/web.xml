@@ -5,9 +5,17 @@
         <servlet-name>EventManagementServlet</servlet-name>
         <servlet-class>unmsm.edu.pe.calidadsw.controller.EventManagementServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>unmsm.edu.pe.calidadsw.controller.Login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EventManagementServlet</servlet-name>
         <url-pattern>/EventManagementServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

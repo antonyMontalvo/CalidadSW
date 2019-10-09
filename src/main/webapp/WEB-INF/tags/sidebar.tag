@@ -28,9 +28,13 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                           
                     <li class="nav-item ml-4">
-                        <a class="nav-link" href="#">Usuario Logueado</a>
+                        <a class="nav-link" href="#">${sessionScope.username}</a>
                     </li>
-
+                    
+                    <li class="nav-item ml-4">
+                        <a class="nav-link" href="Logout">Cerrar sesión</a>
+                    </li>
+                    
                 </ul>
             </div>
         </nav>
