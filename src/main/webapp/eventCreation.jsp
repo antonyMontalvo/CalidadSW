@@ -8,93 +8,104 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
-        <title>SIGCE</title>
-    </head>
 
-    <body>
-        <t:sidebar>
-            <jsp:attribute name="content"> <!--Bloque de contenido, definido en el tag sidebar.tag-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
+    <title>SIGCE</title>
+</head>
 
-                <div class="container-fluid">
-                    <br>
-                    <div class="row">
-                        <div class="col-7">
+<body>
+    <t:sidebar>
+        <jsp:attribute name="content">
+            <!--Bloque de contenido, definido en el tag sidebar.tag-->
 
-                            <!--Card event creation-->
-                            <div class="card ml-4">
-                                <div class="card-body">
-                                    <h2>Crear Evento</h2>
-                                    Después de crear un evento, no podrás cambiar la configuración de este.
+            <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-7">
 
-                                    <form method="post" action="">
+                        <!--Card event creation-->
+                        <div class="card ml-4">
+                            <div class="card-body">
+                                <h2>Crear Evento</h2>
+                                Después de crear un evento, no podrás cambiar la configuración de este.
 
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="title">Título</label>
-                                            <input type="text" class="form-control" id="title" name="title">
-                                            <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y claro.</small>
-                                        </div>
+                                <form method="post" action="events_create?action=create1">
 
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="description">Descripción</label>
-                                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
-                                            <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de que trata el evento.</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="expositor">Expositor</label>
-                                            <select id="expositor" name="expositor" class="form-control">
-                                                <option selected>Elige...</option>
-                                                <option>...</option>
-                                            </select>
-                                            <small id="expositorHelp" class="form-text text-muted">Persona que presentará la ponencia durante el evento.</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <br>
-                                            <label for="date">Fecha y hora</label>
-                                            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="date" name="date">
-                                            <small id="dateHelp" class="form-text text-muted">Día y hora en la cual se desarrollará el evento.</small> 
-                                        </div>
-
+                                    <div class="form-group">
                                         <br>
+                                        <label for="title">Título</label>
+                                        <input type="text" class="form-control" id="title" name="title" required>
+                                        <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y
+                                            claro.</small>
+                                    </div>
 
-                                        <button type="submit" class="btn btn-primary" formaction="eventCreationS2.jsp">Siguiente</button>  
+                                    <div class="form-group">
+                                        <br>
+                                        <label for="description">Descripción</label>
+                                        <textarea class="form-control" id="description" name="description"
+                                            rows="5"></textarea>
+                                        <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de
+                                            que trata el evento.</small>
+                                    </div>
 
-                                    </form>
-                                </div>
+                                    <!-- <div class="form-group">
+                                        <br>
+                                        <label for="expositor">Expositor</label>
+                                        <select id="expositor" name="expositor" class="form-control">
+                                            <option selected>Elige...</option>
+                                            <option>...</option>
+                                        </select>
+                                        <small id="expositorHelp" class="form-text text-muted">Persona que presentará la
+                                            ponencia durante el evento.</small>
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <br>
+                                        <label for="date">Fecha del evento</label>
+                                        <input class="form-control" type="date" value="2019-10-8" id="date" name="date"
+                                            required>
+                                        <small id="dateHelp" class="form-text text-muted">Día en la cual se desarrollará
+                                            el evento, el horario se definira más adelante.</small>
+                                    </div>
+
+                                    <br>
+
+                                    <button type="submit" class="btn btn-primary">Siguiente</button>
+
+                                </form>
                             </div>
-                            <!--Card end-->
-                            <br>
                         </div>
+                        <!--Card end-->
+                        <br>
+                    </div>
 
-                        <div class="col-2">
-                            <!--Default space-->
-                        </div>
+                    <div class="col-1">
+                        <!--Default space-->
+                    </div>
 
-                        <div class="col-3">
-                            <div class="card bg-light mb-3" style="max-width: 18rem;">
-                                <div class="card-header">¿Necesitas ayuda?</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Sobre la creación de eventos...</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
+                    <div class="col-4">
+                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                            <div class="card-header">¿Necesitas ayuda?</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Sobre la creación de eventos...</h5>
+                                <p class="card-text">La creción de los eventos se realiza en 3 partes este será la
+                                    primera para describir información básica.</p>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
 
-            </jsp:attribute>
-        </t:sidebar>    
-    </body>
+            </div>
+
+        </jsp:attribute>
+    </t:sidebar>
+</body>
 
 </body>
+
 </html>

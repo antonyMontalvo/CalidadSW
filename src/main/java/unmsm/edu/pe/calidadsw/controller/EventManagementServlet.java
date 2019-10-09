@@ -23,7 +23,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
  *
  * @author antony
  */
-@WebServlet(name = "EventManagementServlet", urlPatterns = {"/EventManagementServlet"})
+@WebServlet(name = "events", urlPatterns = {"/events"})
 public class EventManagementServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +44,6 @@ public class EventManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -91,9 +90,9 @@ public class EventManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String tipo = request.getParameter("tipo");
+        // String tipo = request.getParameter("tipo");
 
-        if (tipo.equals("buscar")) {
+        // if (tipo.equals("buscar")) {
             String fecha_inicio = request.getParameter("start_date");
             String fecha_fin = request.getParameter("end_date");
             List<Event> elements;
@@ -104,7 +103,7 @@ public class EventManagementServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        // }
     }
 
     /**
