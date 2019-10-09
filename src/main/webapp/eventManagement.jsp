@@ -68,7 +68,7 @@
                             </thead>
                             <tbody>
                                 
-                            <c:forEach items="${eventos}" var="item">
+                            <c:forEach items="${eventos}" var="item"> 
                                 <tr>
                                     <td class="text-center"><c:out value="${item.getIdEvent()}"/></td>
                                     <td class="text-center"><c:out value="${item.getTitle()}"/></td>
