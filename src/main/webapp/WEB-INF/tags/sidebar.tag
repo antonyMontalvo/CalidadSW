@@ -11,8 +11,8 @@
         <div class="list-group list-group-flush">
             <a href="eventStartPage.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Inicio</font></a>
             <a href="eventCreation.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Crear evento</font></a>
-            <a href="eventManagement.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Gestión de eventos</font></a>
-            <a href="eventEnviroment.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
+            <a href="EventManagementServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Gestión de eventos</font></a>
+            <a href="AmbientServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
             <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Reportes</font></a>
         </div>
     </div>

@@ -17,6 +17,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
 public class EventDAO implements IEventDAO {
+
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("EventDAO");
 
@@ -125,6 +126,46 @@ public class EventDAO implements IEventDAO {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
+        return events;
+    }
+
+    @Override
+    public List<Event> search(String start_date, String end_date) {
+        List<Event> events = new ArrayList<>();
+
+        String sql = "{CALL sp_search_events(?,?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+            callableStatement.setString(1, start_date);
+            callableStatement.setString(2, end_date);
+            ResultSet resultSet = callableStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Event event = new Event();
+                Ambient ambient = new Ambient();
+                Administrator administrator = new Administrator();
+
+                event.setIdEvent(resultSet.getInt("idevent"));
+                event.setTitle(resultSet.getString("title"));
+                event.setDescription(resultSet.getString("description"));
+                event.setDate(resultSet.getDate("date"));
+                event.setState(resultSet.getString("state"));
+
+                ambient.setIdAmbient(resultSet.getInt("idambient"));
+                event.setAmbient(ambient);
+
+                administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
+                event.setAdministrator(administrator);
+
+                events.add(event);
+            }
+            LOGGER.log(Level.INFO, "Events.");
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            System.out.println("Error: " + e.getMessage());
+        }
         return events;
     }
 }

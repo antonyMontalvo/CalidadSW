@@ -50,10 +50,10 @@ public class AmbientServlet extends HttpServlet {
         
         try {
             elements = ambientDAO.read();
-            request.setAttribute("ambients", elements);
-            request.getRequestDispatcher("ambient.jsp").forward(request, response);
+            request.setAttribute("ambientes", elements);
+            request.getRequestDispatcher("eventEnviroment.jsp").forward(request, response);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
         }
     }
 
