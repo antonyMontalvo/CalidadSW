@@ -29,4 +29,11 @@ public interface IAmbientDAO {
      * @return
      */
     public abstract List<Ambient> read();
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract List<Ambient> filterAmbients(Integer idEvent);
 }

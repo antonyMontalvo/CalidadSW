@@ -115,4 +115,36 @@ public class AmbientDAO implements IAmbientDAO {
 
         return ambients;
     }
+
+    @Override
+    public List<Ambient> filterAmbients(Integer idEvent) {
+        List<Ambient> ambients = new ArrayList<>();
+        String sql = "{CALL sp_get_ambients_event(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, idEvent);
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    Ambient ambient = new Ambient();
+
+                    ambient.setIdAmbient(resultSet.getInt("idambient"));
+                    ambient.setName(resultSet.getString("name"));
+                    ambient.setType(resultSet.getString("type"));
+                    ambient.setFloor(resultSet.getString("floor"));
+                    ambient.setCapacity(resultSet.getInt("capacity"));
+                    ambient.setDescription(resultSet.getString("description"));
+
+                    ambients.add(ambient);
+                }
+                LOGGER.log(Level.INFO, "Event ambients.");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+
+        return ambients;
+    }
 }

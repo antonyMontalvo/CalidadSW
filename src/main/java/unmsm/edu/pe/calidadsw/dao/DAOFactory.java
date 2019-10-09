@@ -1,5 +1,6 @@
 package unmsm.edu.pe.calidadsw.dao;
 
+import unmsm.edu.pe.calidadsw.dao.component.AdministratorDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IAssistantDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IClientDAO;
@@ -12,6 +13,7 @@ import unmsm.edu.pe.calidadsw.dao.component.ClientDAO;
 import unmsm.edu.pe.calidadsw.dao.component.EventDAO;
 import unmsm.edu.pe.calidadsw.dao.component.ExhibitorDAO;
 import unmsm.edu.pe.calidadsw.dao.component.PresentationDAO;
+import unmsm.edu.pe.calidadsw.dao.design.IAdministratorDAO;
 
 /**
  * DAOFactory
@@ -50,5 +52,9 @@ public class DAOFactory {
 
     public IPresentationDAO getPresentationDAO() {
         return new PresentationDAO();
+    }
+    
+    public IAdministratorDAO getAdministratorDAO() {
+        return new AdministratorDAO();
     }
 }
