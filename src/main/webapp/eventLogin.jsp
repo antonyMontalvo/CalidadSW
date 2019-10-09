@@ -4,6 +4,12 @@
     Author     : Usuario
 --%>
 
+<%@page import="unmsm.edu.pe.calidadsw.dao.DAOFactory"%>
+<%@page import="unmsm.edu.pe.calidadsw.dao.design.IAdministratorDAO"%>
+<%@page import="unmsm.edu.pe.calidadsw.dao.model.Administrator"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,21 +23,36 @@
         <br>
         <br>
         <br>
+
+
+
         <div class="login-form">
-            <form action="" method="post" class="rounded">
+
+            <form action="Login" method="post" class="rounded">
+
+                <c:if test="${e!=null}">
+                    <div class="alert alert-warning" role="alert">
+                        <c:out value="${e}" />
+                    </div>
+                </c:if>
+
                 <h2 class="text-center">SIGCE Log in</h2>  
                 <hr>
                 <br>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Usuario" required="required">
+                    <input type="text" class="form-control" placeholder="Usuario" name="username" required="required">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Contraseña" required="required">
+                    <input type="password" class="form-control" placeholder="Contraseña" name="password" required="required">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" formaction="eventStartPage.jsp">Acceder</button>
+                    <!--<button type="submit" class="btn btn-primary btn-block" formaction="eventStartPage.jsp">Acceder</button>-->
+                    <input type="submit" name="loginBtn" value="Acceder">
                 </div>       
             </form>
+
+
+
 
         </div>
 

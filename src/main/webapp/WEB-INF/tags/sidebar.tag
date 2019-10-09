@@ -12,7 +12,7 @@
             <a href="eventStartPage.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Inicio</font></a>
             <a href="eventCreation.jsp" class="list-group-item list-group-item-action bg-dark"><font color="white">Crear evento</font></a>
             <a href="EventManagementServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Gestión de eventos</font></a>
-            <a href="AmbientServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
+            <a href="ambients" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
             <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Reportes</font></a>
         </div>
     </div>
@@ -28,9 +28,13 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                           
                     <li class="nav-item ml-4">
-                        <a class="nav-link" href="#">Usuario Logueado</a>
+                        <a class="nav-link" href="#">${sessionScope.username}</a>
                     </li>
-
+                    
+                    <li class="nav-item ml-4">
+                        <a class="nav-link" href="Logout">Cerrar sesión</a>
+                    </li>
+                    
                 </ul>
             </div>
         </nav>

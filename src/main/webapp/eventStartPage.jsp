@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page session="true"%>
 
 <html lang="en">
     <head>
@@ -12,11 +14,30 @@
         <title>SIGCE</title>
     </head>
     <body>
+
+        <%
+            
+            HttpSession s = request.getSession();
+            if (s.getAttribute("username") == null) { 
+                request.getRequestDispatcher("Login").include(request, response);
+                response.sendRedirect("Login");
+            } else {
+                //Nada
+            }
+            /* String username;
+            if(s.getAttribute("username")!= null){
+                username = s.getAttribute("username").toString();
+                out.println(username+ " thiss");
+            }*/
+        %>
+
         <t:sidebar>
             <jsp:attribute name="content">
                 <br>
                 <div class="container ml-4">
-                    <h1>Home test</h1>
+
+
+                    <h1>Home test - Este es el session: <c:out value="${sessionScope.username}" /></h1>
                 </div>
             </jsp:attribute>
         </t:sidebar>
