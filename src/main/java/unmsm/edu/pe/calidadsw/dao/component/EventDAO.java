@@ -183,11 +183,19 @@ public class EventDAO implements IEventDAO {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");
 
-                    if (response == 0) {
-                        result = false;
-                        LOGGER.log(Level.WARNING, "Error to execute procedure publish.");
-                    } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Event published succesfully.");
+                    switch (response) {
+                    case 0:
+                        result=false;
+                        LOGGER.log(Level.WARNING, "Error to execute procedure.");
+                        break;
+                    case 1:
+                        result = true;
+                        LOGGER.log(Level.INFO, "Update successfully.");
+                        break;
+                    case 2:
+                        result=false;
+                        LOGGER.log(Level.WARNING, "The event selected not exits.");
+                        break;
                     }
                 }
             }
