@@ -79,6 +79,7 @@ public class EventManagementServlet extends HttpServlet {
                 request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
             }else{
                 System.out.println("Error en la operacion");
+                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
             }
         }
         
