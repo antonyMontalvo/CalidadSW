@@ -17,6 +17,16 @@
     </head>
     <body>
 
+        <% 
+            HttpSession s = request.getSession();
+            if (s.getAttribute("userdata") == null) { 
+                request.getRequestDispatcher("Login").include(request, response);
+                response.sendRedirect("Login");
+            } else {
+                //Nada
+            }
+        %>
+
         <t:sidebar>
             <jsp:attribute name="content">
                 <div class="container">
@@ -67,23 +77,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                            <c:forEach items="${eventos}" var="item"> 
-                                <tr>
-                                    <td class="text-center"><c:out value="${item.getIdEvent()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getTitle()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getDescription()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getDate()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getState()}"/></td>
-                                    <td class="text-center"><c:out value="${item.getAmbient().getIdAmbient()}"/></td>
-                                    <td class="text-center">
-                                        <a class="btn btn-info" href="eventAttendant.jsp">Info</a>
-                                        <a class="btn btn-warning" href="#">Editar</a>
-                                        <a class="btn btn-dark" href="#">Publicar</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                                
+
+                                <c:forEach items="${eventos}" var="item"> 
+                                    <tr>
+                                        <td class="text-center"><c:out value="${item.getIdEvent()}"/></td>
+                                        <td class="text-center"><c:out value="${item.getTitle()}"/></td>
+                                        <td class="text-center"><c:out value="${item.getDescription()}"/></td>
+                                        <td class="text-center"><c:out value="${item.getDate()}"/></td>
+                                        <td class="text-center"><c:out value="${item.getState()}"/></td>
+                                        <td class="text-center"><c:out value="${item.getAmbient().getIdAmbient()}"/></td>
+                                        <td class="text-center">
+                                            <a class="btn btn-info" href="eventAttendant.jsp">Info</a>
+                                            <a class="btn btn-warning" href="#">Editar</a>
+                                            <a class="btn btn-dark" href="#">Publicar</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+
                             </tbody>
                         </table>    
                     </div>

@@ -93,9 +93,9 @@ public class Login extends HttpServlet {
             adminData = adminDAO.readLogin(username);
 
             if (adminData != null && password.equals(adminData.getPassword())) {
-                request.setAttribute("admin", adminData);
+                //request.setAttribute("admin", adminData);
                 HttpSession s = request.getSession();
-                s.setAttribute("username", adminData.getUsername());
+                s.setAttribute("userdata", adminData);
                 response.sendRedirect("eventStartPage.jsp");
             } else {
                 request.setAttribute("e", "Error al iniciar sesión.");

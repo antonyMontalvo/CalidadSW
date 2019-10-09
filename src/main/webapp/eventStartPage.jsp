@@ -16,9 +16,9 @@
     <body>
 
         <%
-            
+
             HttpSession s = request.getSession();
-            if (s.getAttribute("username") == null) { 
+            if (s.getAttribute("userdata") == null) {
                 request.getRequestDispatcher("Login").include(request, response);
                 response.sendRedirect("Login");
             } else {
@@ -36,8 +36,15 @@
                 <br>
                 <div class="container ml-4">
 
+                    <div class="card mb-3 mr-5">
+                        <div class="card-body">
+                            <p class="card-text"><h1>Hola, ${sessionScope.userdata.getName()} ${sessionScope.userdata.getLastname()}!</h1></p>
+                            <p class="card-text">Bienvenido al área administrativa de eventos.</p>
+                        </div>
+                    </div>
+                    
+                    
 
-                    <h1>Home test - Este es el session: <c:out value="${sessionScope.username}" /></h1>
                 </div>
             </jsp:attribute>
         </t:sidebar>
