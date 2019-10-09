@@ -152,10 +152,10 @@ public class EventDAO implements IEventDAO {
                 event.setDate(resultSet.getDate("date"));
                 event.setState(resultSet.getString("state"));
 
-                ambient.setIdAmbient(resultSet.getInt("idambient"));
+                ambient.setIdAmbient(resultSet.getInt("ambient_idambient"));
                 event.setAmbient(ambient);
 
-                administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
+                administrator.setIdAdministrator(resultSet.getInt("administrator_idadministrator"));
                 event.setAdministrator(administrator);
 
                 events.add(event);
