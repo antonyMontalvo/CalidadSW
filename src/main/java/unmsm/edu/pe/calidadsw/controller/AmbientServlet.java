@@ -11,25 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import unmsm.edu.pe.calidadsw.dao.DAOFactory;
-
-import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
+import unmsm.edu.pe.calidadsw.dao.component.AmbientDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
 @WebServlet("/ambients")
 public class AmbientServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
-    //static AmbientDAO ambientDAO = new AmbientDAO();
-    IAmbientDAO ambientDAO;
-    
-    public void init() {
-        try {
-            ambientDAO = DAOFactory.getInstance().getAmbientDAO();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-    }
+    static AmbientDAO ambientDAO = new AmbientDAO();
 
     public AmbientServlet() {
         super();
@@ -62,7 +51,7 @@ public class AmbientServlet extends HttpServlet {
         try {
             elements = ambientDAO.read();
             request.setAttribute("ambients", elements);
-            request.getRequestDispatcher("eventEnviroment.jsp").forward(request, response);
+            request.getRequestDispatcher("ambient.jsp").forward(request, response);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
