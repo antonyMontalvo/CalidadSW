@@ -23,22 +23,22 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
  *
  * @author antony
  */
-@WebServlet(name = "events", urlPatterns = {"/events"})
+@WebServlet(name = "events", urlPatterns = { "/events" })
 public class EventManagementServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
-    //static AmbientDAO ambientDAO = new AmbientDAO();
+    // static AmbientDAO ambientDAO = new AmbientDAO();
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,18 +56,32 @@ public class EventManagementServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String accion = request.getParameter("accion");
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        if (accion.equals("publicar")) {
+            if (eventDAO.publish(id)) {
+                System.out.println("Evento publicado con exito");
+                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+            } else {
+                System.out.println("Error en la operacion");
+                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+            }
+        }
 
         List<Event> elements;
         try {
@@ -82,28 +96,25 @@ public class EventManagementServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // String tipo = request.getParameter("tipo");
 
-        // if (tipo.equals("buscar")) {
-            String fecha_inicio = request.getParameter("start_date");
-            String fecha_fin = request.getParameter("end_date");
-            List<Event> elements;
-            try {
-                elements = eventDAO.search(fecha_inicio, fecha_fin);
-                request.setAttribute("eventos", elements);
-                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        // }
+        String fecha_inicio = request.getParameter("start_date");
+        String fecha_fin = request.getParameter("end_date");
+        List<Event> elements;
+        try {
+            elements = eventDAO.search(fecha_inicio, fecha_fin);
+            request.setAttribute("eventos", elements);
+            request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -79,7 +79,7 @@
                                     <td class="text-center">
                                         <a class="btn btn-info" href="eventAttendant.jsp">Info</a>
                                         <a class="btn btn-warning" href="#">Editar</a>
-                                        <a class="btn btn-dark" href="#">Publicar</a>
+                                        <a class="btn btn-dark" href="EventManagementServlet?accion=publicar&id=${item.getIdEvent()}">Publicar</a>
                                     </td>
                                 </tr>
                             </c:forEach>
