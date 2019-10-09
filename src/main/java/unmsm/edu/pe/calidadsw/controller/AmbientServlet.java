@@ -21,7 +21,8 @@ import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 public class AmbientServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
-    static AmbientDAO ambientDAO = new AmbientDAO();
+    //static AmbientDAO ambientDAO = new AmbientDAO();
+    static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
 
     public AmbientServlet() {
         super();
@@ -53,10 +54,10 @@ public class AmbientServlet extends HttpServlet {
         
         try {
             elements = ambientDAO.read();
-            request.setAttribute("ambients", elements);
-            request.getRequestDispatcher("ambient.jsp").forward(request, response);
+            request.setAttribute("ambientes", elements);
+            request.getRequestDispatcher("eventEnviroment.jsp").forward(request, response);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            e.printStackTrace();
         }
     }
 

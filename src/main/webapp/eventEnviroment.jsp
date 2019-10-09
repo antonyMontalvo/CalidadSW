@@ -31,42 +31,19 @@
 
                     <br>
 
-                    <c:forEach var="a" items="ambients">
+                    <c:forEach items="${ambientes}" var="item">
                         <div class="card flex-row flex-wrap ml-4 mr-4">
                             <div class="card-header border-0">
                                 <img src="//placehold.it/200" alt="">
                             </div>
                             <div class="card-block px-2">
-                                <h4 class="card-title mt-3 ml-3"><c:out value="${a.getDescription()}"/></h4>
-                                <p class="card-text mt-3 ml-3">Descripcion</p>
+                                <h4 class="card-title mt-3 ml-3"><c:out value="${item.getName()}"/></h4>
+                                <p class="card-text mt-3 ml-3"><c:out value="${item.getDescription()}"/></p>
                             </div>
                             <div class="w-100"></div>
                         </div>
+                        <br>
                     </c:forEach>
-
-                    <div class="card flex-row flex-wrap ml-4 mr-4">
-                        <div class="card-header border-0">
-                            <img src="//placehold.it/200" alt="">
-                        </div>
-                        <div class="card-block px-2">
-                            <h4 class="card-title mt-3 ml-3">Título</h4>
-                            <p class="card-text mt-3 ml-3">Descripcion</p>
-                        </div>
-                        <div class="w-100"></div>
-                    </div>
-
-                    <br>
-
-                    <div class="card flex-row flex-wrap ml-4 mr-4">
-                        <div class="card-header border-0">
-                            <img src="//placehold.it/200" alt="">
-                        </div>
-                        <div class="card-block px-2">
-                            <h4 class="card-title mt-3 ml-3">Titulo</h4>
-                            <p class="card-text mt-3 ml-3">Descripcion</p>
-                        </div>
-                        <div class="w-100"></div>
-                    </div>
 
                 </div>
                 <br>
