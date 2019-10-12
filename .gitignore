@@ -13,6 +13,20 @@ buildNumber.properties
 # Compiled class file
 *.class
 
-# Log file
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
 *.log
 /nbproject/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
