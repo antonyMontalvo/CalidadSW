@@ -13,9 +13,6 @@ public class Presentation {
     private Event event;
     private Exhibitor exhibitor;
 
-    public Presentation() {
-    }
-
     /**
      * 
      * @return

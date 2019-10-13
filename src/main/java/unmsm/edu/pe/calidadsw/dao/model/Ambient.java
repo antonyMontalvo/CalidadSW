@@ -13,9 +13,6 @@ public class Ambient {
     private String description;
     private String state;
 
-    public Ambient() {
-    }
-
     /**
      * 
      * @return

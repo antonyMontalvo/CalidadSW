@@ -29,6 +29,8 @@ public class EventCreationServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(EventCreationServlet.class.getName());
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
     static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
+    private static final String EVENT = "event";
+    private static final String RETURN_INDEX = "./events_create?action=index";
 
     public EventCreationServlet() {
         super();
@@ -48,6 +50,7 @@ public class EventCreationServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
+
         try {
             switch (action) {
             case "index":
@@ -87,7 +90,11 @@ public class EventCreationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        try {
+            doGet(request, response);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
     }
 
     /**
@@ -132,10 +139,10 @@ public class EventCreationServlet extends HttpServlet {
         int idEvent = 0;
         idEvent = eventDAO.createBasic(event);
         if (idEvent == 0) {
-            response.sendRedirect("./events_create?action=index");
+            response.sendRedirect(RETURN_INDEX);
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("event", idEvent);
+            session.setAttribute(EVENT, idEvent);
             response.sendRedirect("./events_create?action=second");
         }
     }
@@ -150,10 +157,10 @@ public class EventCreationServlet extends HttpServlet {
     private void second(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute("event");
+        Integer idEvent = (Integer) session.getAttribute(EVENT);
 
         if (idEvent == null) {
-            response.sendRedirect("./events_create?action=index");
+            response.sendRedirect(RETURN_INDEX);
         } else {
             List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
 
@@ -166,11 +173,9 @@ public class EventCreationServlet extends HttpServlet {
      * 
      * @param request
      * @param response
-     * @throws ServletException
      * @throws IOException
      */
-    private void create2(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void create2(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Event event = new Event();
         Ambient ambient = new Ambient();
 
@@ -178,7 +183,7 @@ public class EventCreationServlet extends HttpServlet {
         event.setAmbient(ambient);
 
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute("event");
+        Integer idEvent = (Integer) session.getAttribute(EVENT);
         event.setIdEvent(idEvent);
 
         boolean status = eventDAO.createSecond(event);
@@ -186,8 +191,8 @@ public class EventCreationServlet extends HttpServlet {
             session.setAttribute("status", true);
             response.sendRedirect("./events_create?action=third");
         } else {
-            session.removeAttribute("event");
-            response.sendRedirect("./events_create?action=index");
+            session.removeAttribute(EVENT);
+            response.sendRedirect(RETURN_INDEX);
         }
     }
 
@@ -200,11 +205,11 @@ public class EventCreationServlet extends HttpServlet {
      */
     private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute("event");
+        Integer idEvent = (Integer) session.getAttribute(EVENT);
         boolean status = (Boolean) session.getAttribute("status");
 
         if (!status) {
-            
+            response.sendRedirect(RETURN_INDEX);
         } else {
             List<Event> elements = eventDAO.filterSchedule(idEvent);
 
@@ -218,26 +223,24 @@ public class EventCreationServlet extends HttpServlet {
      * 
      * @param request
      * @param response
-     * @throws ServletException
      * @throws IOException
      */
-    private void create3(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void create3(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Event event = new Event();
 
         event.setStartTime(Integer.parseInt(request.getParameter("start-time")));
         event.setEndTime(Integer.parseInt(request.getParameter("end-time")));
 
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute("event");
+        Integer idEvent = (Integer) session.getAttribute(EVENT);
         event.setIdEvent(idEvent);
 
         boolean status = eventDAO.finalCreate(event);
         if (status) {
             response.sendRedirect("./events");
         } else {
-            session.removeAttribute("event");
-            response.sendRedirect("./events_create?action=index");
+            session.removeAttribute(EVENT);
+            response.sendRedirect(RETURN_INDEX);
         }
     }
 

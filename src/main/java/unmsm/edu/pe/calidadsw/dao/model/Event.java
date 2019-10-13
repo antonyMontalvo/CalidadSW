@@ -15,9 +15,6 @@ public class Event {
     private Ambient ambient; // LLave foranea proveniente de la tabla ambiente.
     private Administrator administrator; // Llave foranea proveniente de la tabla administrador.
 
-    public Event() {
-    }
-
     /**
      * 
      * @return

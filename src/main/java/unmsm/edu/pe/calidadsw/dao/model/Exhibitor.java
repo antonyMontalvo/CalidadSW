@@ -9,9 +9,6 @@ public class Exhibitor extends User {
     private String nationality;
     private String specialty;
 
-    public Exhibitor() {
-    }
-
     /**
      * 
      * @return

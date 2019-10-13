@@ -12,10 +12,6 @@ public class Assistant {
     private Client client;
     private Event event;
 
-    public Assistant() {
-    }
-
-
     /**
      * 
      * @return

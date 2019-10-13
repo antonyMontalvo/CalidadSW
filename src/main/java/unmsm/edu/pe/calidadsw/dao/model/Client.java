@@ -10,10 +10,7 @@ public class Client extends User {
     private String mail;
     private String username;
     private String password;
-
-    public Client() {
-    }
-
+    
     /**
      * 
      * @return

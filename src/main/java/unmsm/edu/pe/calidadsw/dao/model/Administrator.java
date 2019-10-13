@@ -8,10 +8,7 @@ public class Administrator extends User {
     private int idAdministrator;
     private String username;
     private String password;
-
-    public Administrator() {
-    }
-
+    
     /**
      * 
      * @return

@@ -10,9 +10,6 @@ public class User {
     private String lastname;
     private String birthdate;
 
-    public User() {
-    }
-
     /**
      * 
      * @return
