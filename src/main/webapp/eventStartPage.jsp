@@ -14,6 +14,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
     <link rel="icon" href="favicon.ico">
+
     <title>SIGCE</title>
 </head>
 
@@ -21,10 +22,16 @@
 
     <%
         HttpSession s = request.getSession();
-        if (s.getAttribute("username") == null) { 
-            request.getRequestDispatcher("login").include(request, response);
+        if (s.getAttribute("userdata") == null) {
+            request.getRequestDispatcher("login").forward(request, response);
             response.sendRedirect("login");
         }
+        
+        /* String username;
+        if(s.getAttribute("username")!= null){
+            username = s.getAttribute("username").toString();
+            out.println(username+ " thiss");
+        }*/
     %>
 
     <t:sidebar>
@@ -32,10 +39,17 @@
             <br>
             <div class="container ml-4">
 
+                <div class="card mb-3 mr-5">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <h1>Hola, ${sessionScope.userdata.getName()} ${sessionScope.userdata.getLastname()}!</h1>
+                        </p>
+                        <p class="card-text">Bienvenido al área administrativa de eventos.</p>
+                    </div>
+                </div>
 
-                <h1>Home test - Este es el session:
-                    <c:out value="${sessionScope.username}" />
-                </h1>
+
+
             </div>
         </jsp:attribute>
     </t:sidebar>

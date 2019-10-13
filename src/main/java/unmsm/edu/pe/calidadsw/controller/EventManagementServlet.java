@@ -46,13 +46,15 @@ public class EventManagementServlet extends HttpServlet {
         // int id = Integer.parseInt(request.getParameter("id"));
 
         // if (accion.equals("publicar")) {
-        //     if (eventDAO.publish(id)) {
-        //         System.out.println("Evento publicado con exito");
-        //         request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-        //     } else {
-        //         System.out.println("Error en la operacion");
-        //         request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-        //     }
+        // if (eventDAO.publish(id)) {
+        // System.out.println("Evento publicado con exito");
+        // request.getRequestDispatcher("eventManagement.jsp").forward(request,
+        // response);
+        // } else {
+        // System.out.println("Error en la operacion");
+        // request.getRequestDispatcher("eventManagement.jsp").forward(request,
+        // response);
+        // }
         // }
 
         List<Event> elements;

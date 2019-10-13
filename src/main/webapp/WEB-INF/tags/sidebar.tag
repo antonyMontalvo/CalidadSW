@@ -28,7 +28,7 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                           
                     <li class="nav-item ml-4">
-                        <a class="nav-link" href="#">${sessionScope.username}</a>
+                        <a class="nav-link" href="#">${sessionScope.userdata.getUsername()}</a>
                     </li>
                     
                     <li class="nav-item ml-4">
