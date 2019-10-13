@@ -40,6 +40,13 @@ public interface IEventDAO {
 
     /**
      * 
+     * @param idEvent
+     * @return
+     */
+    public abstract Event readEvent(Integer idEvent);
+
+    /**
+     * 
      * @return
      */
     public abstract List<Event> read();
@@ -64,5 +71,5 @@ public interface IEventDAO {
      * @param idEvent
      * @return
      */
-    public abstract List<Event> filterSchedule(Integer idEvent);
+    public abstract List<Event> filterSchedule(Event event);
 }

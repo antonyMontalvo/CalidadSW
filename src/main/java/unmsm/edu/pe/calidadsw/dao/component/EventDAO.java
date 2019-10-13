@@ -159,6 +159,33 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
+    public Event readEvent(Integer id) {
+        Event event = null;
+        String sql = "{CALL sp_get_event(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, id);
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+
+                if (resultSet.next()) {
+                    event = new Event();
+
+                    event.setTitle(resultSet.getString(TITLE));
+                    event.setDescription(resultSet.getString(DESCRIPTION));
+                    event.setDate(resultSet.getString(DATE));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+
+        return event;
+    }
+
+    @Override
     public List<Event> read() {
         List<Event> events = new ArrayList<>();
         String sql = "{CALL sp_get_events()}";
@@ -238,7 +265,7 @@ public class EventDAO implements IEventDAO {
 
                     events.add(event);
                 }
-                LOGGER.log(Level.INFO, "Events.");
+                LOGGER.log(Level.INFO, "Event found.");
             }
 
         } catch (SQLException e) {
@@ -287,7 +314,7 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
-    public List<Event> filterSchedule(Integer idEvent) {
+    public List<Event> filterSchedule(Event event) {
         List<Event> events = new ArrayList<>();
 
         String sql = "{CALL sp_search_events(?,?)}";
@@ -295,20 +322,21 @@ public class EventDAO implements IEventDAO {
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            callableStatement.setInt(1, idEvent);
+            callableStatement.setInt(1, event.getIdEvent());
+            callableStatement.setInt(2, event.getAmbient().getIdAmbient());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
 
                 while (resultSet.next()) {
-                    Event event = new Event();
+                    Event eventRes = new Event();
 
-                    event.setIdEvent(resultSet.getInt(IDEVENT));
-                    event.setTitle(resultSet.getString(TITLE));
-                    event.setDescription(resultSet.getString(DESCRIPTION));
-                    event.setDate(resultSet.getString(DATE));
-                    event.setState(resultSet.getString(STATE));
+                    eventRes.setIdEvent(resultSet.getInt(IDEVENT));
+                    eventRes.setTitle(resultSet.getString(TITLE));
+                    eventRes.setDescription(resultSet.getString(DESCRIPTION));
+                    eventRes.setDate(resultSet.getString(DATE));
+                    eventRes.setState(resultSet.getString(STATE));
 
-                    events.add(event);
+                    events.add(eventRes);
                 }
                 LOGGER.log(Level.INFO, "Events schedules avalaible.");
             }

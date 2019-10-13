@@ -39,17 +39,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <!-- <label for="environment">Ambiente</label>
-                                        <select id="environment" name="environment" class="form-control" required>
-                                            <option hidden selected disabled>Elige...</option>
-                                            <c:forEach items="${ambients}" var="item">
-                                                <option value="${item.getIdAmbient()}">
-                                                    <c:out value="${item.getName()}" />
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                        <small id="enviromentHelp" class="form-text text-muted">Lugar donde se realizará
-                                            el evento.</small> -->
+                                        
                                     </div>
 
                                     <br>

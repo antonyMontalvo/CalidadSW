@@ -189,6 +189,7 @@ public class EventCreationServlet extends HttpServlet {
         boolean status = eventDAO.createSecond(event);
         if (status) {
             session.setAttribute("status", true);
+            session.setAttribute("idAmbient", ambient.getIdAmbient());
             response.sendRedirect("./events_create?action=third");
         } else {
             session.removeAttribute(EVENT);
@@ -205,18 +206,24 @@ public class EventCreationServlet extends HttpServlet {
      */
     private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute(EVENT);
         boolean status = (Boolean) session.getAttribute("status");
 
         if (!status) {
             response.sendRedirect(RETURN_INDEX);
         } else {
-            List<Event> elements = eventDAO.filterSchedule(idEvent);
+            Event event = new Event();
+            Ambient ambient = new Ambient();
+            Integer idEvent = (Integer) session.getAttribute(EVENT);
 
-            request.setAttribute("ambients", elements);
-            request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
+            event.setIdEvent(idEvent);
+            ambient.setIdAmbient(Integer.parseInt(request.getParameter("idAmbient")));
+            event.setAmbient(ambient);
+    
+            List<Event> events = eventDAO.filterSchedule(event);
+
+            request.setAttribute("events", events);
+            request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
 
     /**

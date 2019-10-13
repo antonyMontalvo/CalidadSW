@@ -24,8 +24,6 @@ public class LoginServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     static IAdministratorDAO adminDAO = DAOFactory.getInstance().getAdministratorDAO();
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -67,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 
             if (adminData != null && password.equals(adminData.getPassword())) {
                 HttpSession s = request.getSession();
-                s.setAttribute("userdata", adminData);
+                s.setAttribute("username", adminData.getUsername());
                 response.sendRedirect("eventStartPage.jsp");
             } else {
                 request.setAttribute("e", "Error al iniciar sesión.");

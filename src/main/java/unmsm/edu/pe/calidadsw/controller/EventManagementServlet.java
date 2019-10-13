@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,29 +38,30 @@ public class EventManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // String accion = request.getParameter("accion");
-        // int id = Integer.parseInt(request.getParameter("id"));
+        response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("accion");
 
-        // if (accion.equals("publicar")) {
-        // if (eventDAO.publish(id)) {
-        // System.out.println("Evento publicado con exito");
-        // request.getRequestDispatcher("eventManagement.jsp").forward(request,
-        // response);
-        // } else {
-        // System.out.println("Error en la operacion");
-        // request.getRequestDispatcher("eventManagement.jsp").forward(request,
-        // response);
-        // }
-        // }
-
-        List<Event> elements;
         try {
-            elements = eventDAO.read();
-            request.setAttribute("eventos", elements);
-            request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+            switch (action) {
+            case "index":
+                index(request, response);
+                break;
+            case "update":
+                update(request, response);
+                break;
+            case "delete":
+                delete(request, response);
+                break;
+            case "publish":
+                publish(request, response);
+                break;
+            default:
+                break;
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
+
     }
 
     /**
@@ -95,5 +97,82 @@ public class EventManagementServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Event> elements = eventDAO.read();
+
+        request.setAttribute("eventos", elements);
+        request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+    }
+
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Event event = eventDAO.readEvent(id);
+
+        if (event == null) {
+            request.setAttribute("message", "<div class='alert alert-danger' role='alert'>No existe este evento</div>");
+        } else {
+            request.setAttribute("event", event);
+        }
+
+        request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
+    }
+
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        if (eventDAO.delete(id)) {
+            request.setAttribute("message",
+                    "<div class='alert alert-success' role='alert'>Se elimino correctamente</div>");
+        } else {
+            request.setAttribute("message",
+                    "<div class='alert alert-danger' role='alert'>Ocurrio un error al eliminar el evento</div>");
+        }
+
+        index(request, response);
+    }
+
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    private void publish(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        if (eventDAO.publish(id)) {
+            request.setAttribute("message",
+                    "<div class='alert alert-success' role='alert'>Se publico correctamente</div>");
+        } else {
+            request.setAttribute("message",
+                    "<div class='alert alert-danger' role='alert'>Ocurrio un error al publicar el evento</div>");
+        }
+
+        index(request, response);
+    }
 
 }
