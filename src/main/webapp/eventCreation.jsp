@@ -53,17 +53,6 @@
                                             que trata el evento.</small>
                                     </div>
 
-                                    <!-- <div class="form-group">
-                                        <br>
-                                        <label for="expositor">Expositor</label>
-                                        <select id="expositor" name="expositor" class="form-control">
-                                            <option selected>Elige...</option>
-                                            <option>...</option>
-                                        </select>
-                                        <small id="expositorHelp" class="form-text text-muted">Persona que presentará la
-                                            ponencia durante el evento.</small>
-                                    </div> -->
-
                                     <div class="form-group">
                                         <br>
                                         <label for="date">Fecha del evento</label>

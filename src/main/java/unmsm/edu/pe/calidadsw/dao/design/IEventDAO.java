@@ -43,7 +43,7 @@ public interface IEventDAO {
      * @param end_date
      * @return
      */
-    public abstract List<Event> search(String start_date, String end_date);
+    public abstract List<Event> search(String startDate, String endDate);
     
     public abstract boolean publish(Integer id);
 }

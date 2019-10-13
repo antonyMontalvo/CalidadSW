@@ -32,7 +32,7 @@
                     </li>
                     
                     <li class="nav-item ml-4">
-                        <a class="nav-link" href="Logout">Cerrar sesión</a>
+                        <a class="nav-link" href="logout">Cerrar sesión</a>
                     </li>
                     
                 </ul>

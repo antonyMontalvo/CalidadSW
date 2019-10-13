@@ -23,11 +23,11 @@ public class AdministratorDAO implements IAdministratorDAO {
 
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger("AdministratorDAO");
-    
+
     public AdministratorDAO() {
         jdbc = new JDBCDataAccessClass();
     }
-    
+
     @Override
     public Administrator readLogin(String user) {
         Administrator admin = new Administrator();
@@ -38,22 +38,21 @@ public class AdministratorDAO implements IAdministratorDAO {
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
             callableStatement.setString(1, user);
 
-            ResultSet resultSet = callableStatement.executeQuery();
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
 
-            while (resultSet.next()) {
+                while (resultSet.next()) {
 
-                admin.setIdAdministrator(resultSet.getInt("idadministrator"));
-                admin.setUsername(resultSet.getString("username"));
-                admin.setPassword(resultSet.getString("password"));
-                admin.setName(resultSet.getString("name"));
-                admin.setLastname(resultSet.getString("lastname"));
-                admin.setBirthdate(resultSet.getDate("birthdate"));
+                    admin.setIdAdministrator(resultSet.getInt("idadministrator"));
+                    admin.setUsername(resultSet.getString("username"));
+                    admin.setPassword(resultSet.getString("password"));
+                    admin.setName(resultSet.getString("name"));
+                    admin.setLastname(resultSet.getString("lastname"));
+                    admin.setBirthdate(resultSet.getDate("birthdate"));
+                }
+                LOGGER.log(Level.INFO, "Admin.");
             }
-            LOGGER.log(Level.INFO, "Admin.");
-
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
-            System.out.println("Error: " + e.getMessage());
         }
         return admin;
     }

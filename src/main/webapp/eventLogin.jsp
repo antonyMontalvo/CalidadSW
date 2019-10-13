@@ -28,11 +28,9 @@
     <br>
     <br>
 
-
-
     <div class="login-form">
 
-        <form action="Login" method="post" class="rounded">
+        <form action="login" method="post" class="rounded">
 
             <c:if test="${e!=null}">
                 <div class="alert alert-warning" role="alert">
@@ -51,13 +49,9 @@
                     required="required">
             </div>
             <div class="form-group">
-                <!--<button type="submit" class="btn btn-primary btn-block" formaction="eventStartPage.jsp">Acceder</button>-->
                 <input type="submit" name="loginBtn" value="Acceder">
             </div>
         </form>
-
-
-
 
     </div>
 

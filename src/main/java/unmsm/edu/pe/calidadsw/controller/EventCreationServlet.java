@@ -1,7 +1,6 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import unmsm.edu.pe.calidadsw.dao.component.AmbientDAO;
-import unmsm.edu.pe.calidadsw.dao.component.EventDAO;
+import unmsm.edu.pe.calidadsw.dao.DAOFactory;
+import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
+import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
@@ -25,44 +25,14 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
 public class EventCreationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger("EventCreationServlet");
-    static EventDAO eventDAO = new EventDAO();
-    static AmbientDAO ambientDAO = new AmbientDAO();
+    private static final Logger LOGGER = Logger.getLogger(EventCreationServlet.class.getName());
+    static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
+    static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
 
     public EventCreationServlet() {
         super();
     }
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        try (PrintWriter out = response.getWriter();) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EventCreationServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EventCreationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -100,7 +70,6 @@ public class EventCreationServlet extends HttpServlet {
             default:
                 break;
             }
-            // request.getRequestDispatcher("eventCreation.jsp").forward(request, response);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
@@ -117,7 +86,6 @@ public class EventCreationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         doGet(request, response);
     }
 
@@ -144,8 +112,13 @@ public class EventCreationServlet extends HttpServlet {
         request.getRequestDispatcher("eventCreation.jsp").forward(request, response);
     }
 
-    private void create1(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    private void create1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Event event = new Event();
 
         event.setTitle(request.getParameter("title"));
@@ -163,6 +136,13 @@ public class EventCreationServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void second(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
 
@@ -170,17 +150,39 @@ public class EventCreationServlet extends HttpServlet {
         request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void create2(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void create3(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
+
 }

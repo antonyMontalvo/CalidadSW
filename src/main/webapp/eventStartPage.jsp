@@ -20,20 +20,12 @@
 <body>
 
     <%
-            
-            HttpSession s = request.getSession();
-            if (s.getAttribute("username") == null) { 
-                request.getRequestDispatcher("Login").include(request, response);
-                response.sendRedirect("Login");
-            } else {
-                //Nada
-            }
-            /* String username;
-            if(s.getAttribute("username")!= null){
-                username = s.getAttribute("username").toString();
-                out.println(username+ " thiss");
-            }*/
-        %>
+        HttpSession s = request.getSession();
+        if (s.getAttribute("username") == null) { 
+            request.getRequestDispatcher("login").include(request, response);
+            response.sendRedirect("login");
+        }
+    %>
 
     <t:sidebar>
         <jsp:attribute name="content">
