@@ -1,7 +1,5 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
-import java.util.Date;
-
 /**
  *
  * @author antony
@@ -16,53 +14,82 @@ public class Client extends User {
     public Client() {
     }
 
-    // Insert client
-    public Client(String dni, String name, String lastname, Date birthdate) {
-        super(dni, name, lastname, birthdate);
-    }
-
-    // With id client
-    public Client(String dni, String name, String lastname, Date birthdate, int idClient) {
-        super(dni, name, lastname, birthdate);
-        this.idClient = idClient;
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getIdClient() {
         return idClient;
     }
 
+    /**
+     * 
+     * @param idClient
+     */
     public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getTelephone() {
         return telephone;
     }
 
+    /**
+     * 
+     * @param telephone
+     */
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getMail() {
         return mail;
     }
 
+    /**
+     * 
+     * @param mail
+     */
     public void setMail(String mail) {
         this.mail = mail;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * 
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * 
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

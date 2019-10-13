@@ -1,7 +1,5 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
-import java.util.Date;
-
 /**
  *
  * @author antony
@@ -14,40 +12,50 @@ public class Administrator extends User {
     public Administrator() {
     }
 
-    public Administrator(String dni, String name, String lastname, Date birthdate, String username, String password) {
-        super(dni, name, lastname, birthdate);
-        this.username = username;
-        this.password = password;
-    }
-
-    public Administrator(String dni, String name, String lastname, Date birthdate, int idAdministrator, String username,
-            String password) {
-        super(dni, name, lastname, birthdate);
-        this.idAdministrator = idAdministrator;
-        this.username = username;
-        this.password = password;
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getIdAdministrator() {
         return idAdministrator;
     }
 
+    /**
+     * 
+     * @param idAdministrator
+     */
     public void setIdAdministrator(int idAdministrator) {
         this.idAdministrator = idAdministrator;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * 
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * 
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

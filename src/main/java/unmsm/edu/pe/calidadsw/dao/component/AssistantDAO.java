@@ -20,7 +20,7 @@ public class AssistantDAO implements IAssistantDAO {
      * Client_has_Event
      */
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("AssistantDAO");
+    private static final Logger LOGGER = Logger.getLogger(AssistantDAO.class.getName());
 
     public AssistantDAO() {
         jdbc = new JDBCDataAccessClass();
@@ -46,7 +46,7 @@ public class AssistantDAO implements IAssistantDAO {
                     assistant.setDni(resultSet.getString("dni"));
                     assistant.setName(resultSet.getString("name"));
                     assistant.setLastname(resultSet.getString("lastname"));
-                    assistant.setBirthdate(resultSet.getDate("birthdate"));
+                    assistant.setBirthdate(resultSet.getString("birthdate"));
                     assistant.setTelephone(resultSet.getString("telephone"));
                     assistant.setMail(resultSet.getString("mail"));
                     assistant.setUsername(resultSet.getString("username"));

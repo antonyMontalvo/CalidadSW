@@ -1,5 +1,5 @@
 <%-- 
-    Document   : eventCreationS2
+    Document   : eventCreationS3
     Created on : 29/09/2019, 04:04:12 PM
     Author     : Usuario
 --%>
@@ -32,14 +32,14 @@
                         <!--Card event creation-->
                         <div class="card ml-4">
                             <div class="card-body">
-                                <h2>Escoge tu ambiente</h2>
-                                Después de crear un evento, debes escoger el ambiente en el cuál se llevará a cabo.
+                                <h2>Escoge de los horarios que se encuentran disponibles</h2>
+                                Para finalizar escogeremos el horario en el cual se realizara el evento.
 
-                                <form method="post" action="events_create?action=create2">
+                                <form method="post" action="events_create?action=create3">
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="environment">Ambiente</label>
+                                        <!-- <label for="environment">Ambiente</label>
                                         <select id="environment" name="environment" class="form-control" required>
                                             <option hidden selected disabled>Elige...</option>
                                             <c:forEach items="${ambients}" var="item">
@@ -49,7 +49,7 @@
                                             </c:forEach>
                                         </select>
                                         <small id="enviromentHelp" class="form-text text-muted">Lugar donde se realizará
-                                            el evento.</small>
+                                            el evento.</small> -->
                                     </div>
 
                                     <br>
@@ -72,8 +72,8 @@
                             <div class="card-header">¿Necesitas ayuda?</div>
                             <div class="card-body">
                                 <h5 class="card-title">Sobre la creación de eventos...</h5>
-                                <p class="card-text">En esta segunda parte se añadira los ambientes que se encuentran
-                                    disponibles .</p>
+                                <p class="card-text">En esta ultima parte se escogera uno de los horarios disponibles
+                                    del ambiente que se selecciono, los expositores los podra añadir luego.</p>
                             </div>
                         </div>
                     </div>

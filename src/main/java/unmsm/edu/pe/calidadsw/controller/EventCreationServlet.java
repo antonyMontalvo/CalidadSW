@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import unmsm.edu.pe.calidadsw.dao.DAOFactory;
 import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
@@ -99,8 +100,6 @@ public class EventCreationServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private int idEvent = 0;
-
     /**
      * 
      * @param request
@@ -130,8 +129,13 @@ public class EventCreationServlet extends HttpServlet {
         administrator.setIdAdministrator(1);
         event.setAdministrator(administrator);
 
+        int idEvent = 0;
         idEvent = eventDAO.createBasic(event);
-        if (idEvent != 0) {
+        if (idEvent == 0) {
+            response.sendRedirect("./events_create?action=index");
+        } else {
+            HttpSession session = request.getSession();
+            session.setAttribute("event", idEvent);
             response.sendRedirect("./events_create?action=second");
         }
     }
@@ -144,10 +148,18 @@ public class EventCreationServlet extends HttpServlet {
      * @throws IOException
      */
     private void second(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
 
-        request.setAttribute("ambients", elements);
-        request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Integer idEvent = (Integer) session.getAttribute("event");
+
+        if (idEvent == null) {
+            response.sendRedirect("./events_create?action=index");
+        } else {
+            List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
+
+            request.setAttribute("ambients", elements);
+            request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -159,7 +171,24 @@ public class EventCreationServlet extends HttpServlet {
      */
     private void create2(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
+        Event event = new Event();
+        Ambient ambient = new Ambient();
+
+        ambient.setIdAmbient(Integer.parseInt(request.getParameter("environment")));
+        event.setAmbient(ambient);
+
+        HttpSession session = request.getSession();
+        Integer idEvent = (Integer) session.getAttribute("event");
+        event.setIdEvent(idEvent);
+
+        boolean status = eventDAO.createSecond(event);
+        if (status) {
+            session.setAttribute("status", true);
+            response.sendRedirect("./events_create?action=third");
+        } else {
+            session.removeAttribute("event");
+            response.sendRedirect("./events_create?action=index");
+        }
     }
 
     /**
@@ -170,6 +199,18 @@ public class EventCreationServlet extends HttpServlet {
      * @throws IOException
      */
     private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Integer idEvent = (Integer) session.getAttribute("event");
+        boolean status = (Boolean) session.getAttribute("status");
+
+        if (!status) {
+            
+        } else {
+            List<Event> elements = eventDAO.filterSchedule(idEvent);
+
+            request.setAttribute("ambients", elements);
+            request.getRequestDispatcher("eventCreationS2.jsp").forward(request, response);
+        }
         request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
 
@@ -182,7 +223,22 @@ public class EventCreationServlet extends HttpServlet {
      */
     private void create3(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
+        Event event = new Event();
+
+        event.setStartTime(Integer.parseInt(request.getParameter("start-time")));
+        event.setEndTime(Integer.parseInt(request.getParameter("end-time")));
+
+        HttpSession session = request.getSession();
+        Integer idEvent = (Integer) session.getAttribute("event");
+        event.setIdEvent(idEvent);
+
+        boolean status = eventDAO.finalCreate(event);
+        if (status) {
+            response.sendRedirect("./events");
+        } else {
+            session.removeAttribute("event");
+            response.sendRedirect("./events_create?action=index");
+        }
     }
 
 }

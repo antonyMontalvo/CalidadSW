@@ -26,10 +26,17 @@ public interface IEventDAO {
 
     /**
      * 
-     * @param id
+     * @param event
      * @return
      */
-    public abstract boolean delete(Integer id);
+    public abstract boolean finalCreate(Event event);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract boolean delete(Integer idEvent);
 
     /**
      * 
@@ -44,6 +51,18 @@ public interface IEventDAO {
      * @return
      */
     public abstract List<Event> search(String startDate, String endDate);
-    
-    public abstract boolean publish(Integer id);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract boolean publish(Integer idEvent);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract List<Event> filterSchedule(Integer idEvent);
 }

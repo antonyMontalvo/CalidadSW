@@ -17,7 +17,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
 public class PresentationDAO implements IPresentationDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("PresentationDAO");
+    private static final Logger LOGGER = Logger.getLogger(PresentationDAO.class.getName());
 
     public PresentationDAO() {
         jdbc = new JDBCDataAccessClass();

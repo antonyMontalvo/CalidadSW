@@ -12,7 +12,12 @@ import unmsm.edu.pe.calidadsw.dao.model.Administrator;
  * @author Usuario
  */
 public interface IAdministratorDAO {
-    
+
+    /**
+     * 
+     * @param user
+     * @return
+     */
     public abstract Administrator readLogin(String user);
-    
+
 }

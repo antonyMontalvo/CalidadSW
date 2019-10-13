@@ -14,7 +14,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Client;
 
 public class ClientDAO implements IClientDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("ClientDAO");
+    private static final Logger LOGGER = Logger.getLogger(ClientDAO.class.getName());
 
     public ClientDAO() {
         jdbc = new JDBCDataAccessClass();

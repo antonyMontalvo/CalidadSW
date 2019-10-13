@@ -26,34 +26,66 @@ public class DAOFactory {
         daoFac = new DAOFactory();
     }
 
+    /**
+     * 
+     * @return
+     */
     public static DAOFactory getInstance() {
         return daoFac;
     }
 
+    /**
+     * 
+     * @return
+     */
     public IAmbientDAO getAmbientDAO() {
         return new AmbientDAO();
     }
 
+    /**
+     * 
+     * @return
+     */
     public IAssistantDAO getAssistantDAO() {
         return new AssistantDAO();
     }
 
+    /**
+     * 
+     * @return
+     */
     public IClientDAO getClientDAO() {
         return new ClientDAO();
     }
 
+    /**
+     * 
+     * @return
+     */
     public IEventDAO getEventDAO() {
         return new EventDAO();
     }
 
+    /**
+     * 
+     * @return
+     */
     public IExhibitorDAO getExhibitorDAO() {
         return new ExhibitorDAO();
     }
 
+    /**
+     * 
+     * @return
+     */
     public IPresentationDAO getPresentationDAO() {
         return new PresentationDAO();
     }
-    
+
+    /**
+     * 
+     * @return
+     */
     public IAdministratorDAO getAdministratorDAO() {
         return new AdministratorDAO();
     }
