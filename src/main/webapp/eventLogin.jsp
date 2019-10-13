@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : eventLogin
     Created on : 29/09/2019, 08:00:24 PM
     Author     : Usuario
@@ -36,7 +36,7 @@
                     </div>
                 </c:if>
 
-                <h2 class="text-center">SIGCE Log in</h2>  
+                <h2 class="text-center">SIGCE</h2>  
                 <hr>
                 <br>
                 <div class="form-group">
@@ -46,8 +46,8 @@
                     <input type="password" class="form-control" placeholder="Contraseña" name="password" required="required">
                 </div>
                 <div class="form-group">
-                    <!--<button type="submit" class="btn btn-primary btn-block" formaction="eventStartPage.jsp">Acceder</button>-->
-                    <input type="submit" name="loginBtn" value="Acceder">
+                    <button type="submit" class="btn btn-primary btn-block rounded">Acceder</button>
+                    <!--<input type="submit" class="btn btn-primary" name="loginBtn" value="Acceder">-->
                 </div>       
             </form>
 

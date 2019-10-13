@@ -7,7 +7,11 @@ package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -96,14 +100,70 @@ public class EventManagementServlet extends HttpServlet {
         if (tipo.equals("buscar")) {
             String fecha_inicio = request.getParameter("start_date");
             String fecha_fin = request.getParameter("end_date");
-            List<Event> elements;
+
+            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                elements = eventDAO.search(fecha_inicio, fecha_fin);
-                request.setAttribute("eventos", elements);
-                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                Date date1 = sdf.parse(fecha_inicio);
+                Date date2 = sdf.parse(fecha_fin);
+
+                int cd = date1.compareTo(date2);
+
+                switch (cd) {
+                    case 1:
+                        List<Event> elements;
+                        try {
+                            elements = eventDAO.search(fecha_inicio, fecha_fin);
+                            request.setAttribute("eventos", elements);
+                            request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                    case -1:
+                        request.setAttribute("e", "Coloca bien las fechas para realizar la búsqueda.");
+                        request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                        break;
+
+                    case 0:
+                        request.setAttribute("e", "Las fechas no pueden ser iguales.");
+                        request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                        break;
+
+                    default:
+                        //???
+                        break;
+                }*/
+
+                List<Event> elements;
+                try {
+                    elements = eventDAO.search(fecha_inicio, fecha_fin);
+                    request.setAttribute("eventos", elements);
+                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                /*if (date1.compareTo(date2) > 0) {
+                    List<Event> elements;
+                    try {
+                        elements = eventDAO.search(fecha_inicio, fecha_fin);
+                        request.setAttribute("eventos", elements);
+                        request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (date1.compareTo(date2) < 0) {
+                    request.setAttribute("e", "Coloca bien las fechas para realizar la búsqueda.");
+                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                } else if (date1.compareTo(date2) == 0) {
+                    request.setAttribute("e", "Las fechas no pueden ser iguales.");
+                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                }*/
+            /*} catch (ParseException ex) {
+                Logger.getLogger(EventManagementServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+
         }
     }
 
