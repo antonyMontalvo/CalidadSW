@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unmsm.edu.pe.calidadsw.dao.component;
 
 import java.sql.CallableStatement;
@@ -22,7 +17,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 public class AdministratorDAO implements IAdministratorDAO {
 
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("AdministratorDAO");
+    private static final Logger LOGGER = Logger.getLogger(AdministratorDAO.class.getName());
 
     public AdministratorDAO() {
         jdbc = new JDBCDataAccessClass();
@@ -47,7 +42,7 @@ public class AdministratorDAO implements IAdministratorDAO {
                     admin.setPassword(resultSet.getString("password"));
                     admin.setName(resultSet.getString("name"));
                     admin.setLastname(resultSet.getString("lastname"));
-                    admin.setBirthdate(resultSet.getDate("birthdate"));
+                    admin.setBirthdate(resultSet.getString("birthdate"));
                 }
                 LOGGER.log(Level.INFO, "Admin.");
             }

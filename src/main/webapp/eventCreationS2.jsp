@@ -17,7 +17,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
     <link rel="icon" href="favicon.ico">
-    
+
     <title>SIGCE</title>
 </head>
 
@@ -40,8 +40,8 @@
                                     <div class="form-group">
                                         <br>
                                         <label for="environment">Ambiente</label>
-                                        <select id="environment" name="environment" class="form-control">
-                                            <option selected>Elige...</option>
+                                        <select id="environment" name="environment" class="form-control" required>
+                                            <option hidden selected disabled>Elige...</option>
                                             <c:forEach items="${ambients}" var="item">
                                                 <option value="${item.getIdAmbient()}">
                                                     <c:out value="${item.getName()}" />
@@ -54,7 +54,7 @@
 
                                     <br>
 
-                                    <button type="submit" class="btn btn-primary">Crear</button>
+                                    <button type="submit" class="btn btn-primary">Siguiente</button>
 
                                 </form>
                             </div>
@@ -72,8 +72,8 @@
                             <div class="card-header">¿Necesitas ayuda?</div>
                             <div class="card-body">
                                 <h5 class="card-title">Sobre la creación de eventos...</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
+                                <p class="card-text">En esta segunda parte se añadira los ambientes que se encuentran
+                                    disponibles .</p>
                             </div>
                         </div>
                     </div>

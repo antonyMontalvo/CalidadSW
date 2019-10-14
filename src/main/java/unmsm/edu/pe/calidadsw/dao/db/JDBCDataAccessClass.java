@@ -39,6 +39,10 @@ public class JDBCDataAccessClass {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public Connection getJdbcConnection() {
         Connection jdbcConnection = null;
 

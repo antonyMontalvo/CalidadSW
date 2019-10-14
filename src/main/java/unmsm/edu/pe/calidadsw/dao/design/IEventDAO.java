@@ -16,20 +16,27 @@ public interface IEventDAO {
      * @return
      */
     public abstract int createBasic(Event event);
-
+    
     /**
      * 
      * @param event
      * @return
      */
-    public abstract boolean createSecond(Event event);
+    public abstract boolean finalCreate(Event event);
 
     /**
      * 
-     * @param id
+     * @param idEvent
      * @return
      */
-    public abstract boolean delete(Integer id);
+    public abstract boolean delete(Integer idEvent);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract Event readEvent(Integer idEvent);
 
     /**
      * 
@@ -44,6 +51,18 @@ public interface IEventDAO {
      * @return
      */
     public abstract List<Event> search(String startDate, String endDate);
-    
-    public abstract boolean publish(Integer id);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract boolean publish(Integer idEvent);
+
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
+    public abstract List<Event> filterSchedule(Event event);
 }

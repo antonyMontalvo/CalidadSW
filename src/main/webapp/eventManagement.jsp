@@ -27,6 +27,9 @@
         <jsp:attribute name="content">
             <div class="container">
                 <br>
+                <c:if test="${message != null}">
+                    ${message}
+                </c:if>
                 <br>
 
                 <h2 class="ml-4">Lista de eventos</h2>
@@ -93,13 +96,14 @@
                                         <c:out value="${item.getAmbient().getName()}" />
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-info" href="eventAttendant.jsp">
-                                            <em class="fas fa-info-circle fa-lg"></em>
+                                        <a class="btn btn-info" href="./events?accion=update&id=${item.getIdEvent()}">
+                                            <em class="fas fa-pen fa-lg"></em>
                                         </a>
-                                        <a class="btn btn-warning" href="#">
-                                            <em class="fas fa-pen-square fa-lg"></em>
+                                        <a class="btn btn-warning"
+                                            href="./events?accion=delete&id=${item.getIdEvent()}">
+                                            <em class="fas fa-trash-alt fa-lg"></em>
                                         </a>
-                                        <a class="btn btn-dark" href="events?accion=publicar&id=${item.getIdEvent()}">
+                                        <a class="btn btn-dark" href="./events?accion=publish&id=${item.getIdEvent()}">
                                             <em class="fas fa-eye fa-lg"></em>
                                         </a>
                                     </td>

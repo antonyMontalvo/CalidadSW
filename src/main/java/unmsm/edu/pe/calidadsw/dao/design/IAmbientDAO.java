@@ -22,7 +22,7 @@ public interface IAmbientDAO {
      * @param id
      * @return
      */
-    public abstract boolean delete(Integer id);
+    public abstract boolean delete(Integer idAmbient);
 
     /**
      * 

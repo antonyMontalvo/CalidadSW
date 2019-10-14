@@ -16,7 +16,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
 public class ExhibitorDAO implements IExhibitorDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("ExhibitorDAO");
+    private static final Logger LOGGER = Logger.getLogger(ExhibitorDAO.class.getName());
 
     public ExhibitorDAO() {
         jdbc = new JDBCDataAccessClass();

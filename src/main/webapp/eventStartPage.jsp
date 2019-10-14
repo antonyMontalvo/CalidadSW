@@ -22,16 +22,16 @@
 
     <%
         HttpSession s = request.getSession();
-        if (s.getAttribute("userdata") == null) {
+        /*if (s.getAttribute("userdata") == null) {
             request.getRequestDispatcher("login").forward(request, response);
             response.sendRedirect("login");
-        }
+        }*/
         
-        /* String username;
+        String username;
         if(s.getAttribute("username")!= null){
             username = s.getAttribute("username").toString();
             out.println(username+ " thiss");
-        }*/
+        }
     %>
 
     <t:sidebar>

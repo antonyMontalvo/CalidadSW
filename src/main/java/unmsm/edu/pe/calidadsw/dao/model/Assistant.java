@@ -12,40 +12,50 @@ public class Assistant {
     private Client client;
     private Event event;
 
-    public Assistant() {
-    }
-
-    public Assistant(Client client, Event event) {
-        this.client = client;
-        this.event = event;
-    }
-
-    public Assistant(int idAssistant, Client client, Event event) {
-        this.idAssistant = idAssistant;
-        this.client = client;
-        this.event = event;
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getIdAssistant() {
         return idAssistant;
     }
 
+    /**
+     * 
+     * @param idAssistant
+     */
     public void setIdAssistant(int idAssistant) {
         this.idAssistant = idAssistant;
     }
 
+    /**
+     * 
+     * @return
+     */
     public Client getClient() {
         return client;
     }
 
+    /**
+     * 
+     * @param client
+     */
     public void setClient(Client client) {
         this.client = client;
     }
 
+    /**
+     * 
+     * @return
+     */
     public Event getEvent() {
         return event;
     }
 
+    /**
+     * 
+     * @param event
+     */
     public void setEvent(Event event) {
         this.event = event;
     }
