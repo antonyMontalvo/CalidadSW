@@ -45,6 +45,20 @@ public class test {
         
         System.out.println(admin.getName() + " funciono!");
         
+        Event e = new Event();
+        
+        e.setTitle("Numb");
+        e.setDescription("ola");
+        e.setDate("1997-11-11");
+        e.setState("creado");
+
+        Administrator administrator = new Administrator();
+        administrator.setIdAdministrator(1);
+        e.setAdministrator(administrator);
+
+        int idEvent = eventDAO.createBasic(e);
+        
+        System.out.println(idEvent + "BUUE");
         
     }
 }

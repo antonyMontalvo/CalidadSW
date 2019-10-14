@@ -34,7 +34,7 @@
                             <div class="card-body">
                                 <h2>Escoge tu ambiente</h2>
                                 Después de crear un evento, debes escoger el ambiente en el cuál se llevará a cabo.
-
+                                
                                 <form method="post" action="events_create?action=create2">
 
                                     <div class="form-group">
@@ -43,7 +43,7 @@
                                         <select id="environment" name="environment" class="form-control">
                                             <option selected>Elige...</option>
                                             <c:forEach items="${ambients}" var="item">
-                                                <option value="${item.getIdEvent()}">
+                                                <option value="${item.getIdAmbient()}">
                                                     <c:out value="${item.getName()}" />
                                                 </option>
                                             </c:forEach>

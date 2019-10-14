@@ -4,6 +4,7 @@
     Author     : Usuario
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
@@ -14,7 +15,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
         <link rel="icon" href="favicon.ico">
-             
+
         <title>SIGCE</title>
     </head>
     <body>
@@ -24,39 +25,61 @@
                     <br>
                     <br>
 
-                    <h2 class="ml-4">Asistentes</h2>
+                    <h2 class="ml-4">Reporte de asistentes</h2>
                     <br>
+
+                    <form method="post" action="EventAttendantServlet" class="ml-4 mr-4">
+
+                        <div class="form-row align-items-center">
+
+
+                            <div class="col-8">
+                                <label for="events">Eventos disponibles</label>
+                                <select id="events" name="eventId" class="form-control mb-2">
+                                    <option selected>Elige...</option>
+                                    <c:forEach items="${events}" var="item">
+                                        <option value="${item.getIdEvent()}">
+                                            <c:out value="${item.getTitle()}" />
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary mt-4">Buscar</button>
+                            </div>
+
+                        </div>
+                    </form>
                     <br>
-                    
+
                     <div class="row ml-4 mr-4">
-                        
+
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" class="text-center">ID</th>
                                     <th scope="col" class="text-center">Nombres</th>
                                     <th scope="col" class="text-center">Apellidos</th>
-                                    <th scope="col" class="text-center">DNI</th>
-                                    <th scope="col" class="text-center">Edad</th>
-                                    <th scope="col" class="text-center">Teléfono</th>
                                     <th scope="col" class="text-center">Email</th>
+                                    <th scope="col" class="text-center">DNI</th>
+                                    <th scope="col" class="text-center">Teléfono</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">Carol</td>
-                                    <td class="text-center">Andia Baltra</td>
-                                    <td class="text-center">72468045</td>
-                                    <td class="text-center">21</td>
-                                    <td class="text-center">3230476</td>
-                                    <td class="text-center">carol.andia@unmsm.edu.pe</td>
-
-                                </tr>
+                                <c:forEach items="${attendant}" var="item">
+                                    <tr>
+                                        <td class="text-center">${item.getName()}</td>
+                                        <td class="text-center">${item.getLastname()}</td>
+                                        <td class="text-center">${item.getMail()}</td>
+                                        <td class="text-center">${item.getDni()}</td>
+                                        <td class="text-center">${item.getTelephone()}</td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>    
                     </div>
-                    
+
                 </div>
             </jsp:attribute>
         </t:sidebar>

@@ -13,7 +13,9 @@
             <a href="./events_create?action=index" class="list-group-item list-group-item-action bg-dark"><font color="white">Crear evento</font></a>
             <a href="./events" class="list-group-item list-group-item-action bg-dark"><font color="white">Gestión de eventos</font></a>
             <a href="./ambients" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark"><font color="white">Reportes</font></a>
+            <a href="./EventAttendantServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Asistentes</font></a>
+            <a href="./EventExpositorServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Expositores</font></a>
+            
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
