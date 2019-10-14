@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 
             if (adminData != null && password.equals(adminData.getPassword())) {
                 HttpSession s = request.getSession();
-                s.setAttribute("username", adminData.getUsername());
+                s.setAttribute("username", adminData.getName() + " " + adminData.getLastname());
                 response.sendRedirect("eventStartPage.jsp");
             } else {
                 request.setAttribute("e", "Error al iniciar sesión.");

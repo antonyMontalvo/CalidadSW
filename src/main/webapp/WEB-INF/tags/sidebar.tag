@@ -15,12 +15,12 @@
             <a href="./ambients" class="list-group-item list-group-item-action bg-dark"><font color="white">Ambiente</font></a>
             <a href="./EventAttendantServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Asistentes</font></a>
             <a href="./EventExpositorServlet" class="list-group-item list-group-item-action bg-dark"><font color="white">Expositores</font></a>
-            
+
         </div>
     </div>
     <!-- /#sidebar-wrapper -->
-    
-    
+
+
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
@@ -28,24 +28,36 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                          
+
                     <li class="nav-item ml-4">
-                        <a class="nav-link" href="#">${sessionScope.userdata.getUsername()}</a>
+                        <a class="nav-link">${sessionScope.username}</a>
                     </li>
-                    
+
                     <li class="nav-item ml-4">
                         <a class="nav-link" href="logout">Cerrar sesión</a>
                     </li>
-                    
+
                 </ul>
             </div>
         </nav>
 
+
+        <%
+            HttpSession s = request.getSession();
+
+            if (s.getAttribute("username") != null) { //Obtiene la variable username de la sesión y si está no está vacia
+                //No realizá accion alguna
+            } else {
+                //Redirige al login.
+                response.sendRedirect("login");
+            }
+        %>
+        
         <jsp:invoke fragment="content" /> <!--Bloque para trabajar el contenido de las vistas-->
 
     </div>
     <!-- /#page-content-wrapper -->
-    
-    
+
+
 </div>
 <!-- /#wrapper -->
