@@ -16,14 +16,7 @@ public interface IEventDAO {
      * @return
      */
     public abstract int createBasic(Event event);
-
-    /**
-     * 
-     * @param event
-     * @return
-     */
-    public abstract boolean createSecond(Event event);
-
+    
     /**
      * 
      * @param event

@@ -15,7 +15,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
     <link rel="icon" href="favicon.ico">
-    
+
     <title>SIGCE</title>
 </head>
 
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <br>
                                         <label for="date">Fecha del evento</label>
-                                        <input class="form-control" type="date" value="2019-10-8" id="date" name="date"
+                                        <input class="form-control" type="date" value="2019-10-16" id="date" name="date"
                                             required>
                                         <small id="dateHelp" class="form-text text-muted">Día en la cual se desarrollará
                                             el evento, el horario se definira más adelante.</small>
@@ -95,8 +95,6 @@
 
         </jsp:attribute>
     </t:sidebar>
-</body>
-
 </body>
 
 </html>

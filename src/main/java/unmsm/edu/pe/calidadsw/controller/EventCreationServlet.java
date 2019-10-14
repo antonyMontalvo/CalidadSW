@@ -1,9 +1,11 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +32,9 @@ public class EventCreationServlet extends HttpServlet {
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
     static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
     private static final String EVENT = "event";
+    private static final String MESSAGE = "message";
     private static final String RETURN_INDEX = "./events_create?action=index";
+    private static final String AMBIENT = "ambient";
 
     public EventCreationServlet() {
         super();
@@ -56,20 +60,11 @@ public class EventCreationServlet extends HttpServlet {
             case "index":
                 index(request, response);
                 break;
-            case "create1":
-                create1(request, response);
-                break;
             case "second":
                 second(request, response);
                 break;
-            case "create2":
-                create2(request, response);
-                break;
             case "third":
                 third(request, response);
-                break;
-            case "create3":
-                create3(request, response);
                 break;
             default:
                 break;
@@ -90,8 +85,23 @@ public class EventCreationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
         try {
-            doGet(request, response);
+            switch (action) {
+            case "create1":
+                create1(request, response);
+                break;
+            case "create2":
+                create2(request, response);
+                break;
+            case "create3":
+                create3(request, response);
+                break;
+            default:
+                break;
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
@@ -155,7 +165,6 @@ public class EventCreationServlet extends HttpServlet {
      * @throws IOException
      */
     private void second(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         Integer idEvent = (Integer) session.getAttribute(EVENT);
 
@@ -176,25 +185,14 @@ public class EventCreationServlet extends HttpServlet {
      * @throws IOException
      */
     private void create2(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Event event = new Event();
         Ambient ambient = new Ambient();
 
         ambient.setIdAmbient(Integer.parseInt(request.getParameter("environment")));
-        event.setAmbient(ambient);
 
         HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute(EVENT);
-        event.setIdEvent(idEvent);
+        session.setAttribute(AMBIENT, ambient.getIdAmbient());
 
-        boolean status = eventDAO.createSecond(event);
-        if (status) {
-            session.setAttribute("status", true);
-            session.setAttribute("idAmbient", ambient.getIdAmbient());
-            response.sendRedirect("./events_create?action=third");
-        } else {
-            session.removeAttribute(EVENT);
-            response.sendRedirect(RETURN_INDEX);
-        }
+        response.sendRedirect("./events_create?action=third");
     }
 
     /**
@@ -206,24 +204,47 @@ public class EventCreationServlet extends HttpServlet {
      */
     private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        boolean status = (Boolean) session.getAttribute("status");
+        Integer idEvent = (Integer) session.getAttribute(EVENT);
+        Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
 
-        if (!status) {
-            response.sendRedirect(RETURN_INDEX);
+        Event event = new Event();
+        Ambient ambient = new Ambient();
+
+        event.setIdEvent(idEvent);
+        ambient.setIdAmbient(idAmbient);
+        event.setAmbient(ambient);
+
+        List<Event> eventsHours = eventDAO.filterSchedule(event);
+        List<Event> hours = new ArrayList<>();
+
+        if (!eventsHours.isEmpty()) {
+            for (int i = 9; i < 25; i++) {
+                Event e = new Event();
+                e.setStartTime(i - 1);
+                e.setEndTime(i);
+
+                boolean find = false;
+                for (int j = 0; j < eventsHours.size() && !find; j++) {
+
+                    if (eventsHours.get(j).getStartTime() <= i - 1 && i <= eventsHours.get(j).getEndTime()) {
+                        e.setIdEvent(1);
+                        find = true;
+                    }
+                }
+
+                hours.add(e);
+            }
         } else {
-            Event event = new Event();
-            Ambient ambient = new Ambient();
-            Integer idEvent = (Integer) session.getAttribute(EVENT);
-
-            event.setIdEvent(idEvent);
-            ambient.setIdAmbient(Integer.parseInt(request.getParameter("idAmbient")));
-            event.setAmbient(ambient);
-    
-            List<Event> events = eventDAO.filterSchedule(event);
-
-            request.setAttribute("events", events);
-            request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
+            for (int i = 9; i < 25; i++) {
+                Event e = new Event();
+                e.setStartTime(i - 1);
+                e.setEndTime(i);
+                hours.add(e);
+            }
         }
+
+        request.setAttribute("events", hours);
+        request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
 
     /**
@@ -235,19 +256,39 @@ public class EventCreationServlet extends HttpServlet {
     private void create3(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Event event = new Event();
 
-        event.setStartTime(Integer.parseInt(request.getParameter("start-time")));
-        event.setEndTime(Integer.parseInt(request.getParameter("end-time")));
+        String[] hours = request.getParameterValues("hour");
 
-        HttpSession session = request.getSession();
-        Integer idEvent = (Integer) session.getAttribute(EVENT);
-        event.setIdEvent(idEvent);
+        if (hours.length > 0) {
 
-        boolean status = eventDAO.finalCreate(event);
-        if (status) {
-            response.sendRedirect("./events");
+            int index = 0;
+            for (String hr : hours) {
+                if (index == 0) {
+                    event.setStartTime(Integer.parseInt(hr));
+                }
+
+                if (index == hours.length - 1) {
+                    event.setEndTime(Integer.parseInt(hr) + 1);
+                }
+                index++;
+            }
+            HttpSession session = request.getSession();
+            Integer idEvent = (Integer) session.getAttribute(EVENT);
+            Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
+
+            event.setIdEvent(idEvent);
+            event.setAmbient(new Ambient(idAmbient));
+
+            boolean status = eventDAO.finalCreate(event);
+            if (status) {
+                response.sendRedirect("./events?accion=index");
+            } else {
+                session.removeAttribute(EVENT);
+                response.sendRedirect(RETURN_INDEX);
+            }
         } else {
-            session.removeAttribute(EVENT);
-            response.sendRedirect(RETURN_INDEX);
+            request.setAttribute(MESSAGE,
+                    "<div class='alert alert-warning' role='alert'>Debe seleccionar algun horario o regresar y cambiar de ambiente</div>");
+            response.sendRedirect("./events_create?action=third");
         }
     }
 

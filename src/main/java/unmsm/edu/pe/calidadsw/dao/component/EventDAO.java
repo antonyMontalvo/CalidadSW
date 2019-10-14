@@ -66,47 +66,17 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
-    public boolean createSecond(Event event) {
+    public boolean finalCreate(Event event) {
         Boolean result = true;
-        String sql = "{CALL sp_update_event_ambient(?,?)}";
+        String sql = "{CALL sp_update_event_ambient_final(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setInt(1, event.getIdEvent());
             callableStatement.setInt(2, event.getAmbient().getIdAmbient());
-
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-                if (resultSet.next()) {
-                    int response = resultSet.getInt(RESPONSE);
-
-                    if (response == 0) {
-                        result = false;
-                        LOGGER.log(Level.WARNING, "Error to execute procedure create second part.");
-                    } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Event second part create succesfully.");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            result = false;
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean finalCreate(Event event) {
-        Boolean result = true;
-        String sql = "{CALL sp_update_event_ambient_final(?,?,?)}";
-
-        try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
-
-            callableStatement.setInt(1, event.getIdEvent());
-            callableStatement.setInt(2, event.getStartTime());
-            callableStatement.setInt(3, event.getEndTime());
+            callableStatement.setInt(3, event.getStartTime());
+            callableStatement.setInt(4, event.getEndTime());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
@@ -317,7 +287,7 @@ public class EventDAO implements IEventDAO {
     public List<Event> filterSchedule(Event event) {
         List<Event> events = new ArrayList<>();
 
-        String sql = "{CALL sp_search_events(?,?)}";
+        String sql = "{CALL sp_filter_avaliable_ambients(?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -329,12 +299,14 @@ public class EventDAO implements IEventDAO {
 
                 while (resultSet.next()) {
                     Event eventRes = new Event();
+                    Ambient ambient = new Ambient();
 
                     eventRes.setIdEvent(resultSet.getInt(IDEVENT));
-                    eventRes.setTitle(resultSet.getString(TITLE));
-                    eventRes.setDescription(resultSet.getString(DESCRIPTION));
-                    eventRes.setDate(resultSet.getString(DATE));
-                    eventRes.setState(resultSet.getString(STATE));
+                    eventRes.setStartTime(resultSet.getInt("start_time"));
+                    eventRes.setEndTime(resultSet.getInt("end_time"));
+
+                    ambient.setIdAmbient(resultSet.getInt(IDAMBIENT));
+                    eventRes.setAmbient(ambient);
 
                     events.add(eventRes);
                 }

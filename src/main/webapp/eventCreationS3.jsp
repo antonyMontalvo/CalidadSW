@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
     <link rel="icon" href="favicon.ico">
 
+    <script src="https://kit.fontawesome.com/f3fb6f4736.js" crossorigin="anonymous"></script>
     <title>SIGCE</title>
 </head>
 
@@ -29,18 +30,41 @@
                 <div class="row">
                     <div class="col-7">
 
+                        <a href="./events_create?action=second" class="btn btn-info">
+                            <em class="fas fa-chevron-left fa-lg"></em>
+                        </a><br>
+
                         <!--Card event creation-->
                         <div class="card ml-4">
                             <div class="card-body">
                                 <h2>Escoge de los horarios que se encuentran disponibles</h2>
                                 Para finalizar escogeremos el horario en el cual se realizara el evento.
+                                <br><br>
 
                                 <form method="post" action="events_create?action=create3">
 
-                                    <div class="form-group">
-                                        <br>
-                                        
-                                    </div>
+                                    <c:forEach items="${events}" var="item" varStatus="i">
+                                        <div class="col-auto my-1">
+                                            <div class="custom-control custom-checkbox mr-sm-2">
+                                                <c:choose>
+                                                    <c:when test="${item.getIdEvent() == 1}">
+                                                        <input type="checkbox" class="custom-control-input" disabled
+                                                            id="customControlAutosizing_${i.count}"
+                                                            value="${item.getStartTime()}" name="hour">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customControlAutosizing_${i.count}"
+                                                            value="${item.getStartTime()}" name="hour">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <label class="custom-control-label"
+                                                    for="customControlAutosizing_${i.count}">
+                                                    <c:out value="${item.getStartTime()}" />:00 -
+                                                    <c:out value="${item.getEndTime()}" />:00 hrs</label>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
 
                                     <br>
 
@@ -63,7 +87,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">Sobre la creación de eventos...</h5>
                                 <p class="card-text">En esta ultima parte se escogera uno de los horarios disponibles
-                                    del ambiente que se selecciono, los expositores los podra añadir luego.</p>
+                                    del ambiente que se selecciono, aquellos horarios ocupados no se podran seleccionar.
+                                    Los expositores los podra añadir luego.</p>
                             </div>
                         </div>
                     </div>

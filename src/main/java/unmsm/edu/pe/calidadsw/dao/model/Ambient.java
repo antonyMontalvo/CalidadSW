@@ -13,6 +13,18 @@ public class Ambient {
     private String description;
     private String state;
 
+    public Ambient() {
+
+    }
+
+    /**
+     * 
+     * @param idAmbient
+     */
+    public Ambient(int idAmbient) {
+        this.idAmbient = idAmbient;
+    }
+
     /**
      * 
      * @return

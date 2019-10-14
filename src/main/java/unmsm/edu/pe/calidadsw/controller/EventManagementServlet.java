@@ -25,6 +25,7 @@ public class EventManagementServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(EventManagementServlet.class.getName());
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
+    private static final String MESSAGE = "message";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -124,7 +125,7 @@ public class EventManagementServlet extends HttpServlet {
         Event event = eventDAO.readEvent(id);
 
         if (event == null) {
-            request.setAttribute("message", "<div class='alert alert-danger' role='alert'>No existe este evento</div>");
+            request.setAttribute(MESSAGE, "<div class='alert alert-danger' role='alert'>No existe este evento</div>");
         } else {
             request.setAttribute("event", event);
         }
@@ -143,10 +144,10 @@ public class EventManagementServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.delete(id)) {
-            request.setAttribute("message",
+            request.setAttribute(MESSAGE,
                     "<div class='alert alert-success' role='alert'>Se elimino correctamente</div>");
         } else {
-            request.setAttribute("message",
+            request.setAttribute(MESSAGE,
                     "<div class='alert alert-danger' role='alert'>Ocurrio un error al eliminar el evento</div>");
         }
 
@@ -165,10 +166,10 @@ public class EventManagementServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.publish(id)) {
-            request.setAttribute("message",
+            request.setAttribute(MESSAGE,
                     "<div class='alert alert-success' role='alert'>Se publico correctamente</div>");
         } else {
-            request.setAttribute("message",
+            request.setAttribute(MESSAGE,
                     "<div class='alert alert-danger' role='alert'>Ocurrio un error al publicar el evento</div>");
         }
 
