@@ -130,7 +130,7 @@ public class EventManagementServlet extends HttpServlet {
             request.setAttribute("event", event);
         }
 
-        request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
+        request.getRequestDispatcher("eventUpdate.jsp").forward(request, response);
     }
 
     /**
