@@ -39,13 +39,11 @@ public class PresentationDAO implements IPresentationDAO {
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
 
-                Presentation presentation = new Presentation();
-
                 while (resultSet.next()) {
+                    Presentation presentation = new Presentation();
+
                     if (resultSet.isFirst()) {
                         Event event = new Event();
-                        Ambient ambient = new Ambient();
-
                         event.setTitle(resultSet.getString("title"));
                         event.setDate(resultSet.getString("date"));
                         event.setDescription(resultSet.getString("description"));
@@ -53,23 +51,25 @@ public class PresentationDAO implements IPresentationDAO {
                         event.setEndTime(resultSet.getInt("end_time"));
                         event.setState(resultSet.getString("state"));
 
+                        Ambient ambient = new Ambient();
                         ambient.setName(resultSet.getString("ambient_name"));
                         ambient.setDescription(resultSet.getString("ambient_description"));
                         ambient.setCapacity(resultSet.getInt("ambient_capacity"));
+
                         event.setAmbient(ambient);
 
                         presentation.setEvent(event);
                     }
 
-                    Exhibitor exhibitor = new Exhibitor();
-
                     presentation.setTheme(resultSet.getString("presentation_theme"));
                     presentation.setStartTime(resultSet.getInt("presentation_start_time"));
                     presentation.setEndTime(resultSet.getInt("presentation_end_time"));
 
+                    Exhibitor exhibitor = new Exhibitor();
                     exhibitor.setName(resultSet.getString("exhibitor_name"));
                     exhibitor.setLastname(resultSet.getString("exhibitor_last_name"));
                     exhibitor.setSpecialty(resultSet.getString("exhibitor_specialty"));
+
                     presentation.setExhibitor(exhibitor);
 
                     presentations.add(presentation);

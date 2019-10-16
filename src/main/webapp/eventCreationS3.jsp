@@ -67,7 +67,6 @@
                                     </c:forEach>
 
                                     <br>
-
                                     <button type="submit" class="btn btn-primary">Siguiente</button>
 
                                 </form>

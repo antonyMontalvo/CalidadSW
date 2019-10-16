@@ -39,7 +39,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="title">Título</label>
+                                        <label class="font-weight-bold" for="title">Título</label>
                                         <input type="text" class="form-control" id="title" name="title" required>
                                         <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y
                                             claro.</small>
@@ -47,7 +47,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="description">Descripción</label>
+                                        <label class="font-weight-bold" for="description">Descripción</label>
                                         <textarea class="form-control" id="description" name="description" required
                                             rows="5"></textarea>
                                         <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de
@@ -56,7 +56,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="date">Fecha del evento</label>
+                                        <label class="font-weight-bold" for="date">Fecha del evento</label>
                                         <input class="form-control" type="date" value="2019-10-16" id="date" name="date"
                                             required>
                                         <small id="dateHelp" class="form-text text-muted">Día en la cual se desarrollará

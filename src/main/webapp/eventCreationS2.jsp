@@ -39,7 +39,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="environment">Ambiente</label>
+                                        <label class="font-weight-bold" for="environment">Ambiente</label>
                                         <select id="environment" name="environment" class="form-control" required>
                                             <option hidden selected disabled>Elige...</option>
                                             <c:forEach items="${ambients}" var="item">

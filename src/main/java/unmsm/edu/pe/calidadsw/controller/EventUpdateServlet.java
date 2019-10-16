@@ -79,6 +79,7 @@ public class EventUpdateServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
+            response.sendRedirect("./events?accion=index");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
