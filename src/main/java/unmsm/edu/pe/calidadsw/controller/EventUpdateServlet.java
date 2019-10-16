@@ -1,7 +1,6 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,11 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import unmsm.edu.pe.calidadsw.dao.DAOFactory;
 import unmsm.edu.pe.calidadsw.dao.design.IPresentationDAO;
-import unmsm.edu.pe.calidadsw.dao.model.Event;
 import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
 /**
@@ -28,8 +25,6 @@ public class EventUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(EventUpdateServlet.class.getName());
     static IPresentationDAO presentationDAO = DAOFactory.getInstance().getPresentationDAO();
-    private static final String EVENT = "event";
-    private static final String MESSAGE = "message";
 
     public EventUpdateServlet() {
         super();
@@ -49,8 +44,7 @@ public class EventUpdateServlet extends HttpServlet {
 
         List<Presentation> presentations;
         try {
-            HttpSession session = request.getSession();
-            Integer idEvent = (Integer) session.getAttribute(EVENT);
+            int idEvent = Integer.parseInt(request.getParameter("id"));
 
             presentations = presentationDAO.readExhibitorsEvent(idEvent);
 

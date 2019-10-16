@@ -16,7 +16,7 @@ public class JDBCDataAccessClass {
     private String jdbcURL = null;
     private String jdbcUsername = null;
     private String jdbcPassword = null;
-    private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
+    private static final Logger LOGGER = Logger.getLogger(JDBCDataAccessClass.class.getName());
 
     public JDBCDataAccessClass() {
         int contador = 0;

@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <br>
                                         <label for="description">Descripción</label>
-                                        <textarea class="form-control" id="description" name="description"
+                                        <textarea class="form-control" id="description" name="description" required
                                             rows="5"></textarea>
                                         <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de
                                             que trata el evento.</small>

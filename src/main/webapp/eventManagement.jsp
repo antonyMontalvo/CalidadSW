@@ -96,7 +96,7 @@
                                         <c:out value="${item.getAmbient().getName()}" />
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-info" href="./events?accion=update&id=${item.getIdEvent()}">
+                                        <a class="btn btn-info" href="./events_update?id=${item.getIdEvent()}">
                                             <em class="fas fa-pen fa-lg"></em>
                                         </a>
                                         <a class="btn btn-warning"

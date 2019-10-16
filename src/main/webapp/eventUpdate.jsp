@@ -35,32 +35,32 @@
                                 <h2>Editar Evento</h2>
                                 Sólo se podrán editar eran ciertos campos.
 
-                                <form method="post" action="events_create?action=create1">
+                                <form method="post" action="./events?accion=index">
 
                                     <div class="form-group">
                                         <br>
                                         <label for="title">Título</label>
-                                        <input type="text" class="form-control" id="title" name="title" value="${}"
-                                            disabled>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                            value="${eventTitle}" disabled>
                                     </div>
 
                                     <div class="form-group">
                                         <br>
                                         <label for="description">Descripción</label>
                                         <textarea class="form-control" id="description" name="description" rows="5"
-                                            value="${}" disabled></textarea>
+                                            disabled>${eventDescription}</textarea>
                                     </div>
 
                                     <div class="form-group">
                                         <br>
                                         <label for="date">Fecha del evento</label>
-                                        <input class="form-control" type="date" value="2019-10-16" id="date" name="date"
-                                            value="${}" disabled>
+                                        <input class="form-control" type="date" id="date" name="date"
+                                            value="${eventDate}" disabled>
                                     </div>
 
                                     <br>
 
-                                    <button type="submit" class="btn btn-primary">Siguiente</button>
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
 
                                 </form>
                             </div>
