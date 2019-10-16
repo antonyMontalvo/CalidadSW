@@ -47,7 +47,7 @@ public class JDBCDataAccessClass {
         Connection jdbcConnection = null;
 
         try {
-            jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+            jdbcConnection = DriverManager.getConnection(this.jdbcURL, this.jdbcUsername, this.jdbcPassword);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
