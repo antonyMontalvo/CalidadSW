@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://dl.dropbox.com/s/usb8v6axquvg8u4/custom-login.css" />
-        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="https://dl.dropbox.com/s/2eb4fvhjukzew07/favicon.ico">
 
         <title>SIGCE</title>
     </head>

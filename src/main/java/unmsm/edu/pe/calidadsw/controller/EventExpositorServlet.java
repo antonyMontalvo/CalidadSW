@@ -25,7 +25,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 public class EventExpositorServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(EventCreationServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EventExpositorServlet.class.getName());
     static IExhibitorDAO exhibitorDAO = DAOFactory.getInstance().getExhibitorDAO();
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
 
@@ -40,6 +40,7 @@ public class EventExpositorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         List<Event> events;
         try {
             events = eventDAO.read();
@@ -48,6 +49,7 @@ public class EventExpositorServlet extends HttpServlet {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
+        
     }
 
     /**
@@ -62,10 +64,10 @@ public class EventExpositorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idEvent = Integer.parseInt(request.getParameter("eventId"));
-
         List<Exhibitor> exhibitors;
+
         try {
+            int idEvent = Integer.parseInt(request.getParameter("eventId"));
             exhibitors = exhibitorDAO.readExhibitorEvent(idEvent);
             request.setAttribute("exhibitors", exhibitors);
             request.getRequestDispatcher("eventExhibitor.jsp").forward(request, response);

@@ -21,21 +21,21 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
  *
  * @author Usuario
  */
-@WebServlet(name = "EventAttendantServlet", urlPatterns = {"/EventAttendantServlet"})
+@WebServlet(name = "EventAttendantServlet", urlPatterns = { "/EventAttendantServlet" })
 public class EventAttendantServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(EventCreationServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EventAttendantServlet.class.getName());
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
     static IAssistantDAO assistantDAO = DAOFactory.getInstance().getAssistantDAO();
 
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -55,21 +55,22 @@ public class EventAttendantServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idEvent = Integer.parseInt(request.getParameter("eventId"));
-        Event ev = new Event();
-        ev.setIdEvent(idEvent);
-
         List<Client> attendant;
+        Event ev = new Event();
+
         try {
+            int idEvent = Integer.parseInt(request.getParameter("eventId"));
+            ev.setIdEvent(idEvent);
+
             attendant = assistantDAO.readAssistantsEvent(ev);
             request.setAttribute("attendant", attendant);
             request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
