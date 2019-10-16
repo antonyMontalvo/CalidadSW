@@ -1,6 +1,6 @@
 <%-- 
-    Document   : eventAttendant
-    Created on : 29/09/2019, 04:58:40 PM
+    Document   : eventExhibitor
+    Created on : 16/10/2019, 09:41:44 AM
     Author     : Usuario
 --%>
 
@@ -25,10 +25,10 @@
                     <br>
                     <br>
 
-                    <h2 class="ml-4">Reporte de asistentes</h2>
+                    <h2 class="ml-4">Expositores</h2>
                     <br>
 
-                    <form method="post" action="EventAttendantServlet" class="ml-4 mr-4">
+                    <form method="post" action="EventExpositorServlet" class="ml-4 mr-4">
 
                         <div class="form-row align-items-center">
 
@@ -61,19 +61,19 @@
                                 <tr>
                                     <th scope="col" class="text-center">Nombres</th>
                                     <th scope="col" class="text-center">Apellidos</th>
-                                    <th scope="col" class="text-center">Email</th>
                                     <th scope="col" class="text-center">DNI</th>
-                                    <th scope="col" class="text-center">Teléfono</th>
+                                    <th scope="col" class="text-center">Especialidad</th>
+                                    <th scope="col" class="text-center">Nacionalidad</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${attendant}" var="item">
+                                <c:forEach items="${exhibitors}" var="item">
                                     <tr>
                                         <td class="text-center">${item.getName()}</td>
                                         <td class="text-center">${item.getLastname()}</td>
-                                        <td class="text-center">${item.getMail()}</td>
                                         <td class="text-center">${item.getDni()}</td>
-                                        <td class="text-center">${item.getTelephone()}</td>
+                                        <td class="text-center">${item.getSpecialty()}</td>
+                                        <td class="text-center">${item.getNationality()}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
