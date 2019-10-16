@@ -13,8 +13,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/webapp/lib/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="https://dl.dropbox.com/s/k4yx251xu3v0qxj/simple-sidebar.css" />
     <link rel="icon" href="favicon.ico">
+
     <title>SIGCE</title>
 </head>
 
@@ -38,7 +39,7 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="title">Título</label>
+                                        <label class="font-weight-bold" for="title">Título</label>
                                         <input type="text" class="form-control" id="title" name="title" required>
                                         <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y
                                             claro.</small>
@@ -46,28 +47,17 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="description">Descripción</label>
-                                        <textarea class="form-control" id="description" name="description"
+                                        <label class="font-weight-bold" for="description">Descripción</label>
+                                        <textarea class="form-control" id="description" name="description" required
                                             rows="5"></textarea>
                                         <small id="descriptionHelp" class="form-text text-muted">Cuenta a los demás de
                                             que trata el evento.</small>
                                     </div>
 
-                                    <!-- <div class="form-group">
-                                        <br>
-                                        <label for="expositor">Expositor</label>
-                                        <select id="expositor" name="expositor" class="form-control">
-                                            <option selected>Elige...</option>
-                                            <option>...</option>
-                                        </select>
-                                        <small id="expositorHelp" class="form-text text-muted">Persona que presentará la
-                                            ponencia durante el evento.</small>
-                                    </div> -->
-
                                     <div class="form-group">
                                         <br>
-                                        <label for="date">Fecha del evento</label>
-                                        <input class="form-control" type="date" value="2019-10-8" id="date" name="date"
+                                        <label class="font-weight-bold" for="date">Fecha del evento</label>
+                                        <input class="form-control" type="date" value="2019-10-16" id="date" name="date"
                                             required>
                                         <small id="dateHelp" class="form-text text-muted">Día en la cual se desarrollará
                                             el evento, el horario se definira más adelante.</small>
@@ -105,8 +95,6 @@
 
         </jsp:attribute>
     </t:sidebar>
-</body>
-
 </body>
 
 </html>

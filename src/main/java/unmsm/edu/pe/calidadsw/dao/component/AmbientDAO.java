@@ -15,7 +15,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 
 public class AmbientDAO implements IAmbientDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("AmbientDAO");
+    private static final Logger LOGGER = Logger.getLogger(AmbientDAO.class.getName());
 
     public AmbientDAO() {
         jdbc = new JDBCDataAccessClass();
@@ -57,14 +57,14 @@ public class AmbientDAO implements IAmbientDAO {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer idAmbient) {
         Boolean result = true;
         String sql = "{CALL sp_delete_ambient(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            callableStatement.setInt(1, id);
+            callableStatement.setInt(1, idAmbient);
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {

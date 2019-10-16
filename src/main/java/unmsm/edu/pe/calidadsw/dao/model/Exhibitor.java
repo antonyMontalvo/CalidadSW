@@ -1,7 +1,5 @@
 package unmsm.edu.pe.calidadsw.dao.model;
 
-import java.util.Date;
-
 /**
  *
  * @author antony
@@ -11,44 +9,50 @@ public class Exhibitor extends User {
     private String nationality;
     private String specialty;
 
-    public Exhibitor() {
-    }
-
-    public Exhibitor(String dni, String name, String lastname, Date birthdate, String nationality, String specialty) {
-        super(dni, name, lastname, birthdate);
-        this.nationality = nationality;
-        this.specialty = specialty;
-    }
-
-    public Exhibitor(String dni, String name, String lastname, Date birthdate, int idExhibitor, String nationality,
-            String specialty) {
-        super(dni, name, lastname, birthdate);
-        this.idExhibitor = idExhibitor;
-        this.nationality = nationality;
-        this.specialty = specialty;
-
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getIdExhibitor() {
         return idExhibitor;
     }
 
+    /**
+     * 
+     * @param idExhibitor
+     */
     public void setIdExhibitor(int idExhibitor) {
         this.idExhibitor = idExhibitor;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getNationality() {
         return nationality;
     }
 
+    /**
+     * 
+     * @param nationality
+     */
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getSpecialty() {
         return specialty;
     }
 
+    /**
+     * 
+     * @param specialty
+     */
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }

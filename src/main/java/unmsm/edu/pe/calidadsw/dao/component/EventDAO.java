@@ -18,7 +18,14 @@ import unmsm.edu.pe.calidadsw.dao.model.Event;
 public class EventDAO implements IEventDAO {
 
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("EventDAO");
+    private static final Logger LOGGER = Logger.getLogger(EventDAO.class.getName());
+    private static final String RESPONSE = "response";
+    private static final String IDAMBIENT = "idambient";
+    private static final String IDEVENT = "idevent";
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String DATE = "date";
+    private static final String STATE = "state";
 
     public EventDAO() {
         jdbc = new JDBCDataAccessClass();
@@ -40,13 +47,13 @@ public class EventDAO implements IEventDAO {
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
+                    int response = resultSet.getInt(RESPONSE);
 
                     if (response == 0) {
-                        LOGGER.log(Level.WARNING, "Error to execute procedure create.");
-                    } else if (response != 0) {
+                        LOGGER.log(Level.WARNING, "Error to execute procedure create first part.");
+                    } else {
                         result = response;
-                        LOGGER.log(Level.INFO, "Event create succesfully.");
+                        LOGGER.log(Level.INFO, "Event first part create succesfully.");
                     }
                 }
             }
@@ -59,25 +66,27 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
-    public boolean createSecond(Event event) {
+    public boolean finalCreate(Event event) {
         Boolean result = true;
-        String sql = "{CALL sp_update_event_ambient(?,?)}";
+        String sql = "{CALL sp_update_event_ambient_final(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setInt(1, event.getIdEvent());
             callableStatement.setInt(2, event.getAmbient().getIdAmbient());
+            callableStatement.setInt(3, event.getStartTime());
+            callableStatement.setInt(4, event.getEndTime());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
+                    int response = resultSet.getInt(RESPONSE);
 
                     if (response == 0) {
                         result = false;
-                        LOGGER.log(Level.WARNING, "Error to execute procedure create.");
+                        LOGGER.log(Level.WARNING, "Error to execute procedure create final part.");
                     } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Event create succesfully.");
+                        LOGGER.log(Level.INFO, "Event final part create succesfully.");
                     }
                 }
             }
@@ -101,7 +110,7 @@ public class EventDAO implements IEventDAO {
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
+                    int response = resultSet.getInt(RESPONSE);
 
                     if (response == 0) {
                         result = false;
@@ -120,6 +129,33 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
+    public Event readEvent(Integer id) {
+        Event event = null;
+        String sql = "{CALL sp_get_event(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, id);
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+
+                if (resultSet.next()) {
+                    event = new Event();
+
+                    event.setTitle(resultSet.getString(TITLE));
+                    event.setDescription(resultSet.getString(DESCRIPTION));
+                    event.setDate(resultSet.getString(DATE));
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+
+        return event;
+    }
+
+    @Override
     public List<Event> read() {
         List<Event> events = new ArrayList<>();
         String sql = "{CALL sp_get_events()}";
@@ -133,15 +169,20 @@ public class EventDAO implements IEventDAO {
                 Ambient ambient = new Ambient();
                 Administrator administrator = new Administrator();
 
-                event.setIdEvent(resultSet.getInt("idevent"));
-                event.setTitle(resultSet.getString("title"));
-                event.setDescription(resultSet.getString("description"));
-                event.setDate(resultSet.getString("date"));
-                event.setState(resultSet.getString("state"));
-                
-                ambient.setIdAmbient(resultSet.getInt("idambient"));
-                ambient.setName(resultSet.getString("name_ambient"));
+                event.setIdEvent(resultSet.getInt(IDEVENT));
+                event.setTitle(resultSet.getString(TITLE));
+                event.setDescription(resultSet.getString(DESCRIPTION));
+                event.setDate(resultSet.getString(DATE));
+                event.setState(resultSet.getString(STATE));
+
+                if (resultSet.getInt(IDAMBIENT) == 0) {
+                    ambient.setName("Sin asignar");
+                } else {
+                    ambient.setIdAmbient(resultSet.getInt(IDAMBIENT));
+                    ambient.setName(resultSet.getString("name_ambient"));
+                }
                 event.setAmbient(ambient);
+
                 administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
                 event.setAdministrator(administrator);
 
@@ -157,47 +198,54 @@ public class EventDAO implements IEventDAO {
     }
 
     @Override
-    public List<Event> search(String start_date, String end_date) {
+    public List<Event> search(String startDate, String endDate) {
         List<Event> events = new ArrayList<>();
 
         String sql = "{CALL sp_search_events(?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
-            callableStatement.setString(1, start_date);
-            callableStatement.setString(2, end_date);
-            ResultSet resultSet = callableStatement.executeQuery();
 
-            while (resultSet.next()) {
-                Event event = new Event();
-                Ambient ambient = new Ambient();
-                Administrator administrator = new Administrator();
+            callableStatement.setString(1, startDate);
+            callableStatement.setString(2, endDate);
 
-                event.setIdEvent(resultSet.getInt("idevent"));
-                event.setTitle(resultSet.getString("title"));
-                event.setDescription(resultSet.getString("description"));
-                event.setDate(resultSet.getString("date"));
-                event.setState(resultSet.getString("state"));
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
 
-                ambient.setIdAmbient(resultSet.getInt("idambient"));
-                event.setAmbient(ambient);
+                while (resultSet.next()) {
+                    Event event = new Event();
+                    Ambient ambient = new Ambient();
+                    Administrator administrator = new Administrator();
 
-                administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
-                event.setAdministrator(administrator);
+                    event.setIdEvent(resultSet.getInt(IDEVENT));
+                    event.setTitle(resultSet.getString(TITLE));
+                    event.setDescription(resultSet.getString(DESCRIPTION));
+                    event.setDate(resultSet.getString(DATE));
+                    event.setState(resultSet.getString(STATE));
 
-                events.add(event);
+                    if (resultSet.getInt(IDAMBIENT) == 0) {
+                        ambient.setName("Sin asignar");
+                    } else {
+                        ambient.setIdAmbient(resultSet.getInt(IDAMBIENT));
+                        ambient.setName(resultSet.getString("name_ambient"));
+                    }
+                    event.setAmbient(ambient);
+
+                    administrator.setIdAdministrator(resultSet.getInt("idadministrator"));
+                    event.setAdministrator(administrator);
+
+                    events.add(event);
+                }
+                LOGGER.log(Level.INFO, "Event found.");
             }
-            LOGGER.log(Level.INFO, "Events.");
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
-            System.out.println("Error: " + e.getMessage());
         }
         return events;
     }
-    
+
     @Override
-    public boolean publish(Integer id){
+    public boolean publish(Integer id) {
         Boolean result = true;
         String sql = "{CALL publish_event(?)}";
 
@@ -208,20 +256,21 @@ public class EventDAO implements IEventDAO {
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
+                    int response = resultSet.getInt(RESPONSE);
 
                     switch (response) {
                     case 0:
-                        result=false;
+                        result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure.");
                         break;
                     case 1:
-                        result = true;
                         LOGGER.log(Level.INFO, "Update successfully.");
                         break;
                     case 2:
-                        result=false;
+                        result = false;
                         LOGGER.log(Level.WARNING, "The event selected not exits.");
+                        break;
+                    default:
                         break;
                     }
                 }
@@ -233,4 +282,41 @@ public class EventDAO implements IEventDAO {
 
         return result;
     }
+
+    @Override
+    public List<Event> filterSchedule(Event event) {
+        List<Event> events = new ArrayList<>();
+
+        String sql = "{CALL sp_filter_avaliable_ambients(?,?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, event.getIdEvent());
+            callableStatement.setInt(2, event.getAmbient().getIdAmbient());
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+
+                while (resultSet.next()) {
+                    Event eventRes = new Event();
+                    Ambient ambient = new Ambient();
+
+                    eventRes.setIdEvent(resultSet.getInt(IDEVENT));
+                    eventRes.setStartTime(resultSet.getInt("start_time"));
+                    eventRes.setEndTime(resultSet.getInt("end_time"));
+
+                    ambient.setIdAmbient(resultSet.getInt(IDAMBIENT));
+                    eventRes.setAmbient(ambient);
+
+                    events.add(eventRes);
+                }
+                LOGGER.log(Level.INFO, "Events schedules avalaible.");
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+        return events;
+    }
+
 }

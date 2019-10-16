@@ -5,9 +5,11 @@ import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IAdministratorDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IAmbientDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
+import unmsm.edu.pe.calidadsw.dao.design.IExhibitorDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,6 +47,12 @@ public class test {
         
         System.out.println(admin.getName() + " funciono!");
         
+        IExhibitorDAO exhibitorDAO = DAOFactory.getInstance().getExhibitorDAO();
+        List<Exhibitor> exhibitor = exhibitorDAO.readExhibitorEvent(3);
+        
+        for (Exhibitor ex: exhibitor) {
+            System.out.println(ex.getName() + " " + ex.getLastname());
+        }
         
     }
 }

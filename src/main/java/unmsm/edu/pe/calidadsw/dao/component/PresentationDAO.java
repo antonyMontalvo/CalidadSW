@@ -11,51 +11,77 @@ import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IPresentationDAO;
+import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
 public class PresentationDAO implements IPresentationDAO {
     private JDBCDataAccessClass jdbc;
-    private static final Logger LOGGER = Logger.getLogger("PresentationDAO");
+    private static final Logger LOGGER = Logger.getLogger(PresentationDAO.class.getName());
 
     public PresentationDAO() {
         jdbc = new JDBCDataAccessClass();
     }
 
     @Override
-    public List<Exhibitor> readExhibitorsEvent(Event event) {
+    public List<Presentation> readExhibitorsEvent(Integer idevent) {
         /**
          * Lista de asistentes a un determinado evento
          */
-        List<Exhibitor> exhibitors = new ArrayList<>();
+        List<Presentation> presentations = new ArrayList<>();
         String sql = "{CALL sp_get_exhibitors_event(?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
-            callableStatement.setInt(1, event.getIdEvent());
+            callableStatement.setInt(1, idevent);
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
+
                 while (resultSet.next()) {
+                    Presentation presentation = new Presentation();
+
+                    if (resultSet.isFirst()) {
+                        Event event = new Event();
+                        event.setTitle(resultSet.getString("title"));
+                        event.setDate(resultSet.getString("date"));
+                        event.setDescription(resultSet.getString("description"));
+                        event.setStartTime(resultSet.getInt("start_time"));
+                        event.setEndTime(resultSet.getInt("end_time"));
+                        event.setState(resultSet.getString("state"));
+
+                        Ambient ambient = new Ambient();
+                        ambient.setName(resultSet.getString("ambient_name"));
+                        ambient.setDescription(resultSet.getString("ambient_description"));
+                        ambient.setCapacity(resultSet.getInt("ambient_capacity"));
+
+                        event.setAmbient(ambient);
+
+                        presentation.setEvent(event);
+                    }
+
+                    presentation.setTheme(resultSet.getString("presentation_theme"));
+                    presentation.setStartTime(resultSet.getInt("presentation_start_time"));
+                    presentation.setEndTime(resultSet.getInt("presentation_end_time"));
+
                     Exhibitor exhibitor = new Exhibitor();
+                    exhibitor.setName(resultSet.getString("exhibitor_name"));
+                    exhibitor.setLastname(resultSet.getString("exhibitor_last_name"));
+                    exhibitor.setSpecialty(resultSet.getString("exhibitor_specialty"));
 
-                    exhibitor.setDni(resultSet.getString("dni"));
-                    exhibitor.setName(resultSet.getString("name"));
-                    exhibitor.setLastname(resultSet.getString("lastname"));
-                    exhibitor.setNationality(resultSet.getString("nationality"));
-                    exhibitor.setSpecialty(resultSet.getString("specialty"));
+                    presentation.setExhibitor(exhibitor);
 
-                    exhibitors.add(exhibitor);
+                    presentations.add(presentation);
                 }
-                LOGGER.log(Level.INFO, "Presentations.");
+                LOGGER.log(Level.INFO, "Event info with presentations.");
 
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.getMessage());
         }
 
-        return exhibitors;
+        return presentations;
 
     }
 
