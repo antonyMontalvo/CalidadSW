@@ -39,11 +39,11 @@ public class AmbientDAO implements IAmbientDAO {
                 if (resulSet.next()) {
                     int response = resulSet.getInt("response");
 
-                    if (response == 0) {
+                    if (response == 1) {
+                        LOGGER.log(Level.INFO, "Ambient create succesfully.");
+                    } else if (response == 0) {
                         result = false;
                         LOGGER.log(Level.SEVERE, "Error to execute procedure create.");
-                    } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Ambient create succesfully.");
                     }
                 }
             }
@@ -128,16 +128,16 @@ public class AmbientDAO implements IAmbientDAO {
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 while (resultSet.next()) {
-                    Ambient ambient = new Ambient();
+                    Ambient newAmbient = new Ambient();
 
-                    ambient.setIdAmbient(resultSet.getInt("idambient"));
-                    ambient.setName(resultSet.getString("name"));
-                    ambient.setType(resultSet.getString("type"));
-                    ambient.setFloor(resultSet.getString("floor"));
-                    ambient.setCapacity(resultSet.getInt("capacity"));
-                    ambient.setDescription(resultSet.getString("description"));
+                    newAmbient.setIdAmbient(resultSet.getInt("idambient"));
+                    newAmbient.setName(resultSet.getString("name"));
+                    newAmbient.setType(resultSet.getString("type"));
+                    newAmbient.setFloor(resultSet.getString("floor"));
+                    newAmbient.setCapacity(resultSet.getInt("capacity"));
+                    newAmbient.setDescription(resultSet.getString("description"));
 
-                    ambients.add(ambient);
+                    ambients.add(newAmbient);
                 }
                 LOGGER.log(Level.INFO, "Event ambients.");
             }

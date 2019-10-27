@@ -41,9 +41,8 @@ public class EventAttendantServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Event> events;
         try {
-            events = eventDAO.read();
+            List<Event> events = eventDAO.read();
             request.setAttribute("events", events);
             request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
         } catch (Exception e) {

@@ -45,20 +45,16 @@ public class ClientDAO implements IClientDAO {
                      * response: 1 Correct; 2 DNI already exists
                      */
 
-                    switch (response) {
-                    case 0:
+                    if (response == 0) {
                         LOGGER.log(Level.WARNING, "Error to execute procedure.");
-                        break;
-                    case 1:
+                    } else if (response == 1) {
                         result = true;
                         LOGGER.log(Level.INFO, "Insert successfully.");
-                        break;
-                    case 2:
+                    } else if (response == 2) {
                         LOGGER.log(Level.WARNING, "The dni number already exists.");
-                        break;
-                    default:
+                    } else {
+
                         LOGGER.log(Level.WARNING, "Default.");
-                        break;
                     }
                 }
             }

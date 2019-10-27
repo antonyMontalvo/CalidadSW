@@ -102,11 +102,11 @@ public class PresentationDAO implements IPresentationDAO {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");
 
-                    if (response == 0) {
+                    if (response == 1) {
+                        LOGGER.log(Level.INFO, "Exhibitor create succesfully.");
+                    } else if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create.");
-                    } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Exhibitor create succesfully.");
                     }
                 }
             }
