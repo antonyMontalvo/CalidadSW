@@ -48,26 +48,26 @@
                     <p>
                         <a href="./events_create?action=index" class="btn btn-sq-lg btn-light"
                             style="margin-left: 30px;margin-right: 30px;">
-                            <i class="fas fa-calendar-plus fa-5x"></i><br />
+                            <em class="fas fa-calendar-plus fa-5x"></em><br />
                             <br>Crear<br>evento
                         </a>
                         <a href="./events?accion=index" class="btn btn-sq-lg btn-light"
                             style="margin-left: 30px;margin-right: 30px;">
-                            <i class="fas fa-calendar-alt fa-5x"></i><br />
+                            <em class="fas fa-calendar-alt fa-5x"></em><br />
                             <br>Gestión<br>de eventos
                         </a>
                         <a href="./ambients" class="btn btn-sq-lg btn-light" style="margin-left: 30px;margin-right: 30px;">
-                            <i class="fas fa-map-marker-alt fa-5x"></i><br />
+                            <em class="fas fa-map-marker-alt fa-5x"></em><br />
                             <br>Ambientes
                         </a>
                         <a href="./EventAttendantServlet" class="btn btn-sq-lg btn-light"
                             style="margin-left: 30px;margin-right: 30px;">
-                            <i class="fas fa-users fa-5x"></i><br />
+                            <em class="fas fa-users fa-5x"></em><br />
                             <br>Asistentes
                         </a>
                         <a href="./EventExpositorServlet" class="btn btn-sq-lg btn-light"
                             style="margin-left: 30px;margin-right: 30px;">
-                            <i class="fas fa-user-graduate fa-5x"></i><br />
+                            <em class="fas fa-user-graduate fa-5x"></em><br />
                             <br>Expositores
                         </a>
                     </p>
