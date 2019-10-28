@@ -56,7 +56,8 @@
                             <em class="fas fa-calendar-alt fa-5x"></em><br />
                             <br>Gestión<br>de eventos
                         </a>
-                        <a href="./ambients" class="btn btn-sq-lg btn-light" style="margin-left: 30px;margin-right: 30px;">
+                        <a href="./ambients" class="btn btn-sq-lg btn-light"
+                            style="margin-left: 30px;margin-right: 30px;">
                             <em class="fas fa-map-marker-alt fa-5x"></em><br />
                             <br>Ambientes
                         </a>
