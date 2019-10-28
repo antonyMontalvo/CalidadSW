@@ -72,6 +72,9 @@ public class EventAttendantServlet extends HttpServlet {
 
             attendant = assistantDAO.readAssistantsEvent(ev);
             request.setAttribute("attendant", attendant);
+
+            List<Event> events = eventDAO.read();
+            request.setAttribute("events", events);
             request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
