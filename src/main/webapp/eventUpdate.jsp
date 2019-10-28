@@ -112,17 +112,15 @@
                                                         <label class="font-weight-bold"
                                                             for="exhibitorName">Expositor</label>
                                                         <input class="form-control" type="text"
-                                                            id="exhibitorName_${i.count}" name="exhibitor-name"
-                                                            value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}"
-                                                            disabled>
+                                                            id="exhibitorName_${i.count}" name="exhibitor-name" disabled
+                                                            value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}">
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label class="font-weight-bold" for="schedule">Expositor</label>
+                                                        <label class="font-weight-bold" for="schedule">Hora</label>
                                                         <input class="form-control" type="text" id="schedule_${i.count}"
-                                                            name="schedule"
-                                                            value="${item.getStartTime()}:00-${item.getEndTime()}:00 hrs"
-                                                            disabled>
+                                                            name="schedule" disabled
+                                                            value="${item.getStartTime()}:00-${item.getEndTime()}:00 hrs">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -137,8 +135,29 @@
                                         <c:otherwise>
                                             <h5>Añadir expositores</h5>
                                             <br>
-                                            En proceso
-                                            <br>
+                                            <c:forEach items="${presentations}" var="item" varStatus="i">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-8">
+                                                        <label class="font-weight-bold"
+                                                            for="exhibitorName">Expositor</label>
+                                                        <input class="form-control" type="text"
+                                                            id="exhibitorName_${i.count}" name="exhibitor-name">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label class="font-weight-bold" for="schedule">Hora</label>
+                                                        <input class="form-control" type="text" id="schedule_${i.count}"
+                                                            name="schedule">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="font-weight-bold"
+                                                        for="presentationTheme_${i.count}">Tema</label>
+                                                    <input class="form-control" type="text"
+                                                        id="presentationTheme_${i.count}" name="presentation-theme"
+                                                        value="${item.getTheme()}" disabled>
+                                                </div>
+                                            </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
 
