@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 public class PresentationDAO implements IPresentationDAO {
     private JDBCDataAccessClass jdbc;
     private static final Logger LOGGER = Logger.getLogger(PresentationDAO.class.getName());
+    private static final String START_TIME = "presentation_start_time";
 
     public PresentationDAO() {
         jdbc = new JDBCDataAccessClass();
@@ -62,7 +64,7 @@ public class PresentationDAO implements IPresentationDAO {
                     }
 
                     presentation.setTheme(resultSet.getString("presentation_theme"));
-                    presentation.setStartTime(resultSet.getInt("presentation_start_time"));
+                    presentation.setStartTime(resultSet.getInt(START_TIME));
                     presentation.setEndTime(resultSet.getInt("presentation_end_time"));
 
                     Exhibitor exhibitor = new Exhibitor();
@@ -116,6 +118,55 @@ public class PresentationDAO implements IPresentationDAO {
         }
 
         return result;
+    }
+
+    @Override
+    public HashMap<Integer, List<Presentation>> getAlgoritmo(List<Presentation> presentations) {
+        HashMap<Integer, List<Presentation>> hashMap = new HashMap<>();
+        String sql = "{CALL sp_filter_avaliable_exhibitors(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setString(1, presentations.get(0).getEvent().getDate());
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+
+                while (resultSet.next()) {
+
+                    for (Presentation p : presentations) {
+                        if (!hashMap.containsKey(p.getStartTime())) {
+                            hashMap.put(p.getStartTime(), new ArrayList<Presentation>());
+                        }
+
+                        if (p.getStartTime() != resultSet.getInt(START_TIME)) {
+                            Presentation presentation = new Presentation();
+
+                            presentation.setTheme(resultSet.getString("presentation_theme"));
+                            presentation.setStartTime(resultSet.getInt(START_TIME));
+                            presentation.setEndTime(resultSet.getInt("presentation_end_time"));
+
+                            Exhibitor exhibitor = new Exhibitor();
+                            exhibitor.setName(resultSet.getString("exhibitor_name"));
+                            exhibitor.setLastname(resultSet.getString("exhibitor_last_name"));
+                            exhibitor.setSpecialty(resultSet.getString("exhibitor_specialty"));
+
+                            presentation.setExhibitor(exhibitor);
+
+                            hashMap.get(p.getStartTime()).add(presentation);
+                        }
+
+                    }
+
+                }
+
+                LOGGER.log(Level.INFO, "Exhibitors avaliables.");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.getMessage());
+        }
+
+        return hashMap;
     }
 
 }

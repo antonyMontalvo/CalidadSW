@@ -110,24 +110,26 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-8">
                                                         <label class="font-weight-bold"
-                                                            for="exhibitorName">Expositor</label>
+                                                            for="exhibitor_name_${i.count}">Expositor</label>
                                                         <input class="form-control" type="text"
-                                                            id="exhibitorName_${i.count}" name="exhibitor-name" disabled
-                                                            value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}">
+                                                            value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}"
+                                                            id="exhibitor_name_${i.count}" disabled
+                                                            name="exhibitor-name">
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label class="font-weight-bold" for="schedule">Hora</label>
-                                                        <input class="form-control" type="text" id="schedule_${i.count}"
-                                                            name="schedule" disabled
-                                                            value="${item.getStartTime()}:00-${item.getEndTime()}:00 hrs">
+                                                        <label class="font-weight-bold"
+                                                            for="schedule_${i.count}">Hora</label>
+                                                        <input class="form-control" type="text"
+                                                            value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs"
+                                                            name="schedule" disabled id="schedule_${i.count}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="font-weight-bold"
-                                                        for="presentationTheme_${i.count}">Tema</label>
+                                                        for="presentation_theme_${i.count}">Tema</label>
                                                     <input class="form-control" type="text"
-                                                        id="presentationTheme_${i.count}" name="presentation-theme"
+                                                        id="presentation_theme_${i.count}" name="presentation-theme"
                                                         value="${item.getTheme()}" disabled>
                                                 </div>
                                             </c:forEach>
@@ -135,27 +137,40 @@
                                         <c:otherwise>
                                             <h5>Añadir expositores</h5>
                                             <br>
-                                            <c:forEach items="${presentations}" var="item" varStatus="i">
+                                            <c:forEach items="${schedule}" var="item" varStatus="i">
                                                 <div class="form-row">
                                                     <div class="form-group col-md-8">
                                                         <label class="font-weight-bold"
-                                                            for="exhibitorName">Expositor</label>
-                                                        <input class="form-control" type="text"
-                                                            id="exhibitorName_${i.count}" name="exhibitor-name">
+                                                            for="exhibitor_name_${i.count}">Expositor</label>
+                                                        <select id="environment" name="environment" class="form-control"
+                                                            required>
+                                                            <option hidden selected disabled>Elige...</option>
+                                                            <c:forEach items="${exhibitors.get(item.getStartTime())}" var="item1">
+                                                                <option value="${item1.getLastname()}">
+                                                                    <c:out value="${item1.getName()}" />
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                        <input class="form-control" type="text" required
+                                                            id="exhibitor_name_${i.count}" name="exhibitor-name">
                                                     </div>
 
                                                     <div class="form-group col-md-4">
-                                                        <label class="font-weight-bold" for="schedule">Hora</label>
+                                                        <label class="font-weight-bold"
+                                                            for="schedule_${i.count}">Hora</label>
                                                         <input class="form-control" type="text" id="schedule_${i.count}"
-                                                            name="schedule">
+                                                            disabled required
+                                                            value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs">
+                                                        <input class="form-control" type="text" required name="schedule"
+                                                            hidden value="${item.getStartTime()}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="font-weight-bold"
                                                         for="presentationTheme_${i.count}">Tema</label>
-                                                    <input class="form-control" type="text"
-                                                        id="presentationTheme_${i.count}" name="presentation-theme"
-                                                        value="${item.getTheme()}" disabled>
+                                                    <input class="form-control" type="text" required
+                                                        placeholder="Ingrese un tema" id="presentationTheme_${i.count}"
+                                                        name="presentation-theme">
                                                 </div>
                                             </c:forEach>
                                         </c:otherwise>

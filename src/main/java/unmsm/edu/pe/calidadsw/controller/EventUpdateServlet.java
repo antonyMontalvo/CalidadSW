@@ -3,6 +3,7 @@ package unmsm.edu.pe.calidadsw.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,12 +71,15 @@ public class EventUpdateServlet extends HttpServlet {
 
             if (presentations.get(0).getExhibitor().getName() == null) {
 
-                List<Presentation> nList = new ArrayList<Presentation>();
+                Map<Integer, List<Presentation>> hashMap = presentationDAO.getAlgoritmo(presentations);
+                request.setAttribute("exhibitors", hashMap);
+
+                List<Presentation> nList = new ArrayList<>();
 
                 for (int i = startT; i < endT; i++) {
                     Presentation presentation = new Presentation();
                     presentation.setStartTime(i);
-                    presentation.setStartTime(i + 1);
+                    presentation.setEndTime(i + 1);
 
                     nList.add(presentation);
                 }
@@ -110,11 +114,10 @@ public class EventUpdateServlet extends HttpServlet {
             presentation.setEvent(event);
 
             exhibitor.setIdExhibitor(Integer.parseInt(request.getParameter("exhibitor-id")));
+
             presentation.setTheme(request.getParameter("theme"));
             presentation.setStartTime(Integer.parseInt(request.getParameter("star-time")));
             presentation.setEndTime(Integer.parseInt(request.getParameter("end-time")));
-
-            int pres = presentationDAO.registerPresentation(presentation);
 
             response.sendRedirect("./events?accion=index");
         } catch (Exception e) {
