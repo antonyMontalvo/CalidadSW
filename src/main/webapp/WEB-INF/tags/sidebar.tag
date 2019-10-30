@@ -1,5 +1,5 @@
 <%@tag description="header" pageEncoding="UTF-8" %> 
-<!--description="header" // <t:header></t:header> es como llamas al tag y su contenido en el jsp-->
+<!--description="header" // <t:sidebar></t:sidebar> es como llamas al tag y su contenido en el jsp-->
 <%@attribute name="content" fragment="true" %>
 
 

@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+    
     <t:sidebar>
         <jsp:attribute name="content">
             <br>
