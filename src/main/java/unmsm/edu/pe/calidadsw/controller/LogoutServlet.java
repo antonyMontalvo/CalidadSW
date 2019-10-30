@@ -3,6 +3,7 @@ package unmsm.edu.pe.calidadsw.controller;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
             response.setDateHeader("Expires", 0); // prevents caching at the proxy server
             
             LOGGER.log(Level.INFO, "You are successfully logged out!");
-            request.getRequestDispatcher("login").forward(request, response);
+            response.sendRedirect("./login");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }

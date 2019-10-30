@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,9 +32,7 @@ public class ExhibitorDAO implements IExhibitorDAO {
             callableStatement.setString(1, exhibitor.getDni());
             callableStatement.setString(2, exhibitor.getName());
             callableStatement.setString(3, exhibitor.getLastname());
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            callableStatement.setString(4, formatter.format(exhibitor.getBirthdate()));
+            callableStatement.setString(4, exhibitor.getBirthdate());
             callableStatement.setString(5, exhibitor.getNationality());
             callableStatement.setString(6, exhibitor.getSpecialty());
 
@@ -75,7 +72,7 @@ public class ExhibitorDAO implements IExhibitorDAO {
                 exhibitor.setDni(resultSet.getString("dni"));
                 exhibitor.setName(resultSet.getString("name"));
                 exhibitor.setLastname(resultSet.getString("lastname"));
-                exhibitor.setNationality(resultSet.getString("nacionality"));
+                exhibitor.setNationality(resultSet.getString("nationality"));
                 exhibitor.setSpecialty(resultSet.getString("specialty"));
 
                 exhibitors.add(exhibitor);

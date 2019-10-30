@@ -67,7 +67,7 @@ public class EventDAO implements IEventDAO {
 
     @Override
     public boolean finalCreate(Event event) {
-        Boolean result = true;
+        Boolean result = false;
         String sql = "{CALL sp_update_event_ambient_final(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
@@ -83,15 +83,14 @@ public class EventDAO implements IEventDAO {
                     int response = resultSet.getInt(RESPONSE);
 
                     if (response == 0) {
-                        result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create final part.");
                     } else if (response == 1) {
+                        result = true;
                         LOGGER.log(Level.INFO, "Event final part create succesfully.");
                     }
                 }
             }
         } catch (SQLException e) {
-            result = false;
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
@@ -112,11 +111,11 @@ public class EventDAO implements IEventDAO {
                 if (resultSet.next()) {
                     int response = resultSet.getInt(RESPONSE);
 
-                    if (response == 0) {
+                    if (response == 1) {
+                        LOGGER.log(Level.INFO, "Event delete succesfully.");
+                    } else if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure delete.");
-                    } else if (response == 1) {
-                        LOGGER.log(Level.INFO, "Event delete succesfully.");
                     }
                 }
             }
@@ -175,11 +174,11 @@ public class EventDAO implements IEventDAO {
                 event.setDate(resultSet.getString(DATE));
                 event.setState(resultSet.getString(STATE));
 
-                if (resultSet.getInt(IDAMBIENT) == 0) {
-                    ambient.setName("Sin asignar");
-                } else {
+                if (resultSet.getInt(IDAMBIENT) != 0) {
                     ambient.setIdAmbient(resultSet.getInt(IDAMBIENT));
                     ambient.setName(resultSet.getString("name_ambient"));
+                } else {
+                    ambient.setName("Sin asignar");
                 }
                 event.setAmbient(ambient);
 

@@ -16,7 +16,7 @@ public class JDBCDataAccessClass {
     private String jdbcURL = null;
     private String jdbcUsername = null;
     private String jdbcPassword = null;
-    private static final Logger LOGGER = Logger.getLogger("JDBCDataAccessClass");
+    private static final Logger LOGGER = Logger.getLogger(JDBCDataAccessClass.class.getName());
 
     public JDBCDataAccessClass() {
         int contador = 0;
@@ -47,7 +47,7 @@ public class JDBCDataAccessClass {
         Connection jdbcConnection = null;
 
         try {
-            jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+            jdbcConnection = DriverManager.getConnection(this.jdbcURL, this.jdbcUsername, this.jdbcPassword);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }

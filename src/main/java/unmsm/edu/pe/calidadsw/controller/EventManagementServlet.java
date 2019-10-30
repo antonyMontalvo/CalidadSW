@@ -47,9 +47,6 @@ public class EventManagementServlet extends HttpServlet {
             case "index":
                 index(request, response);
                 break;
-            case "update":
-                update(request, response);
-                break;
             case "delete":
                 delete(request, response);
                 break;
@@ -111,26 +108,6 @@ public class EventManagementServlet extends HttpServlet {
 
         request.setAttribute("eventos", elements);
         request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-    }
-
-    /**
-     * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Event event = eventDAO.readEvent(id);
-
-        if (event == null) {
-            request.setAttribute(MESSAGE, "<div class='alert alert-danger' role='alert'>No existe este evento</div>");
-        } else {
-            request.setAttribute("event", event);
-        }
-
-        request.getRequestDispatcher("eventAttendant.jsp").forward(request, response);
     }
 
     /**

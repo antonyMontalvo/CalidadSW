@@ -1,9 +1,8 @@
 package unmsm.edu.pe.calidadsw.dao.design;
 
 import java.util.List;
+import java.util.Map;
 
-import unmsm.edu.pe.calidadsw.dao.model.Event;
-import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
 import unmsm.edu.pe.calidadsw.dao.model.Presentation;
 
 /**
@@ -17,10 +16,10 @@ public interface IPresentationDAO {
 
     /**
      * 
-     * @param event
+     * @param idEvent
      * @return
      */
-    public abstract List<Exhibitor> readExhibitorsEvent(Event event);
+    public abstract List<Presentation> readExhibitorsEvent(Integer idEvent);
 
     /**
      * 
@@ -28,5 +27,12 @@ public interface IPresentationDAO {
      * @return
      */
     public abstract boolean registerPresentation(Presentation presentation);
+
+    /**
+     * 
+     * @param presentations
+     * @return
+     */
+    public Map<Integer, List<Presentation>> getAlgoritmo(List<Presentation> presentations);
 
 }

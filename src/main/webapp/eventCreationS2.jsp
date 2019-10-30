@@ -15,8 +15,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
     <link rel="stylesheet" href="https://dl.dropbox.com/s/k4yx251xu3v0qxj/simple-sidebar.css" />
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="https://dl.dropbox.com/s/2eb4fvhjukzew07/favicon.ico">
 
     <title>SIGCE</title>
 </head>
@@ -34,12 +41,12 @@
                             <div class="card-body">
                                 <h2>Escoge tu ambiente</h2>
                                 Después de crear un evento, debes escoger el ambiente en el cuál se llevará a cabo.
-                                
+
                                 <form method="post" action="events_create?action=create2">
 
                                     <div class="form-group">
                                         <br>
-                                        <label for="environment">Ambiente</label>
+                                        <label class="font-weight-bold" for="environment">Ambiente</label>
                                         <select id="environment" name="environment" class="form-control" required>
                                             <option hidden selected disabled>Elige...</option>
                                             <c:forEach items="${ambients}" var="item">

@@ -8,6 +8,7 @@ public class Presentation {
      * Event_has_exhibitor
      */
     private int idPresentation;
+    private String theme;
     private int startTime;
     private int endTime;
     private Event event;
@@ -27,6 +28,22 @@ public class Presentation {
      */
     public void setIdPresentation(int idPresentation) {
         this.idPresentation = idPresentation;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getTheme() {
+        return theme;
+    }
+
+    /**
+     * 
+     * @param theme
+     */
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     /**
