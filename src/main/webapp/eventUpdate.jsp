@@ -43,9 +43,10 @@
                                 <h2>Editar Evento</h2>
                                 Sólo se podrán editar eran ciertos campos.
 
-                                <form method="post" action="events_update">
+                                <form method="post" action="./events_update">
 
                                     <input type="text" name="id" value="${idEvent}" hidden>
+
                                     <div class="form-group">
                                         <br>
                                         <label class="font-weight-bold" for="title">Título</label>
@@ -142,34 +143,39 @@
                                         <c:otherwise>
                                             <h5>Añadir expositores</h5>
                                             <br>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-8">
-                                                    <label class="font-weight-bold"
-                                                        for="exhibitor_name">Expositor</label>
-                                                    <select id="exhibitor_name" name="exhibitor-name"
-                                                        class="form-control" required>
-                                                        <option hidden selected disabled value="">Elige...</option>
-                                                        <c:forEach items="${exhibitors}" var="item1">
-                                                            <option value="${item1.getIdExhibitor()}">
-                                                                ${item1.getName()} ${item1.getLastname()} </option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
+                                            <c:forEach items="${schedule}" var="item" varStatus="i">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-8">
+                                                        <label class="font-weight-bold"
+                                                            for="exhibitor_name_${i.count}">Expositor</label>
+                                                        <select id="exhibitor_name_${i.count}" name="exhibitor-name"
+                                                            class="form-control" required>
+                                                            <option hidden selected disabled value="">Elige...</option>
+                                                            <c:forEach items="${exhibitors}" var="item1">
+                                                                <option value="${item1.getIdExhibitor()}">
+                                                                    ${item1.getName()} ${item1.getLastname()} </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
 
-                                                <div class="form-group col-md-4">
-                                                    <label class="font-weight-bold" for="schedule">Hora</label>
-                                                    <input class="form-control" type="text" id="schedule" disabled
-                                                        value="${eventStartTime}:00 - ${eventEndTime}:00 hrs">
-                                                    <input class="form-control" type="text" required name="schedule"
-                                                        hidden value="${eventStartTime}">
+                                                    <div class="form-group col-md-4">
+                                                        <label class="font-weight-bold"
+                                                            for="schedule_${i.count}">Hora</label>
+                                                        <input class="form-control" type="text" id="schedule_${i.count}"
+                                                            disabled
+                                                            value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs">
+                                                        <input class="form-control" type="text" required name="schedule"
+                                                            hidden value="${item.getStartTime()}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="font-weight-bold" for="presentationTheme">Tema</label>
-                                                <input class="form-control" type="text" required
-                                                    placeholder="Ingrese un tema" id="presentationTheme"
-                                                    name="presentation-theme">
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="font-weight-bold"
+                                                        for="presentationTheme_${i.count}">Tema</label>
+                                                    <input class="form-control" type="text" required
+                                                        placeholder="Ingrese un tema" id="presentationTheme_${i.count}"
+                                                        name="presentation-theme">
+                                                </div>
+                                            </c:forEach>
 
                                             <br>
                                             <button type="submit" class="btn btn-primary">Añadir expositores</button>
