@@ -90,15 +90,16 @@ public class PresentationDAO implements IPresentationDAO {
     @Override
     public boolean registerPresentation(Presentation presentation) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?)}";
+        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setInt(1, presentation.getStartTime());
             callableStatement.setInt(2, presentation.getEndTime());
-            callableStatement.setInt(3, presentation.getExhibitor().getIdExhibitor());
-            callableStatement.setInt(4, presentation.getEvent().getIdEvent());
+            callableStatement.setString(3, presentation.getTheme());
+            callableStatement.setInt(4, presentation.getExhibitor().getIdExhibitor());
+            callableStatement.setInt(5, presentation.getEvent().getIdEvent());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
