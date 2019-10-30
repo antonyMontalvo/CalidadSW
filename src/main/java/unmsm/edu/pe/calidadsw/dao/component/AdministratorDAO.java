@@ -69,14 +69,11 @@ public class AdministratorDAO implements IAdministratorDAO {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");
 
-                    switch (response) {
-                    case 0:
+                    if (response == 0) {
                         LOGGER.log(Level.WARNING, "Error to execute procedure.");
-                        break;
-                    case 1:
+                    } else if (response == 1) {
                         result = true;
                         LOGGER.log(Level.INFO, "Insert successfully.");
-                        break;
                     }
                 }
             }
