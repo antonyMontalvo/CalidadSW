@@ -98,8 +98,8 @@ public class PresentationDAO implements IPresentationDAO {
             callableStatement.setInt(1, presentation.getStartTime());
             callableStatement.setInt(2, presentation.getEndTime());
             callableStatement.setString(3, presentation.getTheme());
-            callableStatement.setInt(4, presentation.getExhibitor().getIdExhibitor());
-            callableStatement.setInt(5, presentation.getEvent().getIdEvent());
+            callableStatement.setInt(4, presentation.getEvent().getIdEvent());
+            callableStatement.setInt(5, presentation.getExhibitor().getIdExhibitor());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {

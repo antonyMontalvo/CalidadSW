@@ -53,6 +53,7 @@ public class EventUpdateServlet extends HttpServlet {
 
             presentations = presentationDAO.readExhibitorsEvent(idEvent);
 
+            request.setAttribute("idEvent", idEvent);
             request.setAttribute("eventTitle", presentations.get(0).getEvent().getTitle());
             request.setAttribute("eventDate", presentations.get(0).getEvent().getDate());
             request.setAttribute("eventDescription", presentations.get(0).getEvent().getDescription());
@@ -107,36 +108,26 @@ public class EventUpdateServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String[] names = request.getParameterValues("exhibitor-name");
-            String[] hours = request.getParameterValues("schedule");
-            String[] themes = request.getParameterValues("presentation-theme");
+            String names = request.getParameter("exhibitor-name");
+            String hours = request.getParameter("schedule");
+            String themes = request.getParameter("presentation-theme");
 
-            if (names.length > 0 && hours.length > 0 && themes.length > 0) {
+            Event event = new Event();
+            event.setIdEvent(Integer.parseInt(request.getParameter("id")));
 
-                Event event = new Event();
-                event.setIdEvent(Integer.parseInt(request.getParameter("id")));
+            Presentation presentation = new Presentation();
 
-                int index = 0;
-                for (String hr : hours) {
-                    Presentation presentation = new Presentation();
+            presentation.setEvent(event);
 
-                    presentation.setEvent(event);
+            presentation.setTheme(themes);
+            presentation.setStartTime(Integer.parseInt(hours));
+            presentation.setEndTime(presentation.getStartTime() + 1);
 
-                    presentation.setTheme(themes[index]);
-                    presentation.setStartTime(Integer.parseInt(hr));
-                    presentation.setEndTime(presentation.getStartTime() + 1);
+            Exhibitor exhibitor = new Exhibitor();
+            exhibitor.setIdExhibitor(Integer.parseInt(names));
+            presentation.setExhibitor(exhibitor);
 
-                    Exhibitor exhibitor = new Exhibitor();
-                    exhibitor.setIdExhibitor(Integer.parseInt(names[index]));
-
-                    presentationDAO.registerPresentation(presentation);
-                    index++;
-                }
-
-            } else {
-                request.setAttribute("message",
-                        "<div class='alert alert-warning' role='alert'>Debe seleccionar los expositores y sus temas correctamente.</div>");
-            }
+            presentationDAO.registerPresentation(presentation);
 
             response.sendRedirect("./events?accion=index");
         } catch (Exception e) {

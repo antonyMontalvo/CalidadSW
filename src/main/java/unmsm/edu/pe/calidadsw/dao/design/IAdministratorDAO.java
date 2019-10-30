@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unmsm.edu.pe.calidadsw.dao.design;
 
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
+import unmsm.edu.pe.calidadsw.dao.model.Client;
 
 /**
- *
- * @author Usuario
+ * Usuario
  */
 public interface IAdministratorDAO {
 
@@ -19,5 +14,12 @@ public interface IAdministratorDAO {
      * @return
      */
     public abstract Administrator readLogin(String user);
+
+    /**
+     * 
+     * @param client
+     * @return
+     */
+    public abstract Boolean registerUser(Client client);
 
 }
