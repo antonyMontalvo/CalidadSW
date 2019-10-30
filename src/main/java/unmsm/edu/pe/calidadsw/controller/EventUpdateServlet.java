@@ -3,7 +3,6 @@ package unmsm.edu.pe.calidadsw.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import unmsm.edu.pe.calidadsw.dao.DAOFactory;
+import unmsm.edu.pe.calidadsw.dao.design.IExhibitorDAO;
 import unmsm.edu.pe.calidadsw.dao.design.IPresentationDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 import unmsm.edu.pe.calidadsw.dao.model.Exhibitor;
@@ -29,6 +29,7 @@ public class EventUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(EventUpdateServlet.class.getName());
     static IPresentationDAO presentationDAO = DAOFactory.getInstance().getPresentationDAO();
+    static IExhibitorDAO exhibitorDAO = DAOFactory.getInstance().getExhibitorDAO();
 
     public EventUpdateServlet() {
         super();
@@ -71,8 +72,8 @@ public class EventUpdateServlet extends HttpServlet {
 
             if (presentations.get(0).getExhibitor().getName() == null) {
 
-                Map<Integer, List<Presentation>> hashMap = presentationDAO.getAlgoritmo(presentations);
-                request.setAttribute("exhibitors", hashMap);
+                List<Exhibitor> exhibitors = exhibitorDAO.read();
+                request.setAttribute("exhibitors", exhibitors);
 
                 List<Presentation> nList = new ArrayList<>();
 
@@ -106,18 +107,36 @@ public class EventUpdateServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            Presentation presentation = new Presentation();
-            Event event = new Event();
-            Exhibitor exhibitor = new Exhibitor();
+            String[] names = request.getParameterValues("exhibitor-name");
+            String[] hours = request.getParameterValues("schedule");
+            String[] themes = request.getParameterValues("presentation-theme");
 
-            event.setIdEvent(Integer.parseInt(request.getParameter("event-id")));
-            presentation.setEvent(event);
+            if (names.length > 0 && hours.length > 0 && themes.length > 0) {
 
-            exhibitor.setIdExhibitor(Integer.parseInt(request.getParameter("exhibitor-id")));
+                Event event = new Event();
+                event.setIdEvent(Integer.parseInt(request.getParameter("id")));
 
-            presentation.setTheme(request.getParameter("theme"));
-            presentation.setStartTime(Integer.parseInt(request.getParameter("star-time")));
-            presentation.setEndTime(Integer.parseInt(request.getParameter("end-time")));
+                int index = 0;
+                for (String hr : hours) {
+                    Presentation presentation = new Presentation();
+
+                    presentation.setEvent(event);
+
+                    presentation.setTheme(themes[index]);
+                    presentation.setStartTime(Integer.parseInt(hr));
+                    presentation.setEndTime(presentation.getStartTime() + 1);
+
+                    Exhibitor exhibitor = new Exhibitor();
+                    exhibitor.setIdExhibitor(Integer.parseInt(names[index]));
+
+                    presentationDAO.registerPresentation(presentation);
+                    index++;
+                }
+
+            } else {
+                request.setAttribute("message",
+                        "<div class='alert alert-warning' role='alert'>Debe seleccionar los expositores y sus temas correctamente.</div>");
+            }
 
             response.sendRedirect("./events?accion=index");
         } catch (Exception e) {

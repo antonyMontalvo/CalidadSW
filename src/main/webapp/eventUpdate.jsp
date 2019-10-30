@@ -133,6 +133,10 @@
                                                         value="${item.getTheme()}" disabled>
                                                 </div>
                                             </c:forEach>
+
+                                            <br>
+                                            <a href="./events?accion=index"><button type="button"
+                                                    class="btn btn-primary">Cancelar</button></a>
                                         </c:when>
                                         <c:otherwise>
                                             <h5>Añadir expositores</h5>
@@ -142,24 +146,21 @@
                                                     <div class="form-group col-md-8">
                                                         <label class="font-weight-bold"
                                                             for="exhibitor_name_${i.count}">Expositor</label>
-                                                        <select id="environment" name="environment" class="form-control"
-                                                            required>
-                                                            <option hidden selected disabled>Elige...</option>
-                                                            <c:forEach items="${exhibitors.get(item.getStartTime())}" var="item1">
-                                                                <option value="${item1.getLastname()}">
-                                                                    <c:out value="${item1.getName()}" />
-                                                                </option>
+                                                        <select id="exhibitor_name_${i.count}" name="exhibitor-name"
+                                                            class="form-control" required>
+                                                            <option hidden selected disabled value="">Elige...</option>
+                                                            <c:forEach items="${exhibitors}" var="item1">
+                                                                <option value="${item1.getIdExhibitor()}">
+                                                                    ${item1.getName()} ${item1.getLastname()} </option>
                                                             </c:forEach>
                                                         </select>
-                                                        <input class="form-control" type="text" required
-                                                            id="exhibitor_name_${i.count}" name="exhibitor-name">
                                                     </div>
 
                                                     <div class="form-group col-md-4">
                                                         <label class="font-weight-bold"
                                                             for="schedule_${i.count}">Hora</label>
                                                         <input class="form-control" type="text" id="schedule_${i.count}"
-                                                            disabled required
+                                                            disabled
                                                             value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs">
                                                         <input class="form-control" type="text" required name="schedule"
                                                             hidden value="${item.getStartTime()}">
@@ -173,13 +174,16 @@
                                                         name="presentation-theme">
                                                 </div>
                                             </c:forEach>
+
+                                            <br>
+                                            <button type="submit" class="btn btn-primary">Añadir expositores</button>
+                                            <a href="./events?accion=index"><button type="button"
+                                                    class="btn btn-primary">Cancelar</button></a>
                                         </c:otherwise>
                                     </c:choose>
 
-                                    <br>
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-
                                 </form>
+
                             </div>
                         </div>
                         <!--Card end-->
