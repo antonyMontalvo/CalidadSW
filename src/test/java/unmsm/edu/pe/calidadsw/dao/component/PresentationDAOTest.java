@@ -27,7 +27,6 @@ import unmsm.edu.pe.calidadsw.dao.model.Presentation;
  */
 public class PresentationDAOTest {
     
-    /*
     static IPresentationDAO presentationDAO = DAOFactory.getInstance().getPresentationDAO();
 
     public PresentationDAOTest() {
@@ -66,7 +65,7 @@ public class PresentationDAOTest {
         System.out.println("registerPresentation");
 
         Event event = new Event();
-        event.setIdEvent(1);
+        event.setIdEvent(3);
         Exhibitor exhibitor = new Exhibitor();
         exhibitor.setIdExhibitor(1);
         Presentation presentation = new Presentation();
@@ -80,5 +79,5 @@ public class PresentationDAOTest {
         boolean result = presentationDAO.registerPresentation(presentation);
         assertEquals(expResult, result);
     }
-*/
+
 }
