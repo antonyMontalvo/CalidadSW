@@ -49,7 +49,7 @@ public class EventExpositorServlet extends HttpServlet {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
-        
+
     }
 
     /**
@@ -65,8 +65,12 @@ public class EventExpositorServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<Exhibitor> exhibitors;
-
+        List<Event> events;
+        
         try {
+            events = eventDAO.read();
+            request.setAttribute("events", events);
+
             int idEvent = Integer.parseInt(request.getParameter("eventId"));
             exhibitors = exhibitorDAO.readExhibitorEvent(idEvent);
             request.setAttribute("exhibitors", exhibitors);
