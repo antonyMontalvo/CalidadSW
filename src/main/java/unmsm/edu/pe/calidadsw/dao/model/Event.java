@@ -14,6 +14,7 @@ public class Event {
     private int endTime;
     private Ambient ambient; // LLave foranea proveniente de la tabla ambiente.
     private Administrator administrator; // Llave foranea proveniente de la tabla administrador.
+    private Type type; // Llave foranea proveniente de la tabla tipo.
 
     /**
      * 
@@ -157,6 +158,22 @@ public class Event {
      */
     public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
+     * 
+     * @param type
+     */
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }

@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-
+            request.setAttribute("e", null);
             request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
             // Puesto simplemente para que cargue el servlet al inicio
         } catch (Exception e) {
@@ -65,12 +65,17 @@ public class LoginServlet extends HttpServlet {
         try {
             adminData = adminDAO.readLogin(username);
 
-            if (adminData != null && password.equals(adminData.getPassword())) {
-                HttpSession s = request.getSession();
-                s.setAttribute("username", adminData.getName() + " " + adminData.getLastname());
-                response.sendRedirect("eventStartPage.jsp");
+            if (adminData.getUsername() != null) {
+                if (password.equals(adminData.getPassword())) {
+                    HttpSession s = request.getSession();
+                    s.setAttribute("username", adminData.getName() + " " + adminData.getLastname());
+                    response.sendRedirect("eventStartPage.jsp");
+                } else {
+                    request.setAttribute("e", "Error al iniciar sesión.");
+                    request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
+                }
             } else {
-                request.setAttribute("e", "Error al iniciar sesión.");
+                request.setAttribute("e", "Usuario no registrado.");
                 request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
             }
 

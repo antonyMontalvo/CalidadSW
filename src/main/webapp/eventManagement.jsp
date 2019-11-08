@@ -103,14 +103,14 @@
                                         <c:out value="${item.getAmbient().getName()}" />
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-info" href="./events_update?id=${item.getIdEvent()}">
+                                        <a class="btn btn-info" title="Actualizar" href="./events_update?id=${item.getIdEvent()}">
                                             <em class="fas fa-pen fa-lg"></em>
                                         </a>
-                                        <a class="btn btn-warning"
+                                        <a class="btn btn-warning" title="Eliminar"
                                             href="./events?accion=delete&id=${item.getIdEvent()}">
                                             <em class="fas fa-trash-alt fa-lg"></em>
                                         </a>
-                                        <a class="btn btn-dark" href="./events?accion=publish&id=${item.getIdEvent()}">
+                                        <a class="btn btn-dark" title="Publicar" href="./events?accion=publish&id=${item.getIdEvent()}">
                                             <em class="fas fa-eye fa-lg"></em>
                                         </a>
                                     </td>

@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IAdministratorDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
-import unmsm.edu.pe.calidadsw.dao.model.Client;
 
 /**
  *
@@ -51,38 +51,6 @@ public class AdministratorDAO implements IAdministratorDAO {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
         return admin;
-    }
-
-    @Override
-    public Boolean registerUser(Client client) {
-        Boolean result = false;
-        String sql = "{CALL sp_insert_client(?,?,?,?,?)}";
-
-        try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
-
-            callableStatement.setString(1, client.getName());
-            callableStatement.setString(2, client.getUsername());
-            callableStatement.setString(3, client.getPassword());
-
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-                if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
-
-                    if (response == 0) {
-                        LOGGER.log(Level.WARNING, "Error to execute procedure.");
-                    } else if (response == 1) {
-                        result = true;
-                        LOGGER.log(Level.INFO, "Insert successfully.");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-
-        return result;
-
     }
 
 }
