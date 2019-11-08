@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     static IAdministratorDAO adminDAO = DAOFactory.getInstance().getAdministratorDAO();
+    private static final String LOGIN = "eventLogin.jsp";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -39,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setAttribute("e", null);
-            request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
+            request.getRequestDispatcher(LOGIN).forward(request, response);
             // Puesto simplemente para que cargue el servlet al inicio
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
@@ -72,11 +73,11 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("eventStartPage.jsp");
                 } else {
                     request.setAttribute("e", "Error al iniciar sesión.");
-                    request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
+                    request.getRequestDispatcher(LOGIN).forward(request, response);
                 }
             } else {
                 request.setAttribute("e", "Usuario no registrado.");
-                request.getRequestDispatcher("eventLogin.jsp").forward(request, response);
+                request.getRequestDispatcher(LOGIN).forward(request, response);
             }
 
         } catch (Exception e) {
