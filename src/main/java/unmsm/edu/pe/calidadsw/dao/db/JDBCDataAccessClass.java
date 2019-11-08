@@ -1,10 +1,10 @@
 package unmsm.edu.pe.calidadsw.dao.db;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,23 +19,15 @@ public class JDBCDataAccessClass {
     private static final Logger LOGGER = Logger.getLogger(JDBCDataAccessClass.class.getName());
 
     public JDBCDataAccessClass() {
-        int contador = 0;
+        try {
+            Properties props = new Properties();
+            props.load(new FileInputStream("src/main/resources/application.properties"));
 
-        try (BufferedReader br = new BufferedReader(new FileReader("server.txt"));) {
-            String[] datos = new String[3];
-            String linea = br.readLine();
-
-            while (linea != null && contador < 3) {
-                datos[contador] = linea;
-                linea = br.readLine();
-                contador++;
-            }
-
-            this.jdbcURL = datos[0];
-            this.jdbcUsername = datos[1];
-            this.jdbcPassword = datos[2];
-        } catch (Exception e1) {
-            LOGGER.log(Level.SEVERE, e1.getMessage());
+            this.jdbcURL = props.getProperty("jdbc.database.url");
+            this.jdbcUsername = props.getProperty("jdbc.database.username");
+            this.jdbcPassword = props.getProperty("jdbc.database.password");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
     }
 
