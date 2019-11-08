@@ -56,6 +56,17 @@
 
   <build>
     <finalName>CalidadSW</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+
     <plugins>
       <!-- Default is too old, update to latest to run the latest Spring 5 + jUnit 5 -->
       <plugin>
@@ -103,7 +114,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <!-- Sonarqube -->
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
