@@ -71,7 +71,7 @@
 
                                         <div class="form-group col-md-6">
                                             <br>
-                                            <label class="font-weight-bold" for="hours">Horario</label>
+                                            <label class="font-weight-bold" for="hours">Rango de presentasiones</label>
                                             <input class="form-control" type="text" id="hours" name="hours"
                                                 value="${eventStartTime}:00-${eventEndTime}:00 hrs" disabled>
                                         </div>
@@ -143,7 +143,7 @@
                                         <c:otherwise>
                                             <h5>Añadir expositores</h5>
                                             <br>
-                                            <c:forEach items="${schedule}" var="item" varStatus="i">
+                                            <c:forEach items="${presentations}" var="item" varStatus="i">
                                                 <div class="form-row">
                                                     <div class="form-group col-md-8">
                                                         <label class="font-weight-bold"

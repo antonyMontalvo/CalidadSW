@@ -22,7 +22,7 @@ public interface IEventDAO {
      * @param event
      * @return
      */
-    public abstract boolean finalCreate(Event event);
+    public abstract boolean finalCreate(Event event, String cadHours);
 
     /**
      * 

@@ -90,23 +90,22 @@ public class PresentationDAO implements IPresentationDAO {
     @Override
     public boolean registerPresentation(Presentation presentation) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?,?)}";
+        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setInt(1, presentation.getStartTime());
-            callableStatement.setInt(2, presentation.getEndTime());
-            callableStatement.setString(3, presentation.getTheme());
-            callableStatement.setInt(4, presentation.getEvent().getIdEvent());
-            callableStatement.setInt(5, presentation.getExhibitor().getIdExhibitor());
+            callableStatement.setString(2, presentation.getTheme());
+            callableStatement.setInt(3, presentation.getEvent().getIdEvent());
+            callableStatement.setInt(4, presentation.getExhibitor().getIdExhibitor());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
                     int response = resultSet.getInt("response");
 
                     if (response == 1) {
-                        LOGGER.log(Level.INFO, "Exhibitor create succesfully.");
+                        LOGGER.log(Level.INFO, "Register presentation succesfully.");
                     } else if (response == 0) {
                         result = false;
                         LOGGER.log(Level.WARNING, "Error to execute procedure create.");

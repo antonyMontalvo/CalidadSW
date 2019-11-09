@@ -147,7 +147,7 @@ public class EventManagementServlet extends HttpServlet {
                     "<div class='alert alert-success' role='alert'>Se publico correctamente</div>");
         } else {
             request.setAttribute(MESSAGE,
-                    "<div class='alert alert-danger' role='alert'>Ocurrio un error al publicar el evento</div>");
+                    "<div class='alert alert-danger' role='alert'>Ocurrio un error al intentar publicar el evento, verifique que esten agregados todos los expositores a los horarios</div>");
         }
 
         index(request, response);

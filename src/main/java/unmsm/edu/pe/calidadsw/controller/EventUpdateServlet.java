@@ -1,7 +1,6 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +51,7 @@ public class EventUpdateServlet extends HttpServlet {
             int idEvent = Integer.parseInt(request.getParameter("id"));
 
             presentations = presentationDAO.readExhibitorsEvent(idEvent);
-            
+
             request.setAttribute("idEvent", idEvent);
             request.setAttribute("eventTitle", presentations.get(0).getEvent().getTitle());
             request.setAttribute("eventDate", presentations.get(0).getEvent().getDate());
@@ -75,18 +74,6 @@ public class EventUpdateServlet extends HttpServlet {
 
                 List<Exhibitor> exhibitors = exhibitorDAO.read();
                 request.setAttribute("exhibitors", exhibitors);
-
-                List<Presentation> nList = new ArrayList<>();
-
-                for (int i = startT; i < endT; i++) {
-                    Presentation presentation = new Presentation();
-                    presentation.setStartTime(i);
-                    presentation.setEndTime(i + 1);
-
-                    nList.add(presentation);
-                }
-
-                request.setAttribute("schedule", nList);
             }
 
             request.getRequestDispatcher("eventUpdate.jsp").forward(request, response);
@@ -125,7 +112,6 @@ public class EventUpdateServlet extends HttpServlet {
 
                     presentation.setTheme(themes[index]);
                     presentation.setStartTime(Integer.parseInt(hr));
-                    presentation.setEndTime(presentation.getStartTime() + 1);
 
                     Exhibitor exhibitor = new Exhibitor();
                     exhibitor.setIdExhibitor(Integer.parseInt(names[index]));

@@ -67,9 +67,9 @@ public class EventDAO implements IEventDAO {
 
     // CAMBIAR
     @Override
-    public boolean finalCreate(Event event) {
+    public boolean finalCreate(Event event, String cadHours) {
         Boolean result = false;
-        String sql = "{CALL sp_update_event_ambient_final(?,?,?,?)}";
+        String sql = "{CALL sp_update_event_ambient_final(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -78,6 +78,7 @@ public class EventDAO implements IEventDAO {
             callableStatement.setInt(2, event.getAmbient().getIdAmbient());
             callableStatement.setInt(3, event.getStartTime());
             callableStatement.setInt(4, event.getEndTime());
+            callableStatement.setString(5, cadHours);
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
@@ -287,7 +288,7 @@ public class EventDAO implements IEventDAO {
     public List<Event> filterSchedule(Event event) {
         List<Event> events = new ArrayList<>();
 
-        String sql = "{CALL sp_filter_avaliable_ambients(?,?)}";
+        String sql = "{CALL sp_filter_avaliable_hours(?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
