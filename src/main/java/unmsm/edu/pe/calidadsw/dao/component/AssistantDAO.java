@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import unmsm.edu.pe.calidadsw.dao.db.JDBCDataAccessClass;
 import unmsm.edu.pe.calidadsw.dao.design.IAssistantDAO;
-import unmsm.edu.pe.calidadsw.dao.model.Assistant;
 import unmsm.edu.pe.calidadsw.dao.model.Client;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
 
@@ -61,51 +60,6 @@ public class AssistantDAO implements IAssistantDAO {
         }
 
         return assistants;
-    }
-
-    @Override
-    public boolean registerParticipant(Assistant assistant) {
-        Boolean result = false;
-        String sql = "{CALL sp_insert_client_event(?,?)}";
-
-        try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
-
-            callableStatement.setInt(1, assistant.getClient().getIdClient());
-            callableStatement.setInt(2, assistant.getEvent().getIdEvent());
-
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-                if (resultSet.next()) {
-                    int response = resultSet.getInt("response");
-                    /**
-                     * Response: 1 Correct; 2 Event not exists; 3 Sold out
-                     */
-
-                    switch (response) {
-                    case 0:
-                        LOGGER.log(Level.WARNING, "Error to execute procedure.");
-                        break;
-                    case 1:
-                        result = true;
-                        LOGGER.log(Level.INFO, "Insert successfully.");
-                        break;
-                    case 2:
-                        LOGGER.log(Level.WARNING, "The event selected not exits.");
-                        break;
-                    case 3:
-                        LOGGER.log(Level.WARNING, "The event is full.");
-                        break;
-                    default:
-                        LOGGER.log(Level.WARNING, "Default.");
-                        break;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-
-        return result;
     }
 
 }

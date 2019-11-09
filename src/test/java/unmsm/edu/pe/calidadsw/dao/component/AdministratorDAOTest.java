@@ -7,8 +7,6 @@ package unmsm.edu.pe.calidadsw.dao.component;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,19 +14,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unmsm.edu.pe.calidadsw.dao.DAOFactory;
-import unmsm.edu.pe.calidadsw.dao.design.IAssistantDAO;
-import unmsm.edu.pe.calidadsw.dao.model.Client;
-import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.design.IAdministratorDAO;
+import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 
 /**
  *
  * @author Antony
  */
-public class AssistantDAOTest {
+public class AdministratorDAOTest {
 
-    static IAssistantDAO assistantDAO = DAOFactory.getInstance().getAssistantDAO();
+    static IAdministratorDAO ambientDAO = DAOFactory.getInstance().getAdministratorDAO();
 
-    public AssistantDAOTest() {
+    public AdministratorDAOTest() {
     }
 
     @BeforeAll
@@ -48,16 +45,15 @@ public class AssistantDAOTest {
     }
 
     /**
-     * Test of readAssistantsEvent method, of class AssistantDAO.
+     * Test of readLogin method, of class AdministratorDAO.
      */
     @Test
-    public void testReadAssistantsEvent() {
-        System.out.println("readAssistantsEvent");
+    public void testReadLogin() {
+        System.out.println("readLogin");
 
-        Event event = new Event();
-        event.setIdEvent(1);
+        String user = "adminP";
+        Administrator result = ambientDAO.readLogin(user);
 
-        List<Client> result = assistantDAO.readAssistantsEvent(event);
         assertEquals(result, result);
     }
 

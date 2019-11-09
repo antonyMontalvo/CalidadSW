@@ -77,4 +77,17 @@ public class AmbientDAOTest {
         assertEquals(result, result);
     }
 
+    /**
+     * Test of filterAmbients method, of class AdministratorDAO.
+     */
+    @Test
+    public void testfilterAmbients() {
+        System.out.println("filterAmbients");
+
+        int idEvent = 3;
+        List<Ambient> result = ambientDAO.filterAmbients(idEvent);
+
+        assertEquals(result, result);
+    }
+
 }

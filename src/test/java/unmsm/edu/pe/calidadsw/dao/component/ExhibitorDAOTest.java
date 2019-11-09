@@ -77,4 +77,16 @@ public class ExhibitorDAOTest {
         assertEquals(result, result);
     }
 
+    /**
+     * Test of readExhibitorEvent method, of class ExhibitorDAO.
+     */
+    @Test
+    public void testReadExhibitorEvent() {
+        System.out.println("readExhibitorEvent");
+
+        int idEvent = 3;
+        List<Exhibitor> result = exhibitorDAO.readExhibitorEvent(idEvent);
+        assertEquals(result, result);
+    }
+
 }

@@ -226,7 +226,7 @@ public class EventCreationServlet extends HttpServlet {
                 boolean find = false;
                 for (int j = 0; j < eventsHours.size() && !find; j++) {
 
-                    if (eventsHours.get(j).getStartTime() <= i - 1 && i <= eventsHours.get(j).getEndTime()) {
+                    if (eventsHours.get(j).getStartTime() == i - 1) {
                         e.setIdEvent(1);
                         find = true;
                     }
@@ -261,17 +261,19 @@ public class EventCreationServlet extends HttpServlet {
         if (hours.length > 0) {
 
             int index = 0;
-            String cadHours = "";
+            StringBuilder bld = new StringBuilder();
             for (String hr : hours) {
                 if (index == 0) {
                     event.setStartTime(Integer.parseInt(hr));
+                    bld.append(hr);
+                } else {
+                    bld.append(";" + hr);
+
+                    if (index == hours.length - 1) {
+                        event.setEndTime(Integer.parseInt(hr) + 1);
+                    }
                 }
 
-                if (index == hours.length - 1) {
-                    event.setEndTime(Integer.parseInt(hr) + 1);
-                }
-
-                cadHours += hr + ";";
                 index++;
             }
             HttpSession session = request.getSession();
@@ -281,7 +283,7 @@ public class EventCreationServlet extends HttpServlet {
             event.setIdEvent(idEvent);
             event.setAmbient(new Ambient(idAmbient));
 
-            boolean status = eventDAO.finalCreate(event, cadHours);
+            boolean status = eventDAO.finalCreate(event, bld.toString());
             if (status) {
                 response.sendRedirect("./events?accion=index");
             } else {

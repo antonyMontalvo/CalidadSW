@@ -128,34 +128,7 @@ public class EventDAO implements IEventDAO {
 
         return result;
     }
-
-    @Override
-    public Event readEvent(Integer id) {
-        Event event = null;
-        String sql = "{CALL sp_get_event(?)}";
-
-        try (Connection connection = jdbc.getJdbcConnection();
-                CallableStatement callableStatement = connection.prepareCall(sql);) {
-
-            callableStatement.setInt(1, id);
-
-            try (ResultSet resultSet = callableStatement.executeQuery();) {
-
-                if (resultSet.next()) {
-                    event = new Event();
-
-                    event.setTitle(resultSet.getString(TITLE));
-                    event.setDescription(resultSet.getString(DESCRIPTION));
-                    event.setDate(resultSet.getString(DATE));
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
-        }
-
-        return event;
-    }
-
+    
     @Override
     public List<Event> read() {
         List<Event> events = new ArrayList<>();

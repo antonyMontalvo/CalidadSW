@@ -38,6 +38,13 @@
       <version>5.1.47</version>
     </dependency>
 
+    <!-- Some containers like Tomcat don't have jstl library -->
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
     <!-- junit 5, unit test -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -46,12 +53,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Some containers like Tomcat don't have jstl library -->
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
   </dependencies>
 
   <build>

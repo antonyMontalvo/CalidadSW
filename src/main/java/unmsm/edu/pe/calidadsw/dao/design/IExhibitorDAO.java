@@ -23,6 +23,11 @@ public interface IExhibitorDAO {
      */
     public abstract List<Exhibitor> read();
     
+    /**
+     * 
+     * @param idEvent
+     * @return
+     */
     public abstract List<Exhibitor> readExhibitorEvent(int idEvent);
     
 }

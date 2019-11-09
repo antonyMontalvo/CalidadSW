@@ -16,7 +16,7 @@ public interface IEventDAO {
      * @return
      */
     public abstract int createBasic(Event event);
-    
+
     /**
      * 
      * @param event
@@ -30,13 +30,6 @@ public interface IEventDAO {
      * @return
      */
     public abstract boolean delete(Integer idEvent);
-
-    /**
-     * 
-     * @param idEvent
-     * @return
-     */
-    public abstract Event readEvent(Integer idEvent);
 
     /**
      * 
