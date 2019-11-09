@@ -1,6 +1,5 @@
 package unmsm.edu.pe.calidadsw.dao.db;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,7 +20,7 @@ public class JDBCDataAccessClass {
     public JDBCDataAccessClass() {
         try {
             Properties props = new Properties();
-            props.load(new FileInputStream("src/main/resources/application.properties"));
+            props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 
             this.jdbcURL = props.getProperty("jdbc.database.url");
             this.jdbcUsername = props.getProperty("jdbc.database.username");
