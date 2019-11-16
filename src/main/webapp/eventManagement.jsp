@@ -37,6 +37,13 @@
                 <c:if test="${message != null}">
                     ${message}
                 </c:if>
+                
+                <c:if test="${errorMsg != null}">
+                    ${errorMsg}
+                </c:if>
+                
+                
+                
                 <br>
 
                 <h2 class="ml-4">Lista de eventos</h2>
