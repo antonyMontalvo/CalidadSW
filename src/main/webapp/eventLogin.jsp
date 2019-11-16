@@ -46,7 +46,8 @@
             <hr>
             <br>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Usuario" name="username" required="required">
+                <input type="text" class="form-control" placeholder="Usuario" name="username" 
+                       required="required" pattern="[a-zA-Z0-9]+"> <!--Solo letras y números-->
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Contraseña" name="password"
