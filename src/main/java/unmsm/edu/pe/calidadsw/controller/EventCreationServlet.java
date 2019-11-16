@@ -140,7 +140,6 @@ public class EventCreationServlet extends HttpServlet {
         event.setTitle(request.getParameter("title"));
         event.setDescription(request.getParameter("description"));
         event.setDate(request.getParameter("date"));
-        event.setState("creado");
 
         Administrator administrator = new Administrator();
         administrator.setIdAdministrator(1);

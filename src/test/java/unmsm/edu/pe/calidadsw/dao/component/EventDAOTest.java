@@ -64,7 +64,6 @@ public class EventDAOTest {
         event.setTitle("Docker conference");
         event.setDescription("La primera conferencia del año.");
         event.setDate("2019-10-27");
-        event.setState("creado");
         event.setAmbient(ambient);
         event.setAdministrator(administrator);
 

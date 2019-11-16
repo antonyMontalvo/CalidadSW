@@ -34,7 +34,7 @@ public class EventDAO implements IEventDAO {
     @Override
     public int createBasic(Event event) {
         int result = 0;
-        String sql = "{CALL sp_insert_event(?,?,?,?,?)}";
+        String sql = "{CALL sp_insert_event(?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -42,8 +42,7 @@ public class EventDAO implements IEventDAO {
             callableStatement.setString(1, event.getTitle());
             callableStatement.setString(2, event.getDescription());
             callableStatement.setString(3, event.getDate());
-            callableStatement.setString(4, event.getState());
-            callableStatement.setInt(5, event.getAdministrator().getIdAdministrator());
+            callableStatement.setInt(4, event.getAdministrator().getIdAdministrator());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
