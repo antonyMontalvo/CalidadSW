@@ -88,4 +88,15 @@ public class EventDAOTest {
         assertEquals(result, result);
     }
 
+    /**
+     * Test of readTypes method, of class EventDAO.
+     */
+    @Test
+    public void testReadTypes() {
+        System.out.println("read");
+
+        List<Type> result = eventDAO.readTypes();
+        assertEquals(result, result);
+    }
+
 }
