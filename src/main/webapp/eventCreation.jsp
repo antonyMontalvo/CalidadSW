@@ -94,7 +94,7 @@
                                         <div class="form-group col-md-6">
                                             <br>
                                             <label class="font-weight-bold" for="date">Fecha de inicio</label>
-                                            <input class="form-control" type="date" value="${date_now}" id="date"
+                                            <input class="form-control" type="date" value="${dateNow}" id="date"
                                                 name="date" required>
                                             <small id="dateHelp" class="form-text text-muted">Día en la cual iniciará el
                                                 desarrollo el evento.</small>
@@ -102,7 +102,7 @@
                                         <div class="form-group col-md-6">
                                             <br>
                                             <label class="font-weight-bold" for="date">Fecha de fin</label>
-                                            <input class="form-control" type="date" value="${date_now}" id="date_end"
+                                            <input class="form-control" type="date" value="${dateNow}" id="date_end"
                                                 name="date_end" required>
                                             <small id="dateHelp" class="form-text text-muted">Día en la cual finaliza el
                                                 desarrollo del evento.</small>

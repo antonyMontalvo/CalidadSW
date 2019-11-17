@@ -27,14 +27,10 @@
     <link rel="icon" href="https://dl.dropbox.com/s/2eb4fvhjukzew07/favicon.ico">
 
     <script src="https://kit.fontawesome.com/f3fb6f4736.js" crossorigin="anonymous"></script>
-    <script src=""></script>
     <title>SIGCE</title>
 </head>
 
 <body>
-    <script type="text/javascript">
-        jq
-    </script>
 
     <t:sidebar>
         <jsp:attribute name="content">

@@ -37,6 +37,7 @@ public class EventCreationServlet extends HttpServlet {
     static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
     private static final String EVENT = "event";
     private static final String MESSAGE = "message";
+    private static final String ERRORMESSAGE = "errorMsg";
     private static final String AMBIENT = "ambient";
 
     public EventCreationServlet() {
@@ -131,9 +132,9 @@ public class EventCreationServlet extends HttpServlet {
         List<Type> types = eventDAO.readTypes();
 
         Calendar fecha = Calendar.getInstance();
-        String date_now = new SimpleDateFormat("yyyy-MM-dd").format(fecha.getTime());
+        String dateNow = new SimpleDateFormat("yyyy-MM-dd").format(fecha.getTime());
 
-        request.setAttribute("date_now", date_now);
+        request.setAttribute("dateNow", dateNow);
         request.setAttribute("types", types);
 
         request.getRequestDispatcher("eventCreation.jsp").forward(request, response);
@@ -168,7 +169,7 @@ public class EventCreationServlet extends HttpServlet {
             e = "<div class='alert alert-warning' role='alert'>La fecha de inicio no puede ser posterior"
                     + " a la final.</div>";
 
-            request.setAttribute("errorMsg", e);
+            request.setAttribute(ERRORMESSAGE, e);
             index(request, response);
         } else {
             int idEvent = 0;
@@ -178,7 +179,7 @@ public class EventCreationServlet extends HttpServlet {
                 e = "<div class='alert alert-danger' role='alert'>Ocurrio un error al crear el evento vuelva a "
                         + "intentarlo más tarde.</div>";
 
-                request.setAttribute("errorMsg", e);
+                request.setAttribute(ERRORMESSAGE, e);
                 index(request, response);
             } else {
                 HttpSession session = request.getSession();
@@ -204,7 +205,7 @@ public class EventCreationServlet extends HttpServlet {
         if (idEvent == null) {
             String e = "<div class='alert alert-danger' role='alert'>Ocurrio un error vuelva intentarlo más tarde.</div>";
 
-            request.setAttribute("errorMsg", e);
+            request.setAttribute(ERRORMESSAGE, e);
             index(request, response);
         } else {
             List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
@@ -237,10 +238,9 @@ public class EventCreationServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
-     * @throws ParseException
      */
     private void third(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
         Integer idEvent = (Integer) session.getAttribute(EVENT);
         Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
@@ -334,7 +334,7 @@ public class EventCreationServlet extends HttpServlet {
             } else {
                 session.removeAttribute(EVENT);
 
-                request.setAttribute("errorMsg",
+                request.setAttribute(ERRORMESSAGE,
                         "<div class='alert alert-danger' role='alert'>Ocurrio un error al añadir los "
                                 + "horarios vuelva a intentarlo más tarde.</div>");
                 index(request, response);

@@ -144,10 +144,9 @@ public class EventManagementServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
-     * @throws ParseException
      */
     private void delete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.delete(id)) {
@@ -167,10 +166,9 @@ public class EventManagementServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
-     * @throws ParseException
      */
     private void publish(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.publish(id)) {
