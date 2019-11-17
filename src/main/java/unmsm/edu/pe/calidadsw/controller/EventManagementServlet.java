@@ -102,22 +102,7 @@ public class EventManagementServlet extends HttpServlet {
                     request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
                 }
             }
-            /*
-            if (date1.compareTo(date2) < 0) {
-                if (date1.compareTo(date2) == 0) {
-
-                } else {
-                    elements = eventDAO.search(startDate, endDate);
-                    request.setAttribute("eventos", elements);
-                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-                }
-            } else {
-
-                request.setAttribute("errorMsg", "<div class='alert alert-danger' role='alert'>La fecha de inicio no puede ser posterior"
-                        + " a la final.</div>" + startDate + " " + endDate);
-                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
-            }
-            */
+            
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
