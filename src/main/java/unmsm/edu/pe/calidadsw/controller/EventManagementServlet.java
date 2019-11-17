@@ -87,25 +87,22 @@ public class EventManagementServlet extends HttpServlet {
             Date date1 = format.parse(startDate);
             Date date2 = format.parse(endDate);
 
-            String e = "";
+            if (date1.compareTo(date2) != 1) {
+                if (date1.compareTo(date2) != 0) {
+                    elements = eventDAO.search(startDate, endDate);
+                    request.setAttribute("eventos", elements);
+                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("errorMsg", "<div class='alert alert-danger' role='alert'>"
+                            + "Las fechas no pueden ser iguales.</div>");
+                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                }
+            } else {
 
-            switch (date1.compareTo(date2)) {
-            case 1:
-                e = "<div class='alert alert-danger' role='alert'>La fecha de inicio no puede ser posterior"
-                        + " a la final.</div>";
-                break;
-            case 0:
-                e = "<div class='alert alert-danger' role='alert'>Las fechas no pueden ser iguales.</div>";
-                break;
-            default:
-                e = null;
-                break;
+                request.setAttribute("errorMsg", "<div class='alert alert-danger' role='alert'>La fecha de inicio no puede ser posterior"
+                        + " a la final.</div>");
+                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
             }
-
-            request.setAttribute("errorMsg", e);
-            elements = eventDAO.search(startDate, endDate);
-            request.setAttribute("eventos", elements);
-            request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
 
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
