@@ -55,6 +55,7 @@ public class EventUpdateServlet extends HttpServlet {
             request.setAttribute("idEvent", idEvent);
             request.setAttribute("eventTitle", presentations.get(0).getEvent().getTitle());
             request.setAttribute("eventDate", presentations.get(0).getEvent().getDate());
+            request.setAttribute("eventDateEnd", presentations.get(0).getEvent().getDateEnd());
             request.setAttribute("eventDescription", presentations.get(0).getEvent().getDescription());
             request.setAttribute("eventState", presentations.get(0).getEvent().getState());
 

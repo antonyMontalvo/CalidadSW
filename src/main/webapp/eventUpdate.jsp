@@ -64,16 +64,16 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <br>
-                                            <label class="font-weight-bold" for="date">Fecha del evento</label>
+                                            <label class="font-weight-bold" for="date">Fecha de inicio del evento</label>
                                             <input class="form-control" type="date" id="date" name="date"
                                                 value="${eventDate}" disabled>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <br>
-                                            <label class="font-weight-bold" for="hours">Rango de presentasiones</label>
-                                            <input class="form-control" type="text" id="hours" name="hours"
-                                                value="${eventStartTime}:00-${eventEndTime}:00 hrs" disabled>
+                                            <label class="font-weight-bold" for="date_end">Fecha de fin del evento</label>
+                                            <input class="form-control" type="date" id="date_end" name="date-end"
+                                                value="${eventDateEnd}" disabled>
                                         </div>
                                     </div>
 

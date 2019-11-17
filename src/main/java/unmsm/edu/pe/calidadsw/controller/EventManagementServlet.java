@@ -1,6 +1,7 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -129,7 +130,8 @@ public class EventManagementServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void index(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         List<Event> elements = eventDAO.read();
 
         request.setAttribute("eventos", elements);
@@ -142,8 +144,10 @@ public class EventManagementServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
+     * @throws ParseException
      */
-    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void delete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.delete(id)) {
@@ -163,9 +167,10 @@ public class EventManagementServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
+     * @throws ParseException
      */
     private void publish(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         int id = Integer.parseInt(request.getParameter("id"));
 
         if (eventDAO.publish(id)) {

@@ -21,6 +21,7 @@ import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Type;
 
 /**
  *
@@ -64,6 +65,10 @@ public class EventDAOTest {
         event.setTitle("Docker conference");
         event.setDescription("La primera conferencia del año.");
         event.setDate("2019-10-27");
+        event.setDateEnd("2019-10-30");
+        Type type = new Type();
+        type.setIdType(6);
+        event.setType(type);
         event.setAmbient(ambient);
         event.setAdministrator(administrator);
 

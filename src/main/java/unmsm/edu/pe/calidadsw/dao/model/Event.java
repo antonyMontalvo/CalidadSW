@@ -9,9 +9,10 @@ public class Event {
     private String title;
     private String description;
     private String date;
+    private String dateEnd;
     private String state;
-    private int startTime;
-    private int endTime;
+    private int startTime; // Ambos en proceso para ser borrados
+    private int endTime; // Ambos en proceso para ser borrados
     private Ambient ambient; // LLave foranea proveniente de la tabla ambiente.
     private Administrator administrator; // Llave foranea proveniente de la tabla administrador.
     private Type type; // Llave foranea proveniente de la tabla tipo.
@@ -78,6 +79,22 @@ public class Event {
      */
     public void setDate(String date) {
         this.date = date;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    /**
+     * 
+     * @param date
+     */
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     /**

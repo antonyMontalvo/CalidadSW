@@ -34,16 +34,22 @@
         <jsp:attribute name="content">
             <div class="container">
                 <br>
-                <c:if test="${message != null}">
-                    ${message}
-                </c:if>
-                
-                <c:if test="${errorMsg != null}">
-                    ${errorMsg}
-                </c:if>
-                
-                
-                
+                <c:choose>
+                    <c:when test="${message != null}">
+                        ${message}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:choose>
+                    <c:when test="${errorMsg != null}">
+                        ${errorMsg}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
                 <br>
 
                 <h2 class="ml-4">Lista de eventos</h2>
@@ -55,13 +61,13 @@
 
                         <div class="col-4">
                             <label for="startDate">Fecha inicio</label>
-                            <input class="form-control mb-2" type="date" name="start-date" value="2019-10-01"
+                            <input class="form-control mb-2" type="date" name="start-date" value="2019-11-01"
                                 id="startDate">
                         </div>
 
                         <div class="col-4">
                             <label for="endDate">Fecha fin</label>
-                            <input class="form-control mb-2" type="date" name="end-date" value="2019-10-31"
+                            <input class="form-control mb-2" type="date" name="end-date" value="2019-11-30"
                                 id="endDate">
                         </div>
 
@@ -85,7 +91,7 @@
                                 <th scope="col" class="text-center">ID</th>
                                 <th scope="col" class="text-center">Título</th>
                                 <th scope="col" class="text-center">Fecha</th>
-                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Estado</th>
                                 <th scope="col" class="text-center">Ambiente</th>
                                 <th scope="col" class="text-center">Opciones</th>
                             </tr>
@@ -110,14 +116,16 @@
                                         <c:out value="${item.getAmbient().getName()}" />
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-info" title="Actualizar" href="./events_update?id=${item.getIdEvent()}">
+                                        <a class="btn btn-info" title="Actualizar"
+                                            href="./events_update?id=${item.getIdEvent()}">
                                             <em class="fas fa-pen fa-lg"></em>
                                         </a>
                                         <a class="btn btn-warning" title="Eliminar"
                                             href="./events?accion=delete&id=${item.getIdEvent()}">
                                             <em class="fas fa-trash-alt fa-lg"></em>
                                         </a>
-                                        <a class="btn btn-dark" title="Publicar" href="./events?accion=publish&id=${item.getIdEvent()}">
+                                        <a class="btn btn-dark" title="Publicar"
+                                            href="./events?accion=publish&id=${item.getIdEvent()}">
                                             <em class="fas fa-eye fa-lg"></em>
                                         </a>
                                     </td>

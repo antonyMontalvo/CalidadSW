@@ -48,7 +48,7 @@
                                         <br>
                                         <label class="font-weight-bold" for="environment">Ambiente</label>
                                         <select id="environment" name="environment" class="form-control" required>
-                                            <option hidden selected disabled>Elige...</option>
+                                            <option hidden selected disabled value="">Elige...</option>
                                             <c:forEach items="${ambients}" var="item">
                                                 <option value="${item.getIdAmbient()}">
                                                     <c:out value="${item.getName()}" />

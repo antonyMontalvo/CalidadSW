@@ -1,7 +1,10 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,7 @@ import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Type;
 
 /**
  *
@@ -33,7 +37,6 @@ public class EventCreationServlet extends HttpServlet {
     static IAmbientDAO ambientDAO = DAOFactory.getInstance().getAmbientDAO();
     private static final String EVENT = "event";
     private static final String MESSAGE = "message";
-    private static final String RETURN_INDEX = "./events_create?action=index";
     private static final String AMBIENT = "ambient";
 
     public EventCreationServlet() {
@@ -125,6 +128,14 @@ public class EventCreationServlet extends HttpServlet {
      * @throws IOException
      */
     private void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Type> types = eventDAO.readTypes();
+
+        Calendar fecha = Calendar.getInstance();
+        String date_now = new SimpleDateFormat("yyyy-MM-dd").format(fecha.getTime());
+
+        request.setAttribute("date_now", date_now);
+        request.setAttribute("types", types);
+
         request.getRequestDispatcher("eventCreation.jsp").forward(request, response);
     }
 
@@ -133,27 +144,50 @@ public class EventCreationServlet extends HttpServlet {
      * @param request
      * @param response
      * @throws IOException
+     * @throws ServletException
      */
-    private void create1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void create1(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         Event event = new Event();
 
         event.setTitle(request.getParameter("title"));
         event.setDescription(request.getParameter("description"));
         event.setDate(request.getParameter("date"));
+        event.setDateEnd(request.getParameter("date_end"));
+
+        Type type = new Type();
+        type.setIdType(Integer.parseInt(request.getParameter("type-event")));
+        event.setType(type);
 
         Administrator administrator = new Administrator();
         administrator.setIdAdministrator(1);
         event.setAdministrator(administrator);
 
-        int idEvent = 0;
-        idEvent = eventDAO.createBasic(event);
-        if (idEvent == 0) {
-            response.sendRedirect(RETURN_INDEX);
+        String e = "";
+        if ((event.getDate()).compareTo(event.getDateEnd()) > 0) {
+            e = "<div class='alert alert-warning' role='alert'>La fecha de inicio no puede ser posterior"
+                    + " a la final.</div>";
+
+            request.setAttribute("errorMsg", e);
+            index(request, response);
         } else {
-            HttpSession session = request.getSession();
-            session.setAttribute(EVENT, idEvent);
-            response.sendRedirect("./events_create?action=second");
+            int idEvent = 0;
+            idEvent = eventDAO.createBasic(event);
+
+            if (idEvent == 0) {
+                e = "<div class='alert alert-danger' role='alert'>Ocurrio un error al crear el evento vuelva a "
+                        + "intentarlo más tarde.</div>";
+
+                request.setAttribute("errorMsg", e);
+                index(request, response);
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute(EVENT, idEvent);
+
+                response.sendRedirect("./events_create?action=second");
+            }
         }
+
     }
 
     /**
@@ -168,7 +202,10 @@ public class EventCreationServlet extends HttpServlet {
         Integer idEvent = (Integer) session.getAttribute(EVENT);
 
         if (idEvent == null) {
-            response.sendRedirect(RETURN_INDEX);
+            String e = "<div class='alert alert-danger' role='alert'>Ocurrio un error vuelva intentarlo más tarde.</div>";
+
+            request.setAttribute("errorMsg", e);
+            index(request, response);
         } else {
             List<Ambient> elements = ambientDAO.filterAmbients(idEvent);
 
@@ -200,8 +237,10 @@ public class EventCreationServlet extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
+     * @throws ParseException
      */
-    private void third(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void third(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
         HttpSession session = request.getSession();
         Integer idEvent = (Integer) session.getAttribute(EVENT);
         Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
@@ -243,6 +282,10 @@ public class EventCreationServlet extends HttpServlet {
         }
 
         request.setAttribute("events", hours);
+
+        Event eventDay = eventDAO.getDayEvents(idEvent);
+
+        request.setAttribute("eventDay", eventDay);
         request.getRequestDispatcher("eventCreationS3.jsp").forward(request, response);
     }
 
@@ -251,8 +294,11 @@ public class EventCreationServlet extends HttpServlet {
      * @param request
      * @param response
      * @throws IOException
+     * @throws ServletException
+     * @throws ParseException
      */
-    private void create3(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void create3(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException, ParseException {
         Event event = new Event();
 
         String[] hours = request.getParameterValues("hour");
@@ -287,12 +333,16 @@ public class EventCreationServlet extends HttpServlet {
                 response.sendRedirect("./events?accion=index");
             } else {
                 session.removeAttribute(EVENT);
-                response.sendRedirect(RETURN_INDEX);
+
+                request.setAttribute("errorMsg",
+                        "<div class='alert alert-danger' role='alert'>Ocurrio un error al añadir los "
+                                + "horarios vuelva a intentarlo más tarde.</div>");
+                index(request, response);
             }
         } else {
-            request.setAttribute(MESSAGE,
-                    "<div class='alert alert-warning' role='alert'>Debe seleccionar algun horario o regresar y cambiar de ambiente</div>");
-            response.sendRedirect("./events_create?action=third");
+            request.setAttribute(MESSAGE, "<div class='alert alert-warning' role='alert'>Debe seleccionar "
+                    + "algun horario o regresar y cambiar de ambiente</div>");
+            third(request, response);
         }
     }
 

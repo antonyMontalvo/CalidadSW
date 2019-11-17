@@ -4,6 +4,7 @@
     Author     : Usuario
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
@@ -33,8 +34,24 @@
 
             <div class="container">
                 <br>
+                <c:choose>
+                    <c:when test="${message != null}">
+                        ${message}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:choose>
+                    <c:when test="${errorMsg != null}">
+                        ${errorMsg}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-8">
 
                         <!--Card event creation-->
                         <div class="card ml-4">
@@ -47,7 +64,8 @@
                                     <div class="form-group">
                                         <br>
                                         <label class="font-weight-bold" for="title">Título</label>
-                                        <input type="text" class="form-control" id="title" name="title" required>
+                                        <input type="text" class="form-control" id="title" name="title" required
+                                            placeholder="Docker conference">
                                         <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y
                                             claro.</small>
                                     </div>
@@ -63,11 +81,32 @@
 
                                     <div class="form-group">
                                         <br>
-                                        <label class="font-weight-bold" for="date">Fecha del evento</label>
-                                        <input class="form-control" type="date" value="2019-10-16" id="date" name="date"
-                                            required>
-                                        <small id="dateHelp" class="form-text text-muted">Día en la cual se desarrollará
-                                            el evento, el horario se definira más adelante.</small>
+                                        <label class="font-weight-bold" for="type_event">Tipos de eventos</label>
+                                        <select id="type_event" name="type-event" class="form-control" required>
+                                            <option hidden selected disabled value="">Elige...</option>
+                                            <c:forEach items="${types}" var="item">
+                                                <option value="${item.getIdType()}">${item.getName()} </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <br>
+                                            <label class="font-weight-bold" for="date">Fecha de inicio</label>
+                                            <input class="form-control" type="date" value="${date_now}" id="date"
+                                                name="date" required>
+                                            <small id="dateHelp" class="form-text text-muted">Día en la cual iniciará el
+                                                desarrollo el evento.</small>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <br>
+                                            <label class="font-weight-bold" for="date">Fecha de fin</label>
+                                            <input class="form-control" type="date" value="${date_now}" id="date_end"
+                                                name="date_end" required>
+                                            <small id="dateHelp" class="form-text text-muted">Día en la cual finaliza el
+                                                desarrollo del evento.</small>
+                                        </div>
                                     </div>
 
                                     <br>
@@ -79,10 +118,6 @@
                         </div>
                         <!--Card end-->
                         <br>
-                    </div>
-
-                    <div class="col-1">
-                        <!--Default space-->
                     </div>
 
                     <div class="col-4">

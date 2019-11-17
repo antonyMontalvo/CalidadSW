@@ -11,6 +11,7 @@ public class Presentation {
     private String theme;
     private int startTime;
     private int endTime;
+    private String date;
     private Event event;
     private Exhibitor exhibitor;
 
@@ -76,6 +77,22 @@ public class Presentation {
      */
     public void setEndTime(int endTime) {
         this.endTime = endTime;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * 
+     * @param date
+     */
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /**

@@ -47,6 +47,7 @@ public class PresentationDAO implements IPresentationDAO {
                         Event event = new Event();
                         event.setTitle(resultSet.getString("title"));
                         event.setDate(resultSet.getString("date"));
+                        event.setDateEnd(resultSet.getString("date_end"));
                         event.setDescription(resultSet.getString("description"));
                         event.setStartTime(resultSet.getInt("start_time"));
                         event.setEndTime(resultSet.getInt("end_time"));

@@ -15,7 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
         </script>
@@ -26,20 +27,41 @@
     <link rel="icon" href="https://dl.dropbox.com/s/2eb4fvhjukzew07/favicon.ico">
 
     <script src="https://kit.fontawesome.com/f3fb6f4736.js" crossorigin="anonymous"></script>
+    <script src=""></script>
     <title>SIGCE</title>
 </head>
 
 <body>
+    <script type="text/javascript">
+        jq
+    </script>
+
     <t:sidebar>
         <jsp:attribute name="content">
             <div class="container-fluid">
                 <br>
+                <c:choose>
+                    <c:when test="${message != null}">
+                        ${message}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:choose>
+                    <c:when test="${errorMsg != null}">
+                        ${errorMsg}
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-8">
 
                         <a href="./events_create?action=second" class="btn btn-info">
                             <em class="fas fa-chevron-left fa-lg"></em>
-                        </a><br>
+                        </a><br><br>
 
                         <!--Card event creation-->
                         <div class="card ml-4">
@@ -50,6 +72,22 @@
 
                                 <form method="post" action="events_create?action=create3">
 
+                                    <label class="font-weight-bold" for="days_event">Fechas en que se hara el
+                                        evento</label>
+                                    <div class="row">
+                                        <div class="form-group col-6">
+                                            <br>
+                                            <input type="date" class="form-control" value="${eventDay.getDate()}"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <br>
+                                            <input type="date" class="form-control" value="${eventDay.getDateEnd()}"
+                                                disabled>
+                                        </div>
+                                    </div>
+
+                                    <br>
                                     <c:forEach items="${events}" var="item" varStatus="i">
                                         <div class="col-auto my-1">
                                             <div class="custom-control custom-checkbox mr-sm-2">
@@ -81,10 +119,6 @@
                         </div>
                         <!--Card end-->
                         <br>
-                    </div>
-
-                    <div class="col-1">
-                        <!--Default space-->
                     </div>
 
                     <div class="col-4">

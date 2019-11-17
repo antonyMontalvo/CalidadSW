@@ -3,6 +3,7 @@ package unmsm.edu.pe.calidadsw.dao.design;
 import java.util.List;
 
 import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Type;
 
 /**
  *
@@ -58,4 +59,17 @@ public interface IEventDAO {
      * @return
      */
     public abstract List<Event> filterSchedule(Event event);
+
+    /**
+     * 
+     * @return
+     */
+    public abstract List<Type> readTypes();
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    public Event getDayEvents(Integer id);
 }

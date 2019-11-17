@@ -14,6 +14,7 @@ import unmsm.edu.pe.calidadsw.dao.design.IEventDAO;
 import unmsm.edu.pe.calidadsw.dao.model.Administrator;
 import unmsm.edu.pe.calidadsw.dao.model.Ambient;
 import unmsm.edu.pe.calidadsw.dao.model.Event;
+import unmsm.edu.pe.calidadsw.dao.model.Type;
 
 public class EventDAO implements IEventDAO {
 
@@ -34,7 +35,7 @@ public class EventDAO implements IEventDAO {
     @Override
     public int createBasic(Event event) {
         int result = 0;
-        String sql = "{CALL sp_insert_event(?,?,?,?)}";
+        String sql = "{CALL sp_insert_event(?,?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -42,7 +43,9 @@ public class EventDAO implements IEventDAO {
             callableStatement.setString(1, event.getTitle());
             callableStatement.setString(2, event.getDescription());
             callableStatement.setString(3, event.getDate());
-            callableStatement.setInt(4, event.getAdministrator().getIdAdministrator());
+            callableStatement.setString(4, event.getDateEnd());
+            callableStatement.setInt(5, event.getType().getIdType());
+            callableStatement.setInt(6, event.getAdministrator().getIdAdministrator());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {
@@ -127,7 +130,7 @@ public class EventDAO implements IEventDAO {
 
         return result;
     }
-    
+
     @Override
     public List<Event> read() {
         List<Event> events = new ArrayList<>();
@@ -290,6 +293,58 @@ public class EventDAO implements IEventDAO {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
         return events;
+    }
+
+    @Override
+    public List<Type> readTypes() {
+        List<Type> types = new ArrayList<>();
+        String sql = "{CALL sp_get_types()}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);
+                ResultSet resultSet = callableStatement.executeQuery();) {
+
+            while (resultSet.next()) {
+                Type type = new Type();
+
+                type.setIdType(resultSet.getInt("idtype"));
+                type.setName(resultSet.getString("name"));
+
+                types.add(type);
+            }
+            LOGGER.log(Level.INFO, "Types.");
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+
+        return types;
+    }
+
+    @Override
+    public Event getDayEvents(Integer id) {
+        Event event = new Event();
+
+        String sql = "{CALL sp_get_day_events(?)}";
+
+        try (Connection connection = jdbc.getJdbcConnection();
+                CallableStatement callableStatement = connection.prepareCall(sql);) {
+
+            callableStatement.setInt(1, id);
+
+            try (ResultSet resultSet = callableStatement.executeQuery();) {
+
+                if (resultSet.next()) {
+                    event.setDate(resultSet.getString("date"));
+                    event.setDateEnd(resultSet.getString("date_end"));
+                }
+                LOGGER.log(Level.INFO, "Days for event.");
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
+        }
+        return event;
     }
 
 }
