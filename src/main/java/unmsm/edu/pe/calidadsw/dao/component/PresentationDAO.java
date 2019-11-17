@@ -64,6 +64,7 @@ public class PresentationDAO implements IPresentationDAO {
                     }
 
                     presentation.setTheme(resultSet.getString("presentation_theme"));
+                    presentation.setDate(resultSet.getString("presentation_date"));
                     presentation.setStartTime(resultSet.getInt(START_TIME));
                     presentation.setEndTime(resultSet.getInt("presentation_end_time"));
 
@@ -90,7 +91,7 @@ public class PresentationDAO implements IPresentationDAO {
     @Override
     public boolean registerPresentation(Presentation presentation) {
         Boolean result = true;
-        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?)}";
+        String sql = "{CALL sp_insert_exhibitors_event(?,?,?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
@@ -99,6 +100,7 @@ public class PresentationDAO implements IPresentationDAO {
             callableStatement.setString(2, presentation.getTheme());
             callableStatement.setInt(3, presentation.getEvent().getIdEvent());
             callableStatement.setInt(4, presentation.getExhibitor().getIdExhibitor());
+            callableStatement.setString(5, presentation.getDate());
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {

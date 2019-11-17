@@ -1,6 +1,8 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,13 +73,22 @@ public class EventUpdateServlet extends HttpServlet {
 
             request.setAttribute("presentations", presentations);
 
+            HashMap<String, List<Presentation>> nuevo = new HashMap<String, List<Presentation>>();
+            for (Presentation p : presentations) {
+                if (!nuevo.containsKey(p.getDate())) {
+                    nuevo.put(p.getDate(), new ArrayList<Presentation>());
+                }
+                nuevo.get(p.getDate()).add(p);
+            }
+            request.setAttribute("present", nuevo);
+
             if (presentations.get(0).getExhibitor().getName() == null) {
 
                 List<Exhibitor> exhibitors = exhibitorDAO.read();
                 request.setAttribute("exhibitors", exhibitors);
             }
-
             request.getRequestDispatcher("eventUpdate.jsp").forward(request, response);
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
@@ -99,15 +110,24 @@ public class EventUpdateServlet extends HttpServlet {
             String[] names = request.getParameterValues("exhibitor-name");
             String[] hours = request.getParameterValues("schedule");
             String[] themes = request.getParameterValues("presentation-theme");
+            String[] dates = request.getParameterValues("presentation-date");
 
             if (names.length > 0 && hours.length > 0 && themes.length > 0) {
 
                 Event event = new Event();
                 event.setIdEvent(Integer.parseInt(request.getParameter("id")));
 
+                // for (String dt : dates) {
+
                 int index = 0;
+                int dateIndex = dates.length;
+                Presentation presentation = new Presentation();
                 for (String hr : hours) {
-                    Presentation presentation = new Presentation();
+                    if (index == 0)
+                        presentation.setDate(dates[0]);
+
+                    if (index % dateIndex == 0)
+                        presentation.setDate(dates[index / dateIndex]);
 
                     presentation.setEvent(event);
 
@@ -121,6 +141,7 @@ public class EventUpdateServlet extends HttpServlet {
                     presentationDAO.registerPresentation(presentation);
                     index++;
                 }
+                // }
 
             } else {
                 request.setAttribute("message",

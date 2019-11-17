@@ -71,16 +71,14 @@ public class EventDAO implements IEventDAO {
     @Override
     public boolean finalCreate(Event event, String cadHours) {
         Boolean result = false;
-        String sql = "{CALL sp_update_event_ambient_final(?,?,?,?,?)}";
+        String sql = "{CALL sp_update_event_ambient_final(?,?,?)}";
 
         try (Connection connection = jdbc.getJdbcConnection();
                 CallableStatement callableStatement = connection.prepareCall(sql);) {
 
             callableStatement.setInt(1, event.getIdEvent());
             callableStatement.setInt(2, event.getAmbient().getIdAmbient());
-            callableStatement.setInt(3, event.getStartTime());
-            callableStatement.setInt(4, event.getEndTime());
-            callableStatement.setString(5, cadHours);
+            callableStatement.setString(3, cadHours);
 
             try (ResultSet resultSet = callableStatement.executeQuery();) {
                 if (resultSet.next()) {

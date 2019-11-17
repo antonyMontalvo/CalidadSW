@@ -64,14 +64,16 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <br>
-                                            <label class="font-weight-bold" for="date">Fecha de inicio del evento</label>
+                                            <label class="font-weight-bold" for="date">Fecha de inicio del
+                                                evento</label>
                                             <input class="form-control" type="date" id="date" name="date"
                                                 value="${eventDate}" disabled>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <br>
-                                            <label class="font-weight-bold" for="date_end">Fecha de fin del evento</label>
+                                            <label class="font-weight-bold" for="date_end">Fecha de fin del
+                                                evento</label>
                                             <input class="form-control" type="date" id="date_end" name="date-end"
                                                 value="${eventDateEnd}" disabled>
                                         </div>
@@ -108,32 +110,45 @@
 
                                     <c:choose>
                                         <c:when test="${presentations.get(0).getExhibitor().getName() != null}">
-                                            <c:forEach items="${presentations}" var="item" varStatus="i">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-8">
-                                                        <label class="font-weight-bold"
-                                                            for="exhibitor_name_${i.count}">Expositor</label>
-                                                        <input class="form-control" type="text"
-                                                            value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}"
-                                                            id="exhibitor_name_${i.count}" disabled
-                                                            name="exhibitor-name">
+                                            <c:forEach items="${present.keySet()}" var="date">
+                                                <br>
+                                                <h5>Presentaciones en la</h5>
+                                                <div class="form-group row">
+                                                    <label for="presentation_date"
+                                                        class="col-sm-2 col-form-label font-weight-bold">Fecha: </label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" disabled value="${date}"
+                                                            class="form-control text-center font-weight-bold"
+                                                            id="presentation_date">
                                                     </div>
+                                                </div>
+                                                <c:forEach items="${present.get(date)}" var="item" varStatus="i">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-8">
+                                                            <label class="font-weight-bold"
+                                                                for="exhibitor_name_${i.count}">Expositor</label>
+                                                            <input class="form-control" type="text"
+                                                                value="${item.getExhibitor().getName()}  ${item.getExhibitor().getLastname()}"
+                                                                id="exhibitor_name_${i.count}" disabled
+                                                                name="exhibitor-name">
+                                                        </div>
 
-                                                    <div class="form-group col-md-4">
-                                                        <label class="font-weight-bold"
-                                                            for="schedule_${i.count}">Hora</label>
-                                                        <input class="form-control" type="text"
-                                                            value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs"
-                                                            name="schedule" disabled id="schedule_${i.count}">
+                                                        <div class="form-group col-md-4">
+                                                            <label class="font-weight-bold"
+                                                                for="schedule_${i.count}">Hora</label>
+                                                            <input class="form-control" type="text"
+                                                                value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs"
+                                                                name="schedule" disabled id="schedule_${i.count}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="font-weight-bold"
-                                                        for="presentation_theme_${i.count}">Tema</label>
-                                                    <input class="form-control" type="text"
-                                                        id="presentation_theme_${i.count}" name="presentation-theme"
-                                                        value="${item.getTheme()}" disabled>
-                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold"
+                                                            for="presentation_theme_${i.count}">Tema</label>
+                                                        <input class="form-control" type="text"
+                                                            id="presentation_theme_${i.count}" name="presentation-theme"
+                                                            value="${item.getTheme()}" disabled>
+                                                    </div>
+                                                </c:forEach>
                                             </c:forEach>
 
                                             <br>
@@ -141,40 +156,53 @@
                                                     class="btn btn-primary">Cancelar</button></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <h5>Añadir expositores</h5>
-                                            <br>
-                                            <c:forEach items="${presentations}" var="item" varStatus="i">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-8">
-                                                        <label class="font-weight-bold"
-                                                            for="exhibitor_name_${i.count}">Expositor</label>
-                                                        <select id="exhibitor_name_${i.count}" name="exhibitor-name"
-                                                            class="form-control" required>
-                                                            <option hidden selected disabled value="">Elige...</option>
-                                                            <c:forEach items="${exhibitors}" var="item1">
-                                                                <option value="${item1.getIdExhibitor()}">
-                                                                    ${item1.getName()} ${item1.getLastname()} </option>
-                                                            </c:forEach>
-                                                        </select>
+                                            <c:forEach items="${present.keySet()}" var="date">
+                                                <br>
+                                                <h5>Presentaciones en la</h5>
+                                                <div class="form-group row">
+                                                    <label for="presentation_date"
+                                                        class="col-sm-2 col-form-label font-weight-bold">Fecha: </label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" readonly value="${date}"
+                                                            class="form-control text-center font-weight-bold"
+                                                            name="presentation-date" id="presentation_date">
                                                     </div>
+                                                </div>
+                                                <c:forEach items="${present.get(date)}" var="item" varStatus="i">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-8">
+                                                            <label class="font-weight-bold"
+                                                                for="exhibitor_name_${i.count}">Expositor</label>
+                                                            <select id="exhibitor_name_${i.count}" name="exhibitor-name"
+                                                                class="form-control" required>
+                                                                <option hidden selected disabled value="">
+                                                                    Elige...</option>
+                                                                <c:forEach items="${exhibitors}" var="item1">
+                                                                    <option value="${item1.getIdExhibitor()}">
+                                                                        ${item1.getName()}
+                                                                        ${item1.getLastname()} </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
 
-                                                    <div class="form-group col-md-4">
-                                                        <label class="font-weight-bold"
-                                                            for="schedule_${i.count}">Hora</label>
-                                                        <input class="form-control" type="text" id="schedule_${i.count}"
-                                                            disabled
-                                                            value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs">
-                                                        <input class="form-control" type="text" required name="schedule"
-                                                            hidden value="${item.getStartTime()}">
+                                                        <div class="form-group col-md-4">
+                                                            <label class="font-weight-bold"
+                                                                for="schedule_${i.count}">Hora</label>
+                                                            <input class="form-control" type="text"
+                                                                id="schedule_${i.count}" disabled
+                                                                value="${item.getStartTime()}:00 - ${item.getEndTime()}:00 hrs">
+                                                            <input class="form-control" type="text" required
+                                                                name="schedule" hidden value="${item.getStartTime()}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="font-weight-bold"
-                                                        for="presentationTheme_${i.count}">Tema</label>
-                                                    <input class="form-control" type="text" required
-                                                        placeholder="Ingrese un tema" id="presentationTheme_${i.count}"
-                                                        name="presentation-theme">
-                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold"
+                                                            for="presentationTheme_${i.count}">Tema</label>
+                                                        <input class="form-control" type="text" required
+                                                            placeholder="Ingrese un tema"
+                                                            id="presentationTheme_${i.count}" name="presentation-theme">
+                                                    </div>
+                                                </c:forEach>
                                             </c:forEach>
 
                                             <br>
