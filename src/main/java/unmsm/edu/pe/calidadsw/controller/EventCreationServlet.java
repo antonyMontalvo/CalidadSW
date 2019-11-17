@@ -1,7 +1,6 @@
 package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -295,10 +294,9 @@ public class EventCreationServlet extends HttpServlet {
      * @param response
      * @throws IOException
      * @throws ServletException
-     * @throws ParseException
      */
     private void create3(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, ParseException {
+            throws IOException, ServletException {
         Event event = new Event();
 
         String[] hours = request.getParameterValues("hour");
