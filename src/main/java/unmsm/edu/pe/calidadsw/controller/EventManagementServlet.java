@@ -28,6 +28,7 @@ public class EventManagementServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(EventManagementServlet.class.getName());
     static IEventDAO eventDAO = DAOFactory.getInstance().getEventDAO();
     private static final String MESSAGE = "message";
+    private static final String PAGE = "eventManagement.jsp";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -90,16 +91,16 @@ public class EventManagementServlet extends HttpServlet {
             if (date1.compareTo(date2) == 0) {
                 request.setAttribute("errorMsg", "<div class='alert alert-danger' role='alert'>"
                         + "Las fechas no pueden ser iguales.</div>");
-                request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                request.getRequestDispatcher(PAGE).forward(request, response);
             } else {
                 if (date1.compareTo(date2) < 0) {
                     elements = eventDAO.search(startDate, endDate);
                     request.setAttribute("eventos", elements);
-                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                    request.getRequestDispatcher(PAGE).forward(request, response);
                 } else {
                     request.setAttribute("errorMsg", "<div class='alert alert-danger' role='alert'>La fecha de inicio no puede ser posterior"
                             + " a la final.</div>");
-                    request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+                    request.getRequestDispatcher(PAGE).forward(request, response);
                 }
             }
             
@@ -130,7 +131,7 @@ public class EventManagementServlet extends HttpServlet {
         List<Event> elements = eventDAO.read();
 
         request.setAttribute("eventos", elements);
-        request.getRequestDispatcher("eventManagement.jsp").forward(request, response);
+        request.getRequestDispatcher(PAGE).forward(request, response);
     }
 
     /**

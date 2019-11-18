@@ -73,7 +73,7 @@ public class EventUpdateServlet extends HttpServlet {
 
             request.setAttribute("presentations", presentations);
 
-            HashMap<String, List<Presentation>> nuevo = new HashMap<String, List<Presentation>>();
+            HashMap<String, List<Presentation>> nuevo = new HashMap<>();
             for (Presentation p : presentations) {
                 if (!nuevo.containsKey(p.getDate())) {
                     nuevo.put(p.getDate(), new ArrayList<Presentation>());
@@ -117,7 +117,7 @@ public class EventUpdateServlet extends HttpServlet {
                 Event event = new Event();
                 event.setIdEvent(Integer.parseInt(request.getParameter("id")));
 
-                // for (String dt : dates) {
+                
 
                 int index = 0;
                 int dateIndex = dates.length;
@@ -141,7 +141,7 @@ public class EventUpdateServlet extends HttpServlet {
                     presentationDAO.registerPresentation(presentation);
                     index++;
                 }
-                // }
+                
 
             } else {
                 request.setAttribute("message",
