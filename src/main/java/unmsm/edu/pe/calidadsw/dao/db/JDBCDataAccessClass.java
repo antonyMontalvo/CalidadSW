@@ -2,6 +2,7 @@ package unmsm.edu.pe.calidadsw.dao.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class JDBCDataAccessClass {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             jdbcConnection = DriverManager.getConnection(this.jdbcURL, this.jdbcUsername, this.jdbcPassword);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
 
