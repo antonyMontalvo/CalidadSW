@@ -305,47 +305,35 @@ public class EventCreationServlet extends HttpServlet {
         } else {
             String[] hours = request.getParameterValues("hour");
 
-            if (hours.length > 0) {
+            int index = 0;
+            StringBuilder bld = new StringBuilder();
+            for (String hr : hours) {
 
-                int index = 0;
-                StringBuilder bld = new StringBuilder();
-                for (String hr : hours) {
-                    if (index == 0) {
-                        event.setStartTime(Integer.parseInt(hr));
-                        bld.append(hr);
-                    } else {
-                        bld.append(";" + hr);
-
-                        if (index == hours.length - 1) {
-                            event.setEndTime(Integer.parseInt(hr) + 1);
-                        }
-                    }
-
-                    index++;
+                if (index > 0) {
+                    bld.append(";");
                 }
-                HttpSession session = request.getSession();
-                Integer idEvent = (Integer) session.getAttribute(EVENT);
-                Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
+                bld.append(hr);
 
-                event.setIdEvent(idEvent);
-                event.setAmbient(new Ambient(idAmbient));
-
-                boolean status = eventDAO.finalCreate(event, bld.toString());
-                if (status) {
-                    response.sendRedirect("./events?accion=index");
-                } else {
-                    session.removeAttribute(EVENT);
-
-                    request.setAttribute(ERRORMESSAGE,
-                            "<div class='alert alert-danger' role='alert'>Ocurrio un error al añadir los "
-                                    + "horarios vuelva a intentarlo más tarde.</div>");
-                    index(request, response);
-                }
-            } else {
-                request.setAttribute(MESSAGE, "<div class='alert alert-warning' role='alert'>Debe seleccionar "
-                        + "algun horario o regresar y cambiar de ambiente</div>");
-                third(request, response);
+                index++;
             }
+            HttpSession session = request.getSession();
+            Integer idEvent = (Integer) session.getAttribute(EVENT);
+            Integer idAmbient = (Integer) session.getAttribute(AMBIENT);
+
+            event.setIdEvent(idEvent);
+            event.setAmbient(new Ambient(idAmbient));
+
+            if (eventDAO.finalCreate(event, bld.toString())) {
+                response.sendRedirect("./events?accion=index");
+            } else {
+                session.removeAttribute(EVENT);
+
+                request.setAttribute(ERRORMESSAGE,
+                        "<div class='alert alert-danger' role='alert'>Ocurrio un error al añadir los "
+                                + "horarios vuelva a intentarlo más tarde.</div>");
+                index(request, response);
+            }
+
         }
 
     }
