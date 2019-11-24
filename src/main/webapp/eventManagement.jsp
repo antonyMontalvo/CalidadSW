@@ -62,13 +62,13 @@
                         <div class="col-4">
                             <label for="startDate">Fecha inicio</label>
                             <input class="form-control mb-2" type="date" name="start-date" value="2019-11-01"
-                                id="startDate">
+                                id="startDate" min="2019-01-01" max="2023-12-12" required>
                         </div>
 
                         <div class="col-4">
                             <label for="endDate">Fecha fin</label>
                             <input class="form-control mb-2" type="date" name="end-date" value="2019-11-30"
-                                id="endDate">
+                                id="endDate" min="2019-01-01" max="2023-12-12" required>
                         </div>
 
                         <div class="col-4">

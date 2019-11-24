@@ -9,7 +9,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,15 +38,15 @@
                 <h2 class="ml-4">Reporte de asistentes</h2>
                 <br>
 
-                <form method="post" action="EventAttendantServlet" class="ml-4 mr-4">
+                <form method="post" action="./EventAttendantServlet" class="ml-4 mr-4">
 
                     <div class="form-row align-items-center">
 
 
                         <div class="col-8">
                             <label for="events">Eventos disponibles</label>
-                            <select id="events" name="eventId" class="form-control mb-2">
-                                <option hidden selected disabled>Elige...</option>
+                            <select id="events" name="eventId" class="form-control mb-2" required>
+                                <option hidden selected disabled value="">Elige...</option>
                                 <c:forEach items="${events}" var="item">
                                     <option value="${item.getIdEvent()}">
                                         <c:out value="${item.getTitle()}" />

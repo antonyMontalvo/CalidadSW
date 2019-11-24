@@ -2,6 +2,7 @@ package unmsm.edu.pe.calidadsw.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,7 +45,7 @@ public class EventManagementServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("accion");
-
+        
         try {
             switch (action) {
                 case "index":
@@ -130,6 +131,11 @@ public class EventManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Event> elements = eventDAO.read();
 
+        Calendar fecha = Calendar.getInstance();
+        String dateNow = new SimpleDateFormat("yyyy-MM-dd").format(fecha.getTime());
+
+        request.setAttribute("dateNow", dateNow);
+        
         request.setAttribute("eventos", elements);
         request.getRequestDispatcher(PAGE).forward(request, response);
     }

@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+<head lang="es">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -38,15 +38,15 @@
                 <h2 class="ml-4">Expositores</h2>
                 <br>
 
-                <form method="post" action="EventExpositorServlet" class="ml-4 mr-4">
+                <form method="post" action="./EventExpositorServlet" class="ml-4 mr-4">
 
                     <div class="form-row align-items-center">
 
 
                         <div class="col-8">
                             <label for="events">Eventos disponibles</label>
-                            <select id="events" name="eventId" class="form-control mb-2">
-                                <option hidden selected disabled>Elige...</option>
+                            <select id="events" name="eventId" class="form-control mb-2" required>
+                                <option hidden selected disabled value="">Elige...</option>
                                 <c:forEach items="${events}" var="item">
                                     <option value="${item.getIdEvent()}">
                                         <c:out value="${item.getTitle()}" />

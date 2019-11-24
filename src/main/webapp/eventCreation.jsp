@@ -65,6 +65,7 @@
                                         <br>
                                         <label class="font-weight-bold" for="title">Título</label>
                                         <input type="text" class="form-control" id="title" name="title" required
+                                            onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 241 || event.charCode == 32 || event.charCode == 209 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
                                             placeholder="Docker conference">
                                         <small id="titleHelp" class="form-text text-muted">Agrega un nombre conciso y
                                             claro.</small>
@@ -95,15 +96,15 @@
                                             <br>
                                             <label class="font-weight-bold" for="date">Fecha de inicio</label>
                                             <input class="form-control" type="date" value="${dateNow}" id="date"
-                                                name="date" required>
+                                                name="date" min="${dateNow}" max="2023-12-12" required>
                                             <small id="dateHelp" class="form-text text-muted">Día en la cual iniciará el
                                                 desarrollo el evento.</small>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <br>
                                             <label class="font-weight-bold" for="date">Fecha de fin</label>
-                                            <input class="form-control" type="date" value="${dateNow}" id="date_end"
-                                                name="date_end" required>
+                                            <input class="form-control" type="date" max="2023-12-12" value="${dateNow}"
+                                                id="date_end" name="date_end" min="${dateNow}" required>
                                             <small id="dateHelp" class="form-text text-muted">Día en la cual finaliza el
                                                 desarrollo del evento.</small>
                                         </div>
